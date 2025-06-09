@@ -1,5 +1,5 @@
 export interface productsProps {
-    id: number;
+    id: string;
     name: string;
     color: string;
     size: string;
