@@ -7,6 +7,7 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
+//app.post("/Products", productsRoute);
 
 const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
