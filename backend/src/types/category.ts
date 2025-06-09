@@ -1,3 +1,3 @@
 export interface categoryProps {
-    category: string;
+    id : string;
 }
