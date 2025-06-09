@@ -72,8 +72,16 @@ export const updateCategory = async (req: Request, res: Response) => {
 
 export const deleteCategory = async (req: Request, res: Response) => {
     try {
+        const { id } = req.params;
+        const existingCategory = await Category.findById(id);
+        if (!existingCategory) {
+            return res.status(404).json({ message: "Category Not Found" });
+        }
+        await Category.findByIdAndDelete(id);
+        res.status(200).json({ message: "Category Deleted Successfully" });
         
     } catch (error) {
+        console.error("Error deleting category:", error);
         res.status(500).json({ message: "Internal Server Error, Try Again" });
         
     }
