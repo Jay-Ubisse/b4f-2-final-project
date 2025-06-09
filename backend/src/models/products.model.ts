@@ -1,4 +1,6 @@
-export const products = [
+import { productsProps } from "../types/products.js";
+
+export const products = <productsProps[]>[
   {
     id: 1,
     name: "Camiseta Básica Branca",
