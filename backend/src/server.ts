@@ -2,12 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
+import { productRoute } from "./routes/product.route.ts";
 
 const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-//app.post("/Products", productsRoute);
+app.post("/products", productRoute);
 
 const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
