@@ -13,7 +13,7 @@ const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 4000;
 
 app.use("/products", router);
-app.use("/category", router)
+app.use("/", router)
 
 /*mongoose
   .connect(process.env.BD_URI as string)

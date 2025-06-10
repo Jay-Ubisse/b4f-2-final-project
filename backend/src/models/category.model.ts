@@ -1,6 +1,6 @@
-import type { CategoryProps } from "../types/category.ts";
+import { CategoryProps } from "../types/category.ts";
 
-export const categoriesProducts = <CategoryProps[]>[
+export const categoriesProducts: CategoryProps[] =[
   {
     id: 1,
     name: "Camisetas",

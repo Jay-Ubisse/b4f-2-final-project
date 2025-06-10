@@ -1,41 +1,36 @@
-import { Request, Response } from "express";  
-import { categoriesProducts } from "../models/category.model.js";
+import { Request, Response } from "express";
+import { CategoryProps } from "../types/category.ts";
+import { categoriesProducts } from "../models/category.model.ts";
 
 export const listCategory = (req: Request, res: Response) => {
-    try {
-    
-        const categoryName = req.params.CategoryName.trim().toLocaleLowerCase();
+  try {
+    const categoryName = req.params.categoryName.trim().toLowerCase();
 
-   
-        const categoryExists = categoriesProducts.some(
-            category => category.name.toLocaleLowerCase() === categoryName
-        );
-        
-        if (!categoryExists) {
-       
-             res.status(404).json({
-                message: `Nenhuma categoria '${categoryName}' encontrada`,
-                availableCategories: categoriesProducts.map(c => c.name)
-            });
-        }
+    const categoryExists = categoriesProducts.some(
+      (category: CategoryProps) => category.name.toLowerCase() === categoryName
+    );
 
-      
-        const filteredProducts = categoriesProducts.filter(
-            category => category.name.toLocaleLowerCase() === categoryName
-        )[0]?.products || []; // Assumindo que cada categoria tem um array 'products'
-
-        
-        res.status(200).json({
-            category: categoryName,
-            count: filteredProducts.length,
-            products: filteredProducts // Renomeado para ficar claro
-        });
-
-    } catch (error) {
-    
-        res.status(500).json({
-            message: "Erro ao buscar categoria",
-            
-        });
+    if (!categoryExists) {
+       res.status(404).json({
+        message: `Nenhuma categoria '${categoryName}' encontrada`,
+        availableCategories: categoriesProducts.map((c) => c.name),
+      });
     }
+
+    const filteredCategory = categoriesProducts.find(
+      (category: CategoryProps) => category.name.toLowerCase() === categoryName
+    );
+
+    res.status(200).json({
+      category: filteredCategory?.name,
+      count: filteredCategory?.products.length,
+      products: filteredCategory?.products,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Erro ao buscar categoria",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
 };
