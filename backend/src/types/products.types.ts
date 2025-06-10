@@ -1,11 +1,9 @@
-import { CategoryProps } from './category.types.ts';
 import mongoose from 'mongoose';
-import { Schema } from 'mongoose';
 
-interface ProductProps{
+export interface ProductProps{
     name:string;
     price:number;
     category:mongoose.Types.ObjectId;
 }
 
-export default ProductProps;
+
