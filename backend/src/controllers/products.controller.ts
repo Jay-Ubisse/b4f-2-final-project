@@ -10,5 +10,18 @@ export const createProduct=async (req:Request, res:Response)=>{
     } catch (error) {
       res.status(500).json({message:"An internal server error occurred"})  
     }
+}
 
-} 
+export const deleteProduct = (req: Request, res: Response) => {
+    const { id } = req.params;
+    Products.findByIdAndDelete(id)
+      .then((deletedProduct) => {
+        if (!deletedProduct) {
+          return res.status(404).json({ message: "Product not found" });
+        }
+        res.status(200).json({ message: "Product deleted successfully" });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: "An internal server error occurred" });
+      });
+}
