@@ -4,10 +4,22 @@ import { Request, Response } from "express";
 
 export const createCategory = async (req: Request, res: Response) => {
     try {
+        const { name, products } = req.body;
         
+        const existingCategory = await Category.findOne({name});
+         if (existingCategory){
+            res.status(400).json({message:"Category exists"});
+            return;
+         }
+
+    const newCategory = new Category({name, products});
+    await newCategory.save();
+    res.status(201).json({message:"Created successfully", category:newCategory});
+      return  
     } catch (error) {
+        console.log("error creating category:", error);
         res.status(500).json({ message: "Internal Server Error, Try Again" });
-        
+        return;
     }
 };
 
