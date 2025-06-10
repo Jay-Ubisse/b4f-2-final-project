@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Order from "../models/orders.models.ts";
+import { Order } from "../models/orders.models.ts";
 
 // Criar um novo pedido
 export async function createOrder(req: Request, res: Response) {
@@ -10,9 +10,13 @@ export async function createOrder(req: Request, res: Response) {
 // Buscar pedidos do usuário autenticado
 export async function getMyOrders(req: Request, res: Response) {
   try {
-  } catch (error) {}
-}
 
+    const orders = await Order.find({ user: req.user.id }).populate('products.product');
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar pedidos' });
+  }
+}
 // Buscar todos os pedidos
 export async function getAllOrders(req: Request, res: Response) {
   try {
