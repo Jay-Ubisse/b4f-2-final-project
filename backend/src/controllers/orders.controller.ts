@@ -39,7 +39,7 @@ export const patchOrders = async (req: Request, res: Response) => {
       new: true,
     });
     res.json(orders);
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
