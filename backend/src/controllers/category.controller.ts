@@ -1,19 +1,20 @@
 import  Category  from "../models/category.model.ts";
+import Product from "../models/products.model.ts";
 import { Request, Response } from "express";
 
 export const createCategory = async (req: Request, res: Response) => {
     try {
-        const { name, products } = req.body;
+        const { name, description } = req.body;
         
-        const existingCategory = await Category.findOne({name});
-         if (existingCategory){
-            res.status(400).json({message:"Category exists"});
-            return;
-         }
+        // const existingCategory = Category.findOne({name});
+        //  if (existingCategory){
+        //     res.status(400).json({message:"Category exists"});
+        //     return;
+        //  }
 
-    const newCategory = new Category({name, products});
-    await newCategory.save();
-    res.status(201).json({message:"Created successfully", category:newCategory});
+   Category.create({name, description});
+    //await newCategory.save();
+    res.status(201).json({message:"Created successfully"});
       
     } catch (error) {
         console.log("error creating category:", error);
@@ -42,39 +43,32 @@ export const getAllCategories = async (req: Request, res: Response)=> {
 };
 
 
-// export const getProductByCategory = async (req: Request, res: Response)=> {
-   
-//     try {
-//         const {id}= req.params;
-//         const existingCategory=await Category.findById(id);
-//         if(!existingCategory){
-//             res.status(404).json({message:"Category Not Found"});
-//             return;
-            
-//         }else{
-//             const products = await Product.find({category:id});
-//             if(products.length === 0){
-//                 console.log("Nao foram encontrados produtos nesta categoria");
-//                 res.status(404).json({message:"No Products Found in this Category"});
-//                 return;
-                
-//             }else{
-//                 res.status(200).json(products);
-//                 return;
-                
-//             }
-//         }
+ 
 
-        
-//     } catch (error) {
-//         console.error("Erro ao buscar produtos por categoria:", error);
-//         res.status(500).json({ message: "Internal Server Error, Try Again" });
-        
-//     }
-// };
+export const getProductByCategory = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const existingCategory = await Category.findById(id);
+
+        if (!existingCategory) {
+            res.status(404).json({ message: "Category Not Found" });
+        }
+
+        const products = await Product.find({ category: id });
+        if (products.length === 0) {
+            console.log("Não foram encontrados produtos nesta categoria");
+            res.status(404).json({ message: "No Products Found in this Category" });
+        }
+
+         res.status(200).json(products);
+    } catch (error) {
+        console.error("Erro ao buscar produtos por categoria:", error);
+        res.status(500).json({ message: "Internal Server Error, Try Again" });
+    }
+};
 
 
-export const updateCategory = async (req: Request, res: Response)=> {
+export const updateCategory = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const { name, products } = req.body;
@@ -88,22 +82,22 @@ export const updateCategory = async (req: Request, res: Response)=> {
         if (!updatedCategory) {
             console.log("Categoria não encontrada");
             res.status(404).json({ message: "Category Not Found" });
-            return;
+        
         }
 
-        res.status(200).json({ message: "Category Updated Successfully", category: updatedCategory });
+     res.status(200).json({ message: "Category Updated Successfully", category: updatedCategory });
     } catch (error) {
         console.error("Erro ao atualizar categoria:", error);
         res.status(500).json({ message: "Internal Server Error, Try Again" });
     }
-}
+};
 
 
 export const deleteCategory = async (req: Request, res: Response)=> {
     try {
         const { id } = req.params;
 
-        const existingCategory = await Category.findById(id);
+        const existingCategory = await Category.deleteOne({ _id: id });
 
         if (!existingCategory) {
             console.log("Categoria não encontrada");
