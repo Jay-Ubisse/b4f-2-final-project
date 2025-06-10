@@ -11,14 +11,13 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-app.post("/products", productRoute);
-app.delete("/products/:id", deletedProduct);
-app.get("/products/:id", productRoute);
-app.put("/products/:id", updatedProduct);
+app.post("/", productRoute);
+app.delete("/:id", deletedProduct);
+app.get("/:id", productRoute);
+app.put("/:id", updatedProduct);
 
 const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
-
 mongoose
   .connect(process.env.BD_URI as string)
   .then(() => console.log("BD conectado com sucesso!"))
