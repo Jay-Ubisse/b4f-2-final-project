@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from "bcrypt";
 import { User } from '../models/user.model.ts';
+import { error } from 'console';
 
 
 export const login = async (req: Request, res: Response) => {
@@ -21,3 +22,15 @@ export const login = async (req: Request, res: Response) => {
 
   res.status(200).json({ message: "Seja bem vindo Devolta", user});
 }
+
+
+export const register = async  (req: Request, res: Response) => {
+  const body = req.body 
+  User.create(body).then(User=>res.json(User))
+  .catch(error=>res.json(error))
+ 
+  
+}
+
+
+

@@ -25,7 +25,7 @@ mongoose
     console.log("Ocorreu um erro ao contectar com a DB: ", error)
   );
 
-app.post("/user", async (req, res) => {
+/*app.post("/user", async (req, res) => {
   try{
     const newUser = await User.create(req, body);
     res.json(newUser);
@@ -33,5 +33,5 @@ app.post("/user", async (req, res) => {
       res.json({ error: error})
 
   }
-});
+});*/
 app.listen(port, () => console.log(`Server running on ${host}:${port}`));
