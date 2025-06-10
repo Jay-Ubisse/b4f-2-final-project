@@ -1,4 +1,4 @@
-import { ProductsProps } from "../types/products.js";
+import { ProductsProps } from "../types/products.ts";
 
 export const products: ProductsProps[] = [
   {

@@ -1,4 +1,4 @@
-import type { CategoryProps } from "../types/category.js";
+import type { CategoryProps } from "../types/category.ts";
 
 export const categoriesProducts = <CategoryProps[]>[
   {

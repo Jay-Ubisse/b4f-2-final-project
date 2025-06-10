@@ -1,8 +1,8 @@
-import express from "express";
-import { getProducts } from "../controllers/products.controller.js";
-import { getCategory } from "../controllers/category.controller.js";
+import {Router} from "express";
+import { getProducts } from "../controllers/products.controller.ts";
+import { getCategory } from "../controllers/category.controller.ts";
 
-export const router = express.Router();
+export const router = Router();
 
 router.get("/", getProducts);
-router.get('/category/categoryName:', getCategory)
+router.get("/:categoryName", getCategory)

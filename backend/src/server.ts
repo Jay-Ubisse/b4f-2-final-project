@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import { router } from "./routes/products.route.js";
+import { router } from "./routes/products.route.ts";
 
 const app = express();
 dotenv.config();
@@ -13,6 +13,7 @@ const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 4000;
 
 app.use("/products", router);
+app.use("/category", router)
 
 /*mongoose
   .connect(process.env.BD_URI as string)
