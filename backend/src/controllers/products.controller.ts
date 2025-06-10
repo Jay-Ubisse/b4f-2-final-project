@@ -5,9 +5,9 @@ import { Response, Request } from "express";
 export const getProductId = async (req:Request, res: Response) =>{
     try {
       const productId = req.params.id;
-      const existingProduct = await Products.findById(productId);
+      const existingProduct =  Products.findById(productId);
       if(!existingProduct) {
-        return res.status(404).json({message: "Produto não encontrado"});
+     res.status(404).json({message: "Produto não encontrado"});
       }
       res.status(200).json({message :"Produto encontrado com sucesso", existingProduct});
     } catch(error){
