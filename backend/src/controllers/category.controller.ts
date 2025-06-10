@@ -1,40 +1,41 @@
 import { Request, Response } from "express";  
-import { categoriesProducts } from "../models/category.model.ts";
+import { categoriesProducts } from "../models/category.model.js";
 
-export const getCategory = (req: Request, res: Response) => {
-
+export const listCategory = (req: Request, res: Response) => {
     try {
-        //Pegamos o nome da categoria que criamos na db locale padronizamos em minúscula
-        const CategoryName = req.params.CategoryName.trim().toLocaleLowerCase;
+    
+        const categoryName = req.params.CategoryName.trim().toLocaleLowerCase();
 
-        //uma pequena validação só para garantir que a categoria existe
-        const categoryExistis = categoriesProducts.some(
-            category => category.name.toLocaleLowerCase === CategoryName
+   
+        const categoryExists = categoriesProducts.some(
+            category => category.name.toLocaleLowerCase() === categoryName
         );
         
-         //se a categoria não for encontrada retorna um status 404
-        if(!categoryExistis){
-            res.status(404).json({
-                message: `Nenhma categoria '${CategoryName}' encontrada `,
-                avalibleCategory: categoriesProducts.map(c => c.name) // aqui iremos listar as categorias só para ele ver
-            })
+        if (!categoryExists) {
+       
+            return res.status(404).json({
+                message: `Nenhuma categoria '${categoryName}' encontrada`,
+                availableCategories: categoriesProducts.map(c => c.name)
+            });
         }
 
-        //Vamos filtrar essa nossa categoria para que ele pegue exatamente a que queremos
-        const filteredCategory = categoriesProducts.filter(
-            categorys => categorys.name.toLocaleLowerCase === CategoryName
-        )
+      
+        const filteredProducts = categoriesProducts.filter(
+            category => category.name.toLocaleLowerCase() === categoryName
+        )[0]?.products || []; // Assumindo que cada categoria tem um array 'products'
 
-
-        //caso encontre retorna um status 200
+        
         res.status(200).json({
-            data: filteredCategory
-        })
+            category: categoryName,
+            count: filteredProducts.length,
+            products: filteredProducts // Renomeado para ficar claro
+        });
 
-        //Erros inesperados do servidor
     } catch (error) {
+    
         res.status(500).json({
-            message: "Erro ao buscar categoria"
-        })
+            message: "Erro ao buscar categoria",
+            
+        });
     }
-}
+};
