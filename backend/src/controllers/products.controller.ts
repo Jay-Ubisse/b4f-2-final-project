@@ -1,6 +1,20 @@
 import Products from "../models/products.model.ts";
 import { productsProps } from "../types/products.types.ts";
 import { Response, Request } from "express";
+
+export const getProductId = async (req:Request, res: Response) =>{
+    try {
+      const productId = req.params.id;
+      const existingProduct = await Products.findById(productId);
+      if(!existingProduct) {
+        return res.status(404).json({message: "Produto não encontrado"});
+      }
+      res.status(200).json({message :"Produto encontrado com sucesso", existingProduct});
+    } catch(error){
+      res.status(500).json({message: "Ocorreu um erro interno no servidor"});
+    }
+  }
+
 export const createProduct=async (req:Request, res:Response)=>{
     try {
       let body=req.body
