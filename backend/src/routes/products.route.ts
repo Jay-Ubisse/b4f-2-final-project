@@ -8,4 +8,4 @@ export const router = express.Router();
 
 router.get("/", getProducts);
 router.get("/:categoryName", listCategory)
-router.get("/search", searchProducts);
+router.get("/:search", searchProducts);
