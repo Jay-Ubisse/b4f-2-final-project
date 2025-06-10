@@ -3,23 +3,21 @@ import { Order } from "../models/orders.models.ts";
 
 // Criar novo pedido (POST /orders)
 
-<<<<<<< HEAD
-// Listar pedidos do usuário autenticado (GET /orders/me)
 
-// Listar todos os pedidos (GET /orders) [Apenas admin]
-=======
-// Buscar pedidos do usuário autenticado
+// Listar pedidos do usuário autenticado (GET /orders/me)
 export async function getMyOrders(req: Request, res: Response) {
   try {
-
-    const orders = await Order.find({ user: req.user.id }).populate('products.product');
+    const userId = (req as any).user.id;
+    const orders = await Order.find({ user: userId }).populate("items");
     res.json(orders);
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao buscar pedidos' });
+  } catch (err) {
+    res.status(500).json({ error: "Erro ao buscar seus pedidos." });
   }
 }
-// Buscar todos os pedidos
->>>>>>> 706af27bb7e6015449fc05662250d9467de81c5d
+
+
+
+// Listar todos os pedidos (GET /orders) [Apenas admin]
 export async function getAllOrders(req: Request, res: Response) {
   try {
     const orders = await Order.find().populate("user").populate("items");
@@ -28,6 +26,7 @@ export async function getAllOrders(req: Request, res: Response) {
     res.status(500).json({ error: "Erro ao buscar pedidos." });
   }
 }
+
 
 //atualizar status do pedido
 export const patchOrders = async (req: Request, res: Response) => {
