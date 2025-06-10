@@ -1,23 +1,23 @@
-import { Request, Response } from "express";
+/*import { Request, Response } from "express";
 import { CategoryProps } from "../types/category.ts";
-import { categoriesProducts } from "../models/category.model.ts";
+import { Category } from "../models/category.model.ts";
 
 export const listCategory = (req: Request, res: Response) => {
   try {
     const categoryName = req.params.categoryName.trim().toLowerCase();
 
-    const categoryExists = categoriesProducts.some(
+    const categoryExists = Category.some(
       (category: CategoryProps) => category.name.toLowerCase() === categoryName
     );
 
     if (!categoryExists) {
        res.status(404).json({
         message: `Nenhuma categoria '${categoryName}' encontrada`,
-        availableCategories: categoriesProducts.map((c) => c.name),
+        availableCategories: Category.map((c) => c.name),
       });
     }
 
-    const filteredCategory = categoriesProducts.find(
+    const filteredCategory = Category.find(
       (category: CategoryProps) => category.name.toLowerCase() === categoryName
     );
 
@@ -33,4 +33,4 @@ export const listCategory = (req: Request, res: Response) => {
       error: error instanceof Error ? error.message : "Unknown error",
     });
   }
-};
+};*/

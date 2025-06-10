@@ -15,11 +15,11 @@ const port = process.env.PORT || 4000;
 app.use("/products", router);
 app.use("/", router)
 
-/*mongoose
+mongoose
   .connect(process.env.BD_URI as string)
   .then(() => console.log("BD conectado com sucesso!"))
   .catch((error) =>
     console.log("Ocorreu um erro ao contectar com a DB: ", error)
-  );*/
+  );
 
 app.listen(port, () => console.log(`Server running on ${host}:${port}`));

@@ -1,8 +1,13 @@
-export interface ProductsProps {
-    id: number;
-    name: string;
-    color: string;
-    size: "S" | "M" | "L" | "XL" | "XXL" | "XXXL" | string;
-    category: "Camisetas" | "Calças" | "Saias" | "Vestidos" | "Casacos" | "Acessorios" ;
-    price: number;
+import mongoose, { Document } from "mongoose";
+
+export interface ProductProps extends Document {
+  name: string;
+  price: number;
+  category: mongoose.Types.ObjectId;
+  categoryId: string;
+  imageUrl: string;
+  description: string;
+  colors: string[];
+  sizes: string[];
+  stock: number;
 }
