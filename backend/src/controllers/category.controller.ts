@@ -1,6 +1,7 @@
+import categoryCollection from "../models/category.model.ts";
 import  Category  from "../models/category.model.ts";
-import Product from "../types/products.types.ts";
-import { Request, Response } from "express";
+import Product from "../models/product.model.ts";
+import { NextFunction, Request, Response} from "express";
 
 export const createCategory = async (req: Request, res: Response) => {
     try {
@@ -11,27 +12,35 @@ export const createCategory = async (req: Request, res: Response) => {
     }
 };
 
-export const getAllCategories = async (req: Request, res: Response) => {
-    try {
-        const categories =await Category.find();
+export const getAllCategories = async (req: Request, res: Response,  next:NextFunction)=> {
 
-        res.status(200).json({message:"OK",categories});
-        if(categories.length === 0){
+     try {
+        const { page, limit } = req.query;
+
+        if (page && limit) {
+            const pageNumber = Number(page);
+            const limitNumber = Number(limit);
+            const paginatedCategory = await categoryCollection.paginate({}, {
+                page: pageNumber,
+                limit: limitNumber
+            });
+            return res.status(200).json({ paginatedCategory });
+        }
+
+        const categories = await Category.find();
+        if (categories.length === 0) {
             console.log("Nao foram encontradas categorias");
-             return res.status(404).json({message:"No Categories Found"});
-                
-            }else{
-                return res.status(200).json({message:"OK",categories});    
-            }
-      } catch (error) {
-        res.status(500).json({ message: "Internal Server Error, Try Again" });
-        
+            return res.status(404).json({ message: "No Categories Found" });
+        }
+         res.status(200).json({ message: "OK", categories });
+         return;
+    } catch (error) {
+        next(error);
     }
-
 };
 
 
-export const getProductByCategory = async (req: Request, res: Response):Promise<void> => {
+export const getProductByCategory = async (req: Request, res: Response)=> {
    
     try {
         const {id}= req.params;
@@ -60,7 +69,7 @@ export const getProductByCategory = async (req: Request, res: Response):Promise<
 };
 
 
-export const updateCategory = async (req: Request, res: Response) => {
+export const updateCategory = async (req: Request, res: Response)=> {
     try {
         
     } catch (error) {
@@ -70,7 +79,7 @@ export const updateCategory = async (req: Request, res: Response) => {
 };
 
 
-export const deleteCategory = async (req: Request, res: Response) => {
+export const deleteCategory = async (req: Request, res: Response)=> {
     try {
         
     } catch (error) {

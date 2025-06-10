@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 
-import {categoryRoute} from "./routes/category.route.ts";
+import categoryRoute from "./routes/category.route.ts";
 
 const app = express();
 dotenv.config();

@@ -1,19 +1,20 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
-import { ICategory } from "../types/category.types.ts";
-import Product from "../types/products.types.ts";
+import { Schema,InferSchemaType,model, PaginateModel } from "mongoose";
+import paginate from "mongoose-paginate-v2"
+import { CategoryProps } from "../types/category.types.ts";
 
-
- const categorySchema = new Schema<ICategory>(
+ const categorySchema = new Schema<CategoryProps>(
     {
         name: { type: String, required: true, unique: true },
-        products: { type: [Product], default: []},
+        products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
 
-    },
-    {
-        timestamps: true,
+    },{
+        timestamps: true
     }
 );
-export default mongoose.model<ICategory>("Category", categorySchema);
+
+type categoryCollectionType = InferSchemaType<typeof categorySchema>;
+categorySchema.plugin(paginate);
+const categoryCollection = model<categoryCollectionType,PaginateModel<categoryCollectionType>>("Category", categorySchema);
+export default categoryCollection;
 
 

@@ -1,10 +1,9 @@
-import { IProduct } from './products.types.ts';
+import type Product  from './products.types.ts';
 
-interface ICategory {
+ export interface CategoryProps {
     name: string;
-    products:IProduct[];
+    products: Product[];
     createdAt?: Date;
     updatedAt?: Date;
 }
 
-export { ICategory };
