@@ -3,9 +3,23 @@ import { Order } from "../models/orders.models.ts";
 
 // Criar novo pedido (POST /orders)
 
+<<<<<<< HEAD
 // Listar pedidos do usuário autenticado (GET /orders/me)
 
 // Listar todos os pedidos (GET /orders) [Apenas admin]
+=======
+// Buscar pedidos do usuário autenticado
+export async function getMyOrders(req: Request, res: Response) {
+  try {
+
+    const orders = await Order.find({ user: req.user.id }).populate('products.product');
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar pedidos' });
+  }
+}
+// Buscar todos os pedidos
+>>>>>>> 706af27bb7e6015449fc05662250d9467de81c5d
 export async function getAllOrders(req: Request, res: Response) {
   try {
     const orders = await Order.find().populate("user").populate("items");
