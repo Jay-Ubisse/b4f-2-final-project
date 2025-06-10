@@ -14,7 +14,11 @@ const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
 
 app.use("/categories", categoryRoute);
-const uri = process.env.MONGODB_URI as string;
+const uri = process.env.BD_URI as string;
+
+if (!uri) {
+  throw new Error("BD_URI not set in .env");
+}
 mongoose.connect(uri)
   .then(() => console.log("Conectado ao MongoDB"))
   .catch((err) => console.error("Erro ao conectar ao MongoDB:", err));

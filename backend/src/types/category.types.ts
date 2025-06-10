@@ -1,10 +1,9 @@
-import { IProduct } from './products.types.ts';
+import mongoose, { Document } from 'mongoose';
 
-interface ICategory {
+ export interface CategoryProps extends Document {
     name: string;
-    products:IProduct[];
+    description?:string;
     createdAt?: Date;
     updatedAt?: Date;
 }
 
-export { ICategory };
