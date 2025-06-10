@@ -1,8 +1,9 @@
 export interface productsProps{
+  id:String,
   name:String,
         color:String,
         size:String,
         price:Number,
-        descripton:String,
+        description:String,
         category:String
 }

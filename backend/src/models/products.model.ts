@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
-const productSchema = new mongoose.Schema({
-  name: { type: String },
-  color: { type: String },
-  size: { type: String, enum: ["XS", "S", "L", "XL", "XXL"] },
-  price: { type: Number },
-  description: { type: String },
-  category: {
-    type: String,
+import { productsProps } from "../types/products.types.ts";
+const productSchema = new mongoose.Schema<productsProps>({
+  id:{String, unique:true},
+  name: {String, required:true, min:5},
+  color: {String, required:true },
+  size: {String, enum: ["XS", "S", "L", "XL", "XXL"], required: true},
+  price: { type: Number, required:true },
+  description: {String, min:10 },
+  category: {String,
     enum: ["T-shirt", "Hoodies", "Sweatpants", "Crewnecks"],
   },
 });
