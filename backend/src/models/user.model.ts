@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
+import { userProps } from "../types/types.ts";
 
-const userschema = new mongoose.Schema({
+const userschema = new mongoose.Schema<userProps>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: String, enum: ['Admin', 'Costumer']
+  role: { type:String, enum: ['Admin', 'Costumer'], default: 'Costumer'}
 });
 
 export const User = mongoose.model("user", userschema);
