@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import categoryRoute from "./routes/category.route.ts";
+import { productRoute } from "./routes/product.route.ts";
 
 const app = express();
 dotenv.config();
@@ -14,6 +15,8 @@ const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
 
 app.use("/categories", categoryRoute);
+app.use("/product", productRoute);
+
 const uri = process.env.BD_URI as string;
 
 if (!uri) {
