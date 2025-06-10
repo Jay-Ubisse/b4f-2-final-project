@@ -1,5 +1,5 @@
 export interface CategoryProps {
     id : number;
     name: string ;
-    products: unknown;
+    products: Array<{id: number, name: string, color: string, size: string, price: number}>;
 }
