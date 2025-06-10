@@ -38,11 +38,11 @@ export const deletedProduct = (req: Request, res: Response) => {
         res.status(200).json({ message: "Product deleted successfully" });
       })
       .catch((error) => {
-        res.status(500).json({ message: "An internal server error occurred" });
+        res.status(500).json({ message: "An internal server error occurred",error });
       });
 }
 
-export const updateProduct = async (req:Request, res:Response) => {
+export const updateProduct = async (req:Request, res:Response):Promise<any>=> {
   try {
     const id = req.params.id;
     const body = req.body;
