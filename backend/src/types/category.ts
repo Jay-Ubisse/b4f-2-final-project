@@ -1,3 +1,5 @@
-export interface categoryProps {
-    id : string;
+export interface CategoryProps {
+    id : number;
+    name: string ;
+    products: unknown;
 }

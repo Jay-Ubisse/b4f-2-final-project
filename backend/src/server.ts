@@ -10,15 +10,15 @@ app.use(express.json());
 app.use(cors());
 
 const host = process.env.HOST || "http://localhost";
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
-app.get("/", router)
+app.use("/products", router);
 
-mongoose
+/*mongoose
   .connect(process.env.BD_URI as string)
   .then(() => console.log("BD conectado com sucesso!"))
   .catch((error) =>
     console.log("Ocorreu um erro ao contectar com a DB: ", error)
-  );
+  );*/
 
 app.listen(port, () => console.log(`Server running on ${host}:${port}`));

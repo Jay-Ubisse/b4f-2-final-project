@@ -1,9 +1,8 @@
-export interface productsProps {
-    id: string;
+export interface ProductsProps {
+    id: number;
     name: string;
     color: string;
-    size: string;
-    category: string;
+    size: "S" | "M" | "L" | "XL" | "XXL" | "XXXL" | string;
+    category: "Camisetas" | "Calças" | "Saias" | "Vestidos" | "Casacos" | "Acessorios" ;
     price: number;
-
 }

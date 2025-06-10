@@ -1,6 +1,6 @@
-import { productsProps } from "../types/products.js";
+import { ProductsProps } from "../types/products.js";
 
-export const products = <productsProps[]>[
+export const products: ProductsProps[] = [
   {
     id: 1,
     name: "Camiseta Básica Branca",
@@ -21,7 +21,7 @@ export const products = <productsProps[]>[
     id: 3,
     name: "Vestido Floral Leve",
     color: "Rosa",
-    size: "P",
+    size: "L",
     category: "Vestidos",
     price: 89.90
   },
@@ -29,7 +29,7 @@ export const products = <productsProps[]>[
     id: 4,
     name: "Jaqueta Corta-Vento",
     color: "Preto",
-    size: "G",
+    size: "XL",
     category: "Casacos",
     price: 199.90
   },
