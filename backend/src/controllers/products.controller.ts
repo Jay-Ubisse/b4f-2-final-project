@@ -3,8 +3,11 @@ import { Product } from "../models/products.model.ts";
 
 export const getProducts = async (req: Request, res: Response) => {
    try {
+      const products = await Product.find()
+
       res.status(200).json({
-         message: "ok", Product
+         message: "Produtos encontrados", 
+         deta: products
       })
    } catch (error) {
       console.error("Erro da MAudlyn")
