@@ -1,6 +1,6 @@
-import categoryModel from "../models/category.model.ts";
+
 import  Category  from "../models/category.model.ts";
-import Product from "../types/products.types.ts";
+import Product from "../models/product.model.ts"
 import { Request, Response } from "express";
 
 export const createCategory = async (req: Request, res: Response) => {
@@ -107,7 +107,7 @@ export const deleteCategory = async (req: Request, res: Response)  => {
             console.log("Categoria não encontrada");
             return res.status(404).json({ message: "Category Not Found" });
         }
-        await categoryModel.deleteOne({ id });
+        await Category.deleteOne({ id });
         res.status(200).json({ message: "Category Deleted Successfully" });
         
     } catch (error) {
