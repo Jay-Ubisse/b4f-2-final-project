@@ -15,7 +15,6 @@ app.get("/:id", productRoute);
 
 const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
-
 mongoose
   .connect(process.env.BD_URI as string)
   .then(() => console.log("BD conectado com sucesso!"))
