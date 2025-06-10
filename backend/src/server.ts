@@ -12,7 +12,7 @@ app.use(cors());
 const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
 
-app.use("/ordes", orderRoute);
+app.use("/orders", orderRoute);
 
 mongoose
   .connect(process.env.BD_URI as string)
