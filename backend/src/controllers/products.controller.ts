@@ -39,3 +39,25 @@ export const deleteProduct = (req: Request, res: Response) => {
         res.status(500).json({ message: "An internal server error occurred" });
       });
 }
+
+export const updateProduct = async (req:Request, res:Response) => {
+  try {
+    const id = req.params.id;
+    const body = req.body;
+    const { name, color, size ,price,descripton,category } = body;
+
+    const product = await Products.findById(id);
+if(!product){
+  return res.status(404).json({message:"product not found"})
+}
+product.name=name
+product.price=price
+product.color=color
+product.size=size
+product.description=descripton
+product.category=category
+res.status(200).json({message:"product changed successfully"})
+  } catch (error) {
+   res.status(500).json({message:"error when editing a product",error})
+  }
+};
