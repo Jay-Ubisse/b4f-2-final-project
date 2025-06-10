@@ -8,9 +8,9 @@ import {
 
 export const orderRoute = express.Router();
 
-orderRoute.post("/orders", createOrder);
-orderRoute.get("/orders/me", getMyOrders);
-orderRoute.get("/orders", getAllOrders);
+orderRoute.post("/", createOrder);
+orderRoute.get("/:id", getMyOrders);
+orderRoute.get("/", getAllOrders);
 orderRoute.patch("/:id", patchOrders);
 
 export default orderRoute;
