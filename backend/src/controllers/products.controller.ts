@@ -5,9 +5,9 @@ import { Response, Request } from "express";
 export const createProduct = async (req: Request, res: Response) => {
   try {
     const body: productsProps = req.body;
-    const {name, color,sizes,price,description, category, stock
+    const {name, price, category, imageUrl,description,colors,sizes,stock,categoryId
 }=body;
-    Products.create({name,color,sizes,price,description, category,stock});
+    Products.create({name, price, category, imageUrl,description,colors,sizes,stock,categoryId});
     res.status(201).json({ message: "Product created successfully",body});
     
   } catch (error) {
@@ -16,7 +16,7 @@ export const createProduct = async (req: Request, res: Response) => {
 export const getProductId = async (req:Request, res: Response) =>{
     try {
       const productId = req.params.id;
-      const existingProduct =  Products.findById(productId);
+      const existingProduct =  await Products.findById(productId).select({});
       if(!existingProduct) {
      res.status(404).json({message: "Produto não encontrado"});
       }
@@ -42,24 +42,24 @@ export const deletedProduct = (req: Request, res: Response) => {
       });
 }
 
-export const updateProduct = async (req:Request, res:Response):Promise<any>=> {
+export const updateProduct = async (req:Request, res:Response)=> {
   try {
     const id = req.params.id;
-    const body = req.body;
-    const { name, color,sizes,price,description, category, stock } = body;
+    const body:productsProps = req.body;
+    const {name, price, category, imageUrl,description,colors,sizes,stock,categoryId } = body;
 
-    const product = await Products.findById(id);
+    const product = await Products.findByIdAndUpdate(id,{name, price,
+colors,
+sizes,
+description,
+category,
+imageUrl,
+stock,categoryId});
 if(!product){
   return res.status(404).json({message:"product not found"})
 }
-product.name=name
-product.price=price
-product.color=color
-product.sizes=sizes
-product.description=description
-product.category=category
-product.stock=stock
-res.status(200).json({message:"product changed successfully"})
+
+res.status(200).json({message:"product updated successfully",product})
   } catch (error) {
    res.status(500).json({message:"error when editing a product",error})
   }
