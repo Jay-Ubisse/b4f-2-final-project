@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import {categoryRoute} from "./routes/category.route.ts";
+import categoryRoute from "./routes/category.route.ts";
 
 const app = express();
 dotenv.config();
@@ -14,12 +14,9 @@ const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
 
 app.use("/categories", categoryRoute);
-
-mongoose
-  .connect(process.env.BD_URI as string)
-  .then(() => console.log("BD conectado com sucesso!"))
-  .catch((error) =>
-    console.log("Ocorreu um erro ao contectar com a DB: ", error)
-  );
+const uri = process.env.MONGODB_URI as string;
+mongoose.connect(uri)
+  .then(() => console.log("Conectado ao MongoDB"))
+  .catch((err) => console.error("Erro ao conectar ao MongoDB:", err));
 
 app.listen(port, () => console.log(`Server running on ${host}:${port}`));

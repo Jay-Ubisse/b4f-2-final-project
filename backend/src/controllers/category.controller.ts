@@ -1,4 +1,5 @@
-import categoryModel from "../models/category.model.ts";import  Category  from "../models/category.model.ts";
+import categoryModel from "../models/category.model.ts";
+import  Category  from "../models/category.model.ts";
 import Product from "../types/products.types.ts";
 import { Request, Response } from "express";
 
@@ -72,30 +73,29 @@ export const getProductByCategory = async (req: Request, res: Response):Promise<
 };
 
 
+
 export const updateCategory = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const { name, products } = req.body;
 
-        const existingCategory = await Category.findById(id);
+        const updatedCategory = await Category.findByIdAndUpdate(
+            id,
+            { $set: { name, products } },
+            { new: true, runValidators: true }
+        );
 
-        if (!existingCategory) {
+        if (!updatedCategory) {
             console.log("Categoria não encontrada");
             return res.status(404).json({ message: "Category Not Found" });
         }
 
-        existingCategory.name = name || existingCategory.name;
-        existingCategory.products = products || existingCategory.products;
-
-        await existingCategory.save();
-        res.status(200).json({ message: "Category Updated Successfully", category: existingCategory });
-        
+        res.status(200).json({ message: "Category Updated Successfully", category: updatedCategory });
     } catch (error) {
+        console.error("Erro ao atualizar categoria:", error);
         res.status(500).json({ message: "Internal Server Error, Try Again" });
-        
     }
-};
-
+}
 
 export const deleteCategory = async (req: Request, res: Response)  => {
     try {
