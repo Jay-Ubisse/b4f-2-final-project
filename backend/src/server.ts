@@ -4,9 +4,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import { productRoute, updatedProduct } from "./routes/product.route.ts";
 import { deletedProduct } from "./routes/product.route.ts";
-
-
-
 const app = express();
 dotenv.config();
 app.use(express.json());
@@ -18,9 +15,6 @@ app.put("/:id", updatedProduct);
 
 const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
-
- 
-
 mongoose
   .connect(process.env.BD_URI as string)
   .then(() => console.log("BD conectado com sucesso!"))
