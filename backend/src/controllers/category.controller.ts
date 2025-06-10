@@ -1,4 +1,4 @@
-import  Category  from "../models/category.model.ts";
+import categoryModel from "../models/category.model.ts";import  Category  from "../models/category.model.ts";
 import Product from "../types/products.types.ts";
 import { Request, Response } from "express";
 
@@ -70,18 +70,21 @@ export const updateCategory = async (req: Request, res: Response) => {
 };
 
 
-export const deleteCategory = async (req: Request, res: Response) => {
+export const deleteCategory = async (req: Request, res: Response)  => {
     try {
         const { id } = req.params;
+
         const existingCategory = await Category.findById(id);
+
         if (!existingCategory) {
+            console.log("Categoria não encontrada");
             return res.status(404).json({ message: "Category Not Found" });
         }
-        await Category.findByIdAndDelete(id);
+        await categoryModel.deleteOne({ id });
         res.status(200).json({ message: "Category Deleted Successfully" });
         
     } catch (error) {
-        console.error("Error deleting category:", error);
+        console.error("Erro ao excluir categoria:", error);
         res.status(500).json({ message: "Internal Server Error, Try Again" });
         
     }
