@@ -5,14 +5,13 @@ import mongoose from "mongoose";
 import { productRoute } from "./routes/product.route.ts";
 import { deletedProduct } from "./routes/product.route.ts";
 import { getProductIdRoute } from "./routes/product.route.ts";
-
-const app = express();
 dotenv.config();
+const app = express();
 app.use(express.json());
 app.use(cors());
-app.post("/products", productRoute);
-app.delete("/products/:id", deletedProduct);
-app.get("/products/:id", productRoute);
+app.post("/", productRoute);
+app.delete("/:id", deletedProduct);
+app.get("/:id", productRoute);
 
 const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;

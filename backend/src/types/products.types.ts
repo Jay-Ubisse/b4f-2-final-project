@@ -1,8 +1,10 @@
+import { Document } from "mongoose";
 export interface productsProps{
   name:String,
-        color:String,
-        size:String,
+        color:String[],
+        sizes:String[],
         price:Number,
-        descripton:String,
-        category:String
+        description:String,
+        category:String[]
+        stock:number;
 }
