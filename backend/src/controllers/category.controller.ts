@@ -13,7 +13,7 @@ export const listCategory = (req: Request, res: Response) => {
         
         if (!categoryExists) {
        
-            return res.status(404).json({
+             res.status(404).json({
                 message: `Nenhuma categoria '${categoryName}' encontrada`,
                 availableCategories: categoriesProducts.map(c => c.name)
             });
