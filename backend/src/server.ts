@@ -14,6 +14,7 @@ const port = process.env.PORT || 4000;
 
 app.use("/products", router);
 app.use("/category", router)
+app.use("/search", router)
 
 /*mongoose
   .connect(process.env.BD_URI as string)
