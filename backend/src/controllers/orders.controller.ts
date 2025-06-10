@@ -10,7 +10,14 @@ export async function createOrder(req: Request, res: Response) {
 // Buscar pedidos do usuário autenticado
 export async function getMyOrders(req: Request, res: Response) {
   try {
-  } catch (error) {}
+    const orders = await Order.find()
+      .populate('products.product');
+      res.json(orders);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar pedidos' });
+    }
+  
+  
 }
 
 // Buscar todos os pedidos
