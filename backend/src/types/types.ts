@@ -1,4 +1,4 @@
-type role = 'Admin' | 'Costumer';
+type role = 'Admin' | 'Customer';
 export interface userProps {
 name:string,
 email:string,

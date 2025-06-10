@@ -1,36 +1,40 @@
-import { Request, Response } from 'express';
-import bcrypt from "bcrypt";
-import { User } from '../models/user.model.ts';
-import { error } from 'console';
-
+import { Request, Response } from 'express'
+import bcrypt from 'bcrypt'
+import { User } from '../models/user.model.ts'
+import { userProps } from '../types/types.ts'
 
 export const login = async (req: Request, res: Response) => {
-  const body = req.body;
-  const { email, password , role} = body;
+  const body = req.body
+  const { email, password } = body
 
-  const user = await User.findOne({ email, role });
+  const user = await User.findOne({ email })
 
-    if (!user) {
-      return res.status(401).json({ message: "Email ou palavra-passe incorreto." });
-    }
-
-  const isEqual = await bcrypt.compare(password, user.password);
-
-  if (!user || !isEqual) {
-   return res.status(401).json({ message: "Email ou palavra-passe incorreto." });
+  if (!user) {
+    return res
+      .status(401)
+      .json({ message: 'Email ou palavra-passe incorreto.' })
   }
 
-  res.status(200).json({ message: "Seja bem vindo Devolta", user});
+  const isEqual = await bcrypt.compare(password, user.password)
+
+  if (!user || !isEqual) {
+    return res
+      .status(401)
+      .json({ message: 'Email ou palavra-passe incorreto.' })
+  }
+
+  res.status(200).json({ message: 'Seja bem vindo Devolta', user })
 }
 
+export const register = async (req: Request, res: Response) => {
+  try {
+    const body: userProps = req.body
+    const { name, email, password } = body
 
-export const register = async  (req: Request, res: Response) => {
-  const body = req.body 
-  User.create(body).then(User=>res.json(User))
-  .catch(error=>res.json(error))
- 
-  
+    User.create({name, email, password})
+    /*.then((User) => {*/
+    res.status(201).json({ message: 'Registrado com sucesso', body })
+  } catch (error) {
+    res.status(500).json({ message: 'Ocorreu um erro', error })
+  }
 }
-
-
-

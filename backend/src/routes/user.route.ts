@@ -1,6 +1,9 @@
-/*import  Express  from "express";
-import { getDetails } from "../controllers/user.controller.ts";
+import Express from 'express'
+import { register } from '../controllers/auth.controller.ts'
+import { getDetails } from '../controllers/user.controller.ts'
 
-export const router = Express.Router();
+export const router = Express.Router()
 
-router.get("/details/:id", getDetails);8*/
+/*router.get("/details/:id", getDetails);8*/
+router.post('/', register)
+router.get('/',getDetails)

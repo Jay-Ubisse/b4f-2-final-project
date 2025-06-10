@@ -4,11 +4,11 @@ import { User } from '../models/user.model.ts'
 
 export async function getDetails(req: Request, res: Response) {
   try {
-    const details = User.findById(req.params.id)
+    const details = await User.find()
 
-    if (!details) {
-      return res.status(404).json({ message: 'Erro, Dados não encontrados' })
-    }
+   /* if (!details) {
+    res.status(404).json({ message: 'Erro, Dados não encontrados' })
+    }*/
 
     res.status(200).json({ message: 'Dados encontrados com sucesso', details })
   } catch (error) {
