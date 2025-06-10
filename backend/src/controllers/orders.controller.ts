@@ -2,7 +2,24 @@ import { Request, Response } from "express";
 import { Order } from "../models/orders.models.ts";
 
 // Criar novo pedido (POST /orders)
+export async function createOrder(req: Request, res: Response) {
+  try {
+    const userId = (req as any).user.id;
+    const { items, total } = req.body;
 
+    const newOrder = await Order.create({
+      user: userId,
+      userId,
+      items,
+      total,
+      status: "pendente",
+    });
+
+    res.status(201).json(newOrder);
+  } catch (err) {
+    res.status(500).json({ error: "Erro ao criar pedido." });
+  }
+}
 
 // Listar pedidos do usuário autenticado (GET /orders/me)
 export async function getMyOrders(req: Request, res: Response) {
