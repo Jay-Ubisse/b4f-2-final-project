@@ -74,6 +74,21 @@ export const getProductByCategory = async (req: Request, res: Response):Promise<
 
 export const updateCategory = async (req: Request, res: Response) => {
     try {
+        const { id } = req.params;
+        const { name, products } = req.body;
+
+        const existingCategory = await Category.findById(id);
+
+        if (!existingCategory) {
+            console.log("Categoria não encontrada");
+            return res.status(404).json({ message: "Category Not Found" });
+        }
+
+        existingCategory.name = name || existingCategory.name;
+        existingCategory.products = products || existingCategory.products;
+
+        await existingCategory.save();
+        res.status(200).json({ message: "Category Updated Successfully", category: existingCategory });
         
     } catch (error) {
         res.status(500).json({ message: "Internal Server Error, Try Again" });

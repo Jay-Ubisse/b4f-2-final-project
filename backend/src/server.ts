@@ -2,13 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-
 import {categoryRoute} from "./routes/category.route.ts";
 
 const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
+// Removed invalid categoryRoutes usage
 
 const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
