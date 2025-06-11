@@ -15,11 +15,10 @@ const authorizeRole =async (role: string) => {
   };
 };
 export const createProduct = async (req: Request, res: Response) => {
-  authorizeRole;
+
   try {
-    const categoryId=await Category.find().populate("Category")
     const body: productsProps = req.body;
-    const {
+     const {
       name,
       price,
       category,
@@ -28,18 +27,21 @@ export const createProduct = async (req: Request, res: Response) => {
       colors,
       sizes,
       stock,
+      categoryId,
     } = body;
-    Products.create({
+    const categoryData=await Category.findById(categoryId).populate("Category");
+    const product =Products.create({
       name,
       price,
-      category:categoryId,
+      category:categoryData,
       imageUrl,
       description,
-      colors,
-      sizes,
+      colors:colors,
+      sizes:sizes || [],
       stock,
+      categoryId,
     });
-    res.status(201).json({ message: "Product created successfully", body });
+    res.status(201).json({ message: "Product created successfully", product});
   } catch (error) {
     res.status(500).json({ message: "An internal server error occurred" });
   }
@@ -93,15 +95,15 @@ export const updateProduct = async (req: Request, res: Response) => {
       stock,
       categoryId,
     } = body;
-
+ const categoryData=await Category.findById(categoryId).populate("Category");
     const product = await Products.findByIdAndUpdate(id, {
-      name,
+     name,
       price,
-      colors,
-      sizes,
-      description,
-      category,
+      category:categoryData,
       imageUrl,
+      description,
+      colors:colors,
+      sizes:sizes || [],
       stock,
       categoryId,
     });

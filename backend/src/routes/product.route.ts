@@ -9,7 +9,7 @@ from "../controllers/products.controller.ts";
 import { authentionToken }
 from "../middleware/auth.middleware.ts";
 export const productRoute=express.Router();
-productRoute.post("/", authentionToken,createProduct);
+productRoute.post("/", createProduct);
 productRoute.get("/:id",getProductId);
 productRoute.delete("/:id",authentionToken, deletedProduct);
 productRoute.put("/:id", authentionToken, updateProduct);
