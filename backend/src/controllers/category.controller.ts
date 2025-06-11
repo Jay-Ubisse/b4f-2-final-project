@@ -36,8 +36,8 @@ export const listCategory = (req: Request, res: Response) => {
 };*/
 
 import { Request, Response } from "express";
-import { Category } from "../models/category.model.ts"; // Modelo da categoria
-import { Product } from "../models/products.model.ts";   // Modelo do produto
+import { Category } from "../models/category.model.ts"; 
+import { Product } from "../models/products.model.ts";   
 
 export const getProductsByQueryCategory = async (req: Request, res: Response) => {
   try {
@@ -45,10 +45,9 @@ export const getProductsByQueryCategory = async (req: Request, res: Response) =>
 
     if (!categoryName || typeof categoryName !== "string") {
         res.status(400).json({
-        message: "Parâmetro 'category' obrigatório e deve ser string"
+        message: "Parâmetro 'categoria' é obrigatório e deve ser string(nome da categoria)."
       });return
     }
-
     
     const normalizedCategory = categoryName.trim().toLowerCase();
 
@@ -73,7 +72,7 @@ export const getProductsByQueryCategory = async (req: Request, res: Response) =>
     });
 
   } catch (error) {
-    console.error("❌ Erro ao buscar produtos por categoria:", error);
+    console.error("Erro ao buscar produtos por categoria:", error);
      res.status(500).json({
       message: "Erro interno no servidor",
       error: error instanceof Error ? error.message : "Unknown error"
