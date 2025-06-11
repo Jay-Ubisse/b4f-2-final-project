@@ -1,3 +1,21 @@
+import mongoose from "mongoose";
+import { userProps } from "../types/types.ts";
+
+const userschema = new mongoose.Schema<userProps>({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+
+  role:{ type: String, enum: ['Admin', 'Costumer']}
+});
+
+export const Users = mongoose.model("users", userschema);
+
+  role: { type:String, enum: ['Admin', 'Customer'], default: 'Customer'}
+});
+
+export const User = mongoose.model<userProps>("User", userschema);
+
 import mongoose, { Document, Schema } from "mongoose";
 import { CategoryProps, ProductProps, UserProps } from "../types/user.js";
 
@@ -48,3 +66,5 @@ const productSchema = new Schema<ProductProps>({
 });
 
 export const Product = mongoose.model<ProductProps>("Product", productSchema);
+
+
