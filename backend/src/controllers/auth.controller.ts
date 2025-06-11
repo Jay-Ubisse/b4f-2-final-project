@@ -5,8 +5,8 @@ import { User } from '../models/user.model.ts'
 import { userProps } from '../types/types.ts'
 
 
-export const login = async (req: Request, res: Response) => {
-  const body = req.body
+export const login = async (req: Request, res: Response): Promise<any> => {
+  const body:userProps = req.body
   const { email, password } = body
 
   const user = await User.findOne({ email })
@@ -31,7 +31,7 @@ const jwtSecret: string = process.env.JWT_SECRET || '';
     },
    jwtSecret,
     {
-      expiresIn: "1h",
+      expiresIn: "24h",
     }
   );
   res.status(200).json({ message: "Seja bem vindo Devolta", user,token})}
@@ -39,15 +39,32 @@ const jwtSecret: string = process.env.JWT_SECRET || '';
 
 
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (req:Request, res:Response) => {
   try {
-    const body: userProps = req.body
-    const { name, email, password } = body
+    const body:userProps = req.body;
+    const { name, email, password } = body;
 
-    User.create({name, email, password})
-    /*.then((User) => {*/
-    res.status(201).json({ message: 'Registrado com sucesso', body })
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      res
+        .status(400)
+        .json({ message: "Já existe um usuário cadastrado com este email." });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      email,
+      name,
+      password: hashedPassword,
+    });
+
+    res.status(201).json({ message: "Usuário criado com sucesso", user });
   } catch (error) {
-    res.status(500).json({ message: 'Ocorreu um erro', error })
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "Ocorreu um erro interno no servidor", error });
   }
-}
+};

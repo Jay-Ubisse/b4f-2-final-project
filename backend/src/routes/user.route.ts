@@ -1,9 +1,12 @@
 import Express from 'express'
-import { register } from '../controllers/auth.controller.ts'
-import { getDetails } from '../controllers/user.controller.ts'
+import { register, login } from '../controllers/auth.controller.ts'
+//import { getMe } from '../controllers/user.controller.ts'
+import { authentionToken } from '../middleware/auth.Middleware.ts'
+
 
 export const router = Express.Router()
 
-/*router.get("/details/:id", getDetails);8*/
-router.post('/', register)
-router.get('/',getDetails)
+
+router.post('/register', register)
+router.post('/login', login)
+//router.get('/me',authentionToken,getMe)

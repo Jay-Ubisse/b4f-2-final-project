@@ -10,8 +10,8 @@ app.use(express.json())
 const host = process.env.HOST || 'http://localhost'
 const port = process.env.PORT || 3000
 
-app.use('/auth/register', router)
-app.use('/auth/users', router)
+app.use('/users', router)
+
 
 
 mongoose.connect(process.env.BD_URI as string)
