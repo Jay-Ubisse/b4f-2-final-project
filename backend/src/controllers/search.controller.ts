@@ -1,7 +1,8 @@
+import { getProductsByQueryCategory } from './category.controller.ts';
 import { Request, Response } from "express";
 import { Product } from "../models/products.model.ts";
 
-export const getProducts = async (req: Request, res: Response) => {
+export const getProductsBySearch = async (req: Request, res: Response) => {
   try {
     const { search, categoryId, page = "1", perPage = "10" } = req.query;
 
