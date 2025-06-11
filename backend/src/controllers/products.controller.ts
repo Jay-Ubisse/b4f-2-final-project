@@ -60,8 +60,9 @@ export const getProductId = async (req: Request, res: Response) => {
   }
 };
 
-export const deletedProduct = (req: Request, res: Response) => {
-  const { id } = req.params; 
+export const deletedProduct = (req: Request, res: Response) => { 
+  authorizeRole("admin");
+  const { id } = req.params;
   Products.findByIdAndDelete(id)
     .then((deletedProduct) => {
       if (!deletedProduct) {
