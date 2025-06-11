@@ -1,14 +1,32 @@
 import mongoose from "mongoose";
-const productSchema = new mongoose.Schema({
-  name: { type: String },
-  color: { type: String },
-  size: { type: String, enum: ["XS", "S", "L", "XL", "XXL"] },
-  price: { type: Number },
-  description: { type: String },
-  category: {
-    type: String,
-    enum: ["T-shirt", "Hoodies", "Sweatpants", "Crewnecks"],
-  },
+import { Document } from "mongoose";
+import { productsProps, CategoryProps } from "../types/products.types.ts";
+const categorySchema = new mongoose.Schema<CategoryProps>({
+  name: { type: String, required: true, unique: true },
+  description: { type: String, default: "" },
 });
-const Products = mongoose.model("products", productSchema);
+
+export const Category = mongoose.model<CategoryProps>(
+  "Category",
+  categorySchema
+);
+const productSchema = new mongoose.Schema<productsProps>({
+ name: { type: String, required: true },
+  price: { type: Number, required: true },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+    required: true,
+  },
+  categoryId: { type: String, required: true },
+  imageUrl: { type: String, required: true },
+  description: { type: String, default: "" },
+  colors: { type: [String], default: [] },
+  sizes: { type: [String], default: [] },
+  stock: { type: Number, required: true, default: 0 },
+
+});
+const Products = mongoose.model<productsProps>("products", productSchema);
 export default Products;
+
+
