@@ -9,16 +9,16 @@ export async function createOrder(req: Request, res: Response) {
     const { items } = req.body;
 
     const user = await User.findById(userId);
+
     if (!user) {
-      return res.status(404).json({ error: "Usuário não encontrado." });
+      res.status(404).json({ error: "Usuário não encontrado." });
+      return;
     }
 
     const foundProducts = await Product.find({ _id: { $in: items } });
 
     if (foundProducts.length !== items.length) {
-      return res
-        .status(400)
-        .json({ error: "Um ou mais produtos são inválidos." });
+      res.status(400).json({ error: "Um ou mais produtos são inválidos." });
     }
 
     const total = foundProducts.reduce(
@@ -47,7 +47,7 @@ export async function getMyOrders(req: Request, res: Response) {
     const user = (req as any).user;
 
     if (!user || !user.id) {
-      return res.status(401).json({ error: "Usuário não autenticado." });
+      res.status(401).json({ error: "Usuário não autenticado." });
     }
 
     const orders = await Order.find({ user: user.id })
@@ -57,10 +57,10 @@ export async function getMyOrders(req: Request, res: Response) {
         select: "name price imageUrl",
       });
 
-    return res.status(200).json(orders);
+    res.status(200).json(orders);
   } catch (err) {
     console.error("Erro ao buscar pedidos do usuário:", err);
-    return res.status(500).json({ error: "Erro ao buscar seus pedidos." });
+    res.status(500).json({ error: "Erro ao buscar seus pedidos." });
   }
 }
 
@@ -69,7 +69,7 @@ export async function getAllOrders(req: Request, res: Response) {
   try {
     const user = (req as any).user;
     if (!user || user.role !== "admin") {
-      return res.status(403).json({
+      res.status(403).json({
         error:
           "Acesso negado. Apenas administradores podem visualizar pedidos.",
       });
@@ -99,7 +99,7 @@ export const patchOrders = async (req: Request, res: Response) => {
     const { status } = req.body;
 
     if (!status) {
-      return res.status(400).json({ error: "Status é obrigatório." });
+      res.status(400).json({ error: "Status é obrigatório." });
     }
 
     const updatedOrder = await Order.findByIdAndUpdate(
@@ -111,7 +111,7 @@ export const patchOrders = async (req: Request, res: Response) => {
       .populate("items", "name price imageUrl");
 
     if (!updatedOrder) {
-      return res.status(404).json({ error: "Pedido não encontrado." });
+      res.status(404).json({ error: "Pedido não encontrado." });
     }
 
     res.status(200).json(updatedOrder);
@@ -129,7 +129,7 @@ export const patchOrders = async (req: Request, res: Response) => {
 
 //     const validStatus = ["pendente", "enviado", "entregue", "cancelado"];
 //     if (!validStatus.includes(status)) {
-//       return res.status(400).json({ error: "Status inválido!" });
+//       res.status(400).json({ error: "Status inválido!" });
 //     }
 
 //     const updatedOrder = await Order.findByIdAndUpdate(
@@ -139,7 +139,7 @@ export const patchOrders = async (req: Request, res: Response) => {
 //     );
 
 //     if (!updatedOrder)
-//       return res.status(404).json({ error: "Pedido não encontrado." });
+//       res.status(404).json({ error: "Pedido não encontrado." });
 
 //     res.json(updatedOrder);
 //   } catch (err) {
