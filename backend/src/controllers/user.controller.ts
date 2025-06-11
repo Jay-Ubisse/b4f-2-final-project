@@ -1,5 +1,4 @@
 import { Request, Response,NextFunction } from 'express'
-import  jwt  from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
 import { userProps } from '../types/types.ts';
 import { User } from '../models/user.model.ts'
