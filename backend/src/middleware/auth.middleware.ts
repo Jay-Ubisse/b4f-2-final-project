@@ -10,6 +10,7 @@ const token=authHeader && authHeader.split(" ")[1];
 
  if (!token) {
  res.status(401).json({ mensagem: "User not authenticated" });
+ return
   }
 
   const jwtSecret=process.env.JWT_SECRET
