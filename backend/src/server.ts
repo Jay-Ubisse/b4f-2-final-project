@@ -12,14 +12,14 @@ app.use(cors());
 const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 4000;
 
-app.use("/api/products", router);
 
+app.use("/api/products", router);
 
 mongoose
   .connect(process.env.BD_URI as string)
   .then(() => console.log("BD conectado com sucesso!"))
   .catch((error) =>
-    console.log("Ocorreu um erro ao contectar com a DB: ", error)
+    console.log("Ocorreu um erro ao conectar com a DB: ", error)
   );
 
 app.listen(port, () => console.log(`Server running on ${host}:${port}`));
