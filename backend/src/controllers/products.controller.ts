@@ -1,8 +1,20 @@
 import Products from "../models/products.model.ts";
 import { productsProps } from "../types/products.types.ts";
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
 
+const authorizeRole =async (role: string) => {
+ (req: Request, res: Response, next: NextFunction) => {
+    const user = (req as any).user;
+
+    if (!user || user.role !== role) {
+      res.status(403).json({ mensagem: "Access denied: insufficient permission." });
+    }
+
+    next();
+  };
+};
 export const createProduct = async (req: Request, res: Response) => {
+authorizeRole;
   try {
     const body: productsProps = req.body;
     const {

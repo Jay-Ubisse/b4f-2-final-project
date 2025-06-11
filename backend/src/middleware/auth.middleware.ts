@@ -22,15 +22,3 @@ const token=authHeader && authHeader.split(" ")[1];
   });
 
 }
-
-export const authorizeRole = (role: string) => {
- (req: Request, res: Response, next: NextFunction) => {
-    const user = (req as any).user;
-
-    if (!user || user.role !== role) {
-      res.status(403).json({ mensagem: "Access denied: insufficient permission." });
-    }
-
-    next();
-  };
-};
