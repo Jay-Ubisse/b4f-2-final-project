@@ -44,11 +44,23 @@ export async function createOrder(req: Request, res: Response) {
 // Listar pedidos do usuário autenticado (GET /orders/me)
 export async function getMyOrders(req: Request, res: Response) {
   try {
-    const userId = (req as any).user.id;
-    const orders = await Order.find({ user: userId }).populate("items");
-    res.json(orders);
+    const user = (req as any).user;
+
+    if (!user || !user.id) {
+      return res.status(401).json({ error: "Usuário não autenticado." });
+    }
+
+    const orders = await Order.find({ user: user.id })
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "items",
+        select: "name price imageUrl",
+      });
+
+    return res.status(200).json(orders);
   } catch (err) {
-    res.status(500).json({ error: "Erro ao buscar seus pedidos." });
+    console.error("Erro ao buscar pedidos do usuário:", err);
+    return res.status(500).json({ error: "Erro ao buscar seus pedidos." });
   }
 }
 
@@ -83,12 +95,29 @@ export async function getAllOrders(req: Request, res: Response) {
 //atualizar status do pedido
 export const patchOrders = async (req: Request, res: Response) => {
   try {
-    const orders = await Order.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.json(orders);
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ error: "Status é obrigatório." });
+    }
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    )
+      .populate("user", "name email")
+      .populate("items", "name price imageUrl");
+
+    if (!updatedOrder) {
+      return res.status(404).json({ error: "Pedido não encontrado." });
+    }
+
+    res.status(200).json(updatedOrder);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    console.error("Erro ao atualizar pedido:", error);
+    res.status(500).json({ error: "Erro ao atualizar pedido." });
   }
 };
 
