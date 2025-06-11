@@ -32,7 +32,9 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
       totalPages: Math.ceil(totalItems / itemsPerPage),
       currentPage,
       perPage: itemsPerPage,
+       message: products.length === 0 ? "Nenhum produto encontrado." : undefined
     });
+    
   } catch (error) {
     console.error("Erro ao buscar produtos:", error);
     res.status(500).json({ message: "Erro ao buscar produtos." });
