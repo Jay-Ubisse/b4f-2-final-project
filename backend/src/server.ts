@@ -9,7 +9,6 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-// Removed invalid categoryRoutes usage
 
 const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
