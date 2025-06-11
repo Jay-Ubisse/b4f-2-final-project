@@ -9,6 +9,13 @@
      "allowImportingTsExtensions": true,
     "noEmit": true,
 
+     "allowImportingTsExtensions": true,
+    "noEmit": true,
+     "typeRoots": ["./node_modules/@types", "./types"],
+
+    "allowImportingTsExtensions": true,
+    "noEmit":true,
+
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

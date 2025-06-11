@@ -42,3 +42,10 @@ export const getMe=(req:Request,res:Response)=> {
     res.status(500).json({ message: 'Erro ao buscar os dados do usuário' })
   }
 }
+
+
+import { Request, Response } from "express";
+import { User } from "../models/user.model.js";
+
+export function createUser(req: Request, res: Response) {}
+
