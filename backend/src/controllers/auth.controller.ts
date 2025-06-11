@@ -38,33 +38,3 @@ const jwtSecret: string = process.env.JWT_SECRET || '';
 
 
 
-
-export const register = async (req:Request, res:Response) => {
-  try {
-    const body:userProps = req.body;
-    const { name, email, password } = body;
-
-    const existingUser = await User.findOne({ email });
-
-    if (existingUser) {
-      res
-        .status(400)
-        .json({ message: "Já existe um usuário cadastrado com este email." });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await User.create({
-      email,
-      name,
-      password: hashedPassword,
-    });
-
-    res.status(201).json({ message: "Usuário criado com sucesso", user });
-  } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .json({ message: "Ocorreu um erro interno no servidor", error });
-  }
-};

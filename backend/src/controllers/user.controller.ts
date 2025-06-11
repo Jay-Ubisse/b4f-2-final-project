@@ -1,16 +1,43 @@
 import { Request, Response,NextFunction } from 'express'
+import  jwt  from 'jsonwebtoken';
+import bcrypt from 'bcrypt'
+import { userProps } from '../types/types.ts';
 import { User } from '../models/user.model.ts'
 
-
-export async function getDetails(req: Request, res: Response) {
+export const register = async (req:Request, res:Response) => {
   try {
-    const details = await User.find()
+    const body:userProps = req.body;
+    const { name, email, password } = body;
 
-   if (!details) {
-    res.status(404).json({ message: 'Erro, Dados não encontrados' })
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      res
+        .status(400)
+        .json({ message: "Já existe um usuário cadastrado com este email." });
     }
 
-    res.status(200).json({ message: 'Dados encontrados com sucesso', details })
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      email,
+      name,
+      password: hashedPassword,
+    });
+
+    res.status(201).json({ message: "Usuário criado com sucesso", user });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "Ocorreu um erro interno no servidor", error });
+  }
+};
+
+export const getMe=(req:Request,res:Response)=> {
+  try {
+    res.status(200).json((req as any ).user)
+
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Erro ao buscar os dados do usuário' })
