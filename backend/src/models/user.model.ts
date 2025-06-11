@@ -7,7 +7,7 @@ const userschema = new mongoose.Schema<userProps>({
   role:{ type: String, enum: ['Admin', 'Costumer']}
 });
 
-export const User = mongoose.model("user", userschema);
+export const Users = mongoose.model("users", userschema);
 
 
 

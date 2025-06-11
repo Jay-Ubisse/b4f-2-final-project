@@ -1,5 +1,5 @@
 import mongoose, { Document } from "mongoose";
-export interface productsProps{
+export interface productsProps extends Document{
   name:String,
         colors:String[];
         sizes:String[];
