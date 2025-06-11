@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Product } from "../models/products.model.ts";
+import { Category } from "../models/category.model.ts"; // Importe o modelo de categoria
 
 export const getProductsBySearch = async (req: Request, res: Response) => {
   try {
@@ -12,11 +13,26 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
     const filter: any = {};
 
     if (search) {
-      filter.name = { $regex: search, $options: "i" }; // busca por nome
+      filter.name = { $regex: search, $options: "i" };
     }
 
     if (categoryId) {
       filter.categoryId = categoryId;
+      // Verifica se a categoria existe
+      const categoryExists = await Category.findById(categoryId);
+      if (!categoryExists) {
+        const allCategories = await Category.find();
+         res.status(404).json({
+          message: `Categoria não encontrada.`,
+          availableCategories: allCategories.map(cat => cat.name)
+        });
+      }
+    }
+
+    if (!search && !categoryId) {
+       res.status(400).json({
+        message: "Parâmetro 'search' é obrigatório.",
+      });
     }
 
     const totalItems = await Product.countDocuments(filter);
