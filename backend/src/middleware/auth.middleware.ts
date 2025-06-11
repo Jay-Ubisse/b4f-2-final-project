@@ -10,13 +10,14 @@ const authHeader=req.headers["authorization"]
 const token=authHeader && authHeader.split(" ")[1];
 
  if (!token) {
-     res.status(401).json({ mensagem: "Usuário não autenticado." });
-     return;
+ res.status(401).json({ mensagem: "User not authenticated" });
+ return
   }
 
   const jwtSecret=process.env.JWT_SECRET
   jwt.verify(token, jwtSecret as string, (err, user) => {
-    if (err)  res.status(403).json({ mensagem: "Token inválido" });
+
+    if (err) res.status(403).json({ mensagem: "Invalid token" });
   
     (req as any).user = user;
     next();

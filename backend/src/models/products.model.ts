@@ -1,4 +1,11 @@
-
+import mongoose from "mongoose";
+import { productsProps, CategoryProps } from "../types/products.types.ts";
+const productSchema = new mongoose.Schema<productsProps>({
+ name: { type: String, required: true },
+  price: { type: Number, required: true },
+  category: {
+  type: mongoose.Schema.Types.ObjectId,
+    
 import mongoose from "mongoose";
 import { productsProps } from "../types/products.types.ts";
 const productSchema = new mongoose.Schema<productsProps>({
@@ -18,26 +25,7 @@ category: [{type: mongoose.Schema.Types.ObjectId,
 const Products = mongoose.model<productsProps>("products", productSchema);
 export default Products;
 
-import mongoose, {Schema} from "mongoose";
-
-import { ProductProps } from "../types/products.ts";
 
 
-const productSchema = new Schema<ProductProps>({
-  name: { type: String, required: true },
-  price: { type: Number, required: true },
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: "Category",
-    required: true,
-  },
-  categoryId: { type: String, required: true },
-  imageUrl: { type: String, required: true },
-  description: { type: String, default: "" },
-  colors: { type: [String], default: [] },
-  sizes: { type: [String], default: [] },
-  stock: { type: Number, required: true, default: 0 },
-});
 
-export const Product = mongoose.model<ProductProps>("Product", productSchema);
 
