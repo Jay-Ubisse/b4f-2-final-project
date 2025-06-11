@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv"
+
 import {Response, Request,NextFunction} from "express";
 dotenv.config()
 
@@ -15,6 +16,7 @@ const token=authHeader && authHeader.split(" ")[1];
 
   const jwtSecret=process.env.JWT_SECRET
   jwt.verify(token, jwtSecret as string, (err, user) => {
+
     if (err) res.status(403).json({ mensagem: "Invalid token" });
   
     (req as any).user = user;
@@ -22,3 +24,4 @@ const token=authHeader && authHeader.split(" ")[1];
   });
 
 }
+
