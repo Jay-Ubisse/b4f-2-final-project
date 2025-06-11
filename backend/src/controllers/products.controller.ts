@@ -1,4 +1,5 @@
 import Products from "../models/products.model.ts";
+import Category from "../models/products.model.ts"
 import { productsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
 
@@ -7,15 +8,16 @@ const authorizeRole =async (role: string) => {
     const user = (req as any).user;
 
     if (!user || user.role !== role) {
-      res.status(403).json({ mensagem: "Access denied: insufficient permission." });
+      res.status(403).json({ message: "Access denied" });
     }
 
     next();
   };
 };
 export const createProduct = async (req: Request, res: Response) => {
-authorizeRole;
+  authorizeRole;
   try {
+    const categoryId=await Category.find().populate("Category")
     const body: productsProps = req.body;
     const {
       name,
@@ -26,18 +28,16 @@ authorizeRole;
       colors,
       sizes,
       stock,
-      categoryId,
     } = body;
     Products.create({
       name,
       price,
-      category,
+      category:categoryId,
       imageUrl,
       description,
       colors,
       sizes,
       stock,
-      categoryId,
     });
     res.status(201).json({ message: "Product created successfully", body });
   } catch (error) {
@@ -79,6 +79,7 @@ export const deletedProduct = (req: Request, res: Response) => {
 };
 
 export const updateProduct = async (req: Request, res: Response) => {
+  authorizeRole;
   try {
     const id = req.params.id;
     const body: productsProps = req.body;
