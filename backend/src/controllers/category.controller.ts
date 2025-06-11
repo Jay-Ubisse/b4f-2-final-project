@@ -36,8 +36,8 @@ export const listCategory = (req: Request, res: Response) => {
 };*/
 
 import { Request, Response } from "express";
-import { Category } from "../models/category.model.ts"; // Modelo da categoria
-import { Product } from "../models/products.model.ts";   // Modelo do produto
+import { Category } from "../models/category.model.ts"; 
+import { Product } from "../models/products.model.ts";   
 
 export const getProductsByQueryCategory = async (req: Request, res: Response) => {
   try {
@@ -48,7 +48,6 @@ export const getProductsByQueryCategory = async (req: Request, res: Response) =>
         message: "Parâmetro 'category' obrigatório e deve ser string"
       });return
     }
-
     
     const normalizedCategory = categoryName.trim().toLowerCase();
 
