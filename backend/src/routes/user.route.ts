@@ -1,7 +1,10 @@
-// import { Router } from "express";
-// import { patchOrders } from "@controllers/orders.controller";
 
-// //Orders routes
-// Router.patch("/:id", patchOrders);
+import Express from 'express'
 
-// export default Router;
+import { register } from '../controllers/user.controller.ts'
+import { getMe } from '../controllers/user.controller.ts'
+import { authentionToken } from '../middleware/auth.Middleware.ts'
+export const router = Express.Router()
+router.post('/register', register)
+router.get('/me',authentionToken,getMe)
+
