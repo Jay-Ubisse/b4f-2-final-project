@@ -2,8 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
+
 import categoryRoute from "./routes/category.route.ts";
 import { productRoute } from "./routes/product.route.ts";
+
+import { router } from "./routes/products.route.ts";
+
 
 const app = express();
 dotenv.config();
@@ -11,7 +15,11 @@ app.use(express.json());
 app.use(cors());
 
 const host = process.env.HOST || "http://localhost";
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
+
+
+app.use("/api/products", router);
+
 
 app.use("/categories", categoryRoute);
 app.use("/product", productRoute);
@@ -24,5 +32,13 @@ if (!uri) {
 mongoose.connect(uri)
   .then(() => console.log("Conectado ao MongoDB"))
   .catch((err) => console.error("Erro ao conectar ao MongoDB:", err));
+
+mongoose
+  .connect(process.env.BD_URI as string)
+  .then(() => console.log("BD conectado com sucesso!"))
+  .catch((error) =>
+    console.log("Ocorreu um erro ao conectar com a DB: ", error)
+  );
+
 
 app.listen(port, () => console.log(`Server running on ${host}:${port}`));

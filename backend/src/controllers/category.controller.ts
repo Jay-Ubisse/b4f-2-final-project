@@ -1,3 +1,4 @@
+
 import  Category  from "../models/category.model.ts";
 import Product from "../models/products.model.ts";
 import { NextFunction, Request, Response } from "express";
@@ -23,7 +24,6 @@ export const createCategory = async (req: Request, res: Response) => {
          const existingCategory = await Category.findOne({name});
           if (existingCategory){
             res.status(400).json({message:"Category exists"});
-          //   return;
             return;
         }
 
@@ -129,3 +129,4 @@ export const deleteCategory = async (req: Request, res: Response)=> {
         
     }
 };
+
