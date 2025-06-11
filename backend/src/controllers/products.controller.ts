@@ -77,6 +77,7 @@ export const deletedProduct = (req: Request, res: Response) => {
 };
 
 export const updateProduct = async (req: Request, res: Response) => {
+  authorizeRole;
   try {
     const id = req.params.id;
     const body: productsProps = req.body;
