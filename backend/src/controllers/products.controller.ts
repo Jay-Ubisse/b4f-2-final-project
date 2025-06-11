@@ -10,7 +10,6 @@ export const getProducts = async (req: Request, res: Response) => {
          deta: products
       })
    } catch (error) {
-      console.error("Erro da MAudlyn")
       res.status(500).json({
          message: "Erro ao buscar produtos"
       })
