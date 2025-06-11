@@ -1,40 +1,39 @@
+import { Request, Response } from "express";
+import { Product } from "../models/products.model.ts";
 
-/*import { Request, Response } from "express";
-import { products} from "../models/products.model.ts";
-import { ProductsProps } from "../types/products.ts";
+export const getProducts = async (req: Request, res: Response) => {
+  try {
+    const { search, categoryId, page = "1", perPage = "10" } = req.query;
 
-// Função para buscar produtos com filtros e paginação
-export const searchProducts = (req: Request, res: Response) => {
-  const {
-    query,
-    page = "1",
-    perPage = "10",
-  } = req.query;
+    const currentPage = parseInt(page as string, 10);
+    const itemsPerPage = parseInt(perPage as string, 10);
+    const skip = (currentPage - 1) * itemsPerPage;
 
+    const filter: any = {};
 
-  // Filtro base
-  let filteredProducts = products;
+    if (search) {
+      filter.name = { $regex: search, $options: "i" }; // busca por nome
+    }
 
-  // Filtro por nome (query)
-  if (query) {
-    filteredProducts = filteredProducts.filter((product) =>
-      product.name.toLowerCase().includes((query as string).toLowerCase())
-    );
-  }
+    if (categoryId) {
+      filter.categoryId = categoryId;
+    }
 
-  // Paginação
-  const totalItems = filteredProducts.length;
-  const currentPage = parseInt(page as string);
-  const itemsPerPage = parseInt(perPage as string);
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+    const totalItems = await Product.countDocuments(filter);
+    const products = await Product.find(filter)
+      .populate("category")
+      .skip(skip)
+      .limit(itemsPerPage);
 
     res.json({
-    data: paginatedProducts,
-    totalItems,
-    totalPages,
-    currentPage,
-    perPage: itemsPerPage,
-  });
-};*/
+      data: products,
+      totalItems,
+      totalPages: Math.ceil(totalItems / itemsPerPage),
+      currentPage,
+      perPage: itemsPerPage,
+    });
+  } catch (error) {
+    console.error("Erro ao buscar produtos:", error);
+    res.status(500).json({ message: "Erro ao buscar produtos." });
+  }
+};
