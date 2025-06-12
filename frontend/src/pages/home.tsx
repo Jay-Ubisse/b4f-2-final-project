@@ -1,7 +1,7 @@
 import { Button } from "../components/ui/button";
 import { login } from "../services/auth";
 import { getProduct } from "../services/products";
-
+import { Footer } from "../components/footer";  
 async function handleLogin() {
   const response = await login({
     data: {
@@ -30,6 +30,10 @@ export const Home = () => {
       <Button onClick={handleGetProducts} variant={"destructive"}>
         Get roducts
       </Button>
+
+
+
+
     </>
   );
 };
