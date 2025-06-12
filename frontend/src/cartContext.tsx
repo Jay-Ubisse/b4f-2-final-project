@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import type { CartContextType, CartItem } from "./types/CartItem";
+/*import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import type { CartContextType, CartItem } from "./types/products";
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -60,4 +60,4 @@ export const useCart = () => {
     throw new Error("useCart deve ser usado dentro de um CartProvider");
   }
   return context;
-};
+};*/
