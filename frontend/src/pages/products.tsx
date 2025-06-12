@@ -1,3 +1,4 @@
+import { Cardsidebar } from "../components/cart/sidebar";
 import {
   Command,
   CommandEmpty,
@@ -12,6 +13,9 @@ import {
 export const Products = () => {
   return (
   <div>
+     <div className="flex justify-center pl-25 ">
+    <Cardsidebar/>
+    </div>
     <Command>
   <CommandInput placeholder="Type a command or search..." />
   <CommandList>
@@ -30,5 +34,6 @@ export const Products = () => {
   </CommandList>
 </Command>
   </div>
+  
   );
 };
