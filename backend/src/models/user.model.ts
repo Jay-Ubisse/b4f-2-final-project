@@ -1,5 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { userProps } from "../types/types.ts";
+import { CategoryProps } from "../types/products.types.ts";
+import { UserProps, ProductProps } from "../types/user.ts";
 
 const userschema = new mongoose.Schema<userProps>({
   name: { type: String, required: true },
@@ -11,7 +13,6 @@ const userschema = new mongoose.Schema<userProps>({
 
 export const Users = mongoose.model("users", userschema);
 
-import { CategoryProps, ProductProps, UserProps } from "../types/user.js";
 
 /* ================== USER =============== */
 
