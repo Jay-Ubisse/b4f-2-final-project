@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { userProps } from "../types/types.ts";
 
 const userschema = new mongoose.Schema<userProps>({
@@ -6,17 +6,11 @@ const userschema = new mongoose.Schema<userProps>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 
-  role:{ type: String, enum: ['Admin', 'Costumer']}
+  role: { type: String, enum: ["Admin", "Costumer"] },
 });
 
 export const Users = mongoose.model("users", userschema);
 
-  role: { type:String, enum: ['Admin', 'Customer'], default: 'Customer'}
-});
-
-export const User = mongoose.model<userProps>("User", userschema);
-
-import mongoose, { Document, Schema } from "mongoose";
 import { CategoryProps, ProductProps, UserProps } from "../types/user.js";
 
 /* ================== USER =============== */
@@ -66,5 +60,3 @@ const productSchema = new Schema<ProductProps>({
 });
 
 export const Product = mongoose.model<ProductProps>("Product", productSchema);
-
-

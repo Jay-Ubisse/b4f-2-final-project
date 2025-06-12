@@ -1,11 +1,10 @@
-
 import Products from "../models/products.model.ts";
-import Category from "../models/products.model.ts"
+import Category from "../models/products.model.ts";
 import { productsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
 
-const authorizeRole =async (role: string) => {
- (req: Request, res: Response, next: NextFunction) => {
+const authorizeRole = async (role: string) => {
+  (req: Request, res: Response, next: NextFunction) => {
     const user = (req as any).user;
 
     if (!user || user.role !== role) {
@@ -16,13 +15,11 @@ const authorizeRole =async (role: string) => {
   };
 };
 export const createProduct = async (req: Request, res: Response) => {
-
   try {
     const body: productsProps = req.body;
-     const {
+    const {
       name,
       price,
-      category,
       imageUrl,
       description,
       colors,
@@ -30,19 +27,19 @@ export const createProduct = async (req: Request, res: Response) => {
       stock,
       categoryId,
     } = body;
-    const categoryData=await Category.findById(categoryId).populate("Category");
-    const product =Products.create({
+    const category = await Category.findById(categoryId).populate("Category");
+    const product = Products.create({
       name,
       price,
-      category:categoryData,
+      category: category,
       imageUrl,
       description,
-      colors:colors,
-      sizes:sizes || [],
+      colors: colors,
+      sizes: sizes || [],
       stock,
       categoryId,
     });
-    res.status(201).json({ message: "Product created successfully", product});
+    res.status(201).json({ message: "Product created successfully", product });
   } catch (error) {
     res.status(500).json({ message: "An internal server error occurred" });
   }
@@ -63,13 +60,13 @@ export const getProductId = async (req: Request, res: Response) => {
   }
 };
 
-export const deletedProduct = (req: Request, res: Response) => { 
+export const deletedProduct = (req: Request, res: Response) => {
   authorizeRole("admin");
   const { id } = req.params;
   Products.findByIdAndDelete(id)
     .then((deletedProduct) => {
       if (!deletedProduct) {
-         res.status(404).json({ message: "Product not found" });
+        res.status(404).json({ message: "Product not found" });
       }
       res.status(200).json({ message: "Product deleted successfully" });
     })
@@ -96,15 +93,17 @@ export const updateProduct = async (req: Request, res: Response) => {
       stock,
       categoryId,
     } = body;
- const categoryData=await Category.findById(categoryId).populate("Category");
+    const categoryData = await Category.findById(categoryId).populate(
+      "Category"
+    );
     const product = await Products.findByIdAndUpdate(id, {
-     name,
+      name,
       price,
-      category:categoryData,
+      category: categoryData,
       imageUrl,
       description,
-      colors:colors,
-      sizes:sizes || [],
+      colors: colors,
+      sizes: sizes || [],
       stock,
       categoryId,
     });
@@ -117,38 +116,3 @@ export const updateProduct = async (req: Request, res: Response) => {
     res.status(500).json({ message: "error when editing a product", error });
   }
 };
-
-import Products from "../models/products.model.ts";
-import { productsProps } from "../types/products.types.ts";
-import { Response, Request } from "express";
-
-export const createProduct = async (req: Request, res: Response) => {
-  try {
-    const body: productsProps = req.body;
-    const {name, color,sizes,price,description, category, stock
-}=body;
-    Products.create({name,color,sizes,price,description, category,stock});
-    res.status(201).json({ message: "Product created successfully",body});
-    
-  } catch (error) {
-    res.status(500).json({ message: "An internal server error occurred" });}}
-
-import { Request, Response } from "express";  
-import { Product } from "../models/products.model.ts";
-
-export const getProducts = async (req: Request, res: Response) => {
-   try {
-      const products = await Product.find().populate("category");
-
-      res.status(200).json({
-         message: "Produtos encontrados", 
-         deta: products
-      })
-   } catch (error) {
-      res.status(500).json({
-         message: "Erro ao buscar produtos"
-      })
-   }
-}
-
-
