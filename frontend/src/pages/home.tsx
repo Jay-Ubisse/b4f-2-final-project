@@ -17,19 +17,35 @@ async function handleLogin() {
   }
 }
 
+
 async function handleGetProducts() {
   const response = await getProduct({ id: "6848315ee273205a2300ef50" });
 }
+
 export const Home = () => {
   return (
     <>
       <h1 className="bg-amber-500">Home Page</h1>
+
       <Button onClick={handleLogin} variant={"destructive"}>
         Hello
       </Button>
       <Button onClick={handleGetProducts} variant={"destructive"}>
         Get roducts
       </Button>
+
+      <Button variant={"destructive"}>Hello</Button>
+
+      
+
+
+
+
+
+
+
+
+
     </>
   );
 };
