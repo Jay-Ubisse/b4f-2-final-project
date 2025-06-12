@@ -1,4 +1,5 @@
 import { Home } from "./home";
 import { About } from "./about";
-
-export { Home, About };
+import { Details } from "./details";
+import { ErrorPage } from "./errorPages";
+export { Home, About, Details, ErrorPage };
