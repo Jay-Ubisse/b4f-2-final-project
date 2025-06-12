@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { productsProps, CategoryProps } from "../types/products.types.ts";
+import { productsProps,} from "../types/products.types.ts";
 
 const productSchema = new mongoose.Schema<productsProps>({
   name: { type: String, required: true },
-  color: { type: [String], default: [] },
+  colors: { type: [String], default: [] },
   sizes: { type: [String], default: [] },
   price: { type: Number, required: true },
   description: { type: String, default: "" },
