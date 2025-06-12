@@ -1,7 +1,12 @@
 import { Button } from "../components/ui/button";
 import { login } from "../services/auth";
+<<<<<<< HEAD
 import { getProduct } from "../services/products";
 import { Footer } from "../components/footer";  
+=======
+//import { getProduct } from "../services/products";
+
+>>>>>>> 127362a307d61927854599732e8aded1c7003689
 async function handleLogin() {
   const response = await login({
     data: {
@@ -17,9 +22,6 @@ async function handleLogin() {
   }
 }
 
-async function handleGetProducts() {
-  const response = await getProduct({ id: "6848315ee273205a2300ef50" });
-}
 export const Home = () => {
   return (
     <>
@@ -27,6 +29,7 @@ export const Home = () => {
       <Button onClick={handleLogin} variant={"destructive"}>
         Hello
       </Button>
+<<<<<<< HEAD
       <Button onClick={handleGetProducts} variant={"destructive"}>
         Get roducts
       </Button>
@@ -34,6 +37,8 @@ export const Home = () => {
 
 
 
+=======
+>>>>>>> 127362a307d61927854599732e8aded1c7003689
     </>
   );
 };
