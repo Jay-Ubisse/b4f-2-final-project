@@ -141,7 +141,7 @@ Cada grupo deve trabalhar em sua própria branch:
 #### Grupo 1 – Autenticação e Perfil
 
 - [ ] Tela de login e registro
-- [ ] Context API para auth
+- [ ] localStorage para auth
 - [ ] Página de perfil do usuário
 - [ ] Logout
 

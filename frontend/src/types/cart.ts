@@ -25,7 +25,7 @@ export interface  ProductProps  {
   price: number;
 }
 
-export  interface cartProps {
+export  interface CartProps {
   cart: number;
   total: number;
 }

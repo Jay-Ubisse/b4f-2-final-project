@@ -7,10 +7,10 @@ export interface UserProps extends Document {
   role: string; // e.g., 'admin', 'custimer'
 }
 
-export interface CategoryProps extends Document {
-  name: string;
-  description?: string;
-}
+// export interface CategoryProps extends Document {
+//   name: string;
+//   description?: string;
+// }
 
 export interface ProductProps extends Document {
   name: string;
@@ -22,13 +22,4 @@ export interface ProductProps extends Document {
   colors: string[];
   sizes: string[];
   stock: number;
-}
-
-export interface OrderProps extends Document {
-  user: mongoose.Types.ObjectId;
-  userId: string;
-  items: mongoose.Types.ObjectId[];
-  status: string; // e.g., 'pending', 'shipped', 'delivered'
-  total: number;
-  createdAt: Date;
 }
