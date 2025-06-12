@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import Product from "../models/products.model.ts";
 import Category from "../models/category.model.ts";
 
+
 export const getProductsBySearch = async (req: Request, res: Response) => {
   try {
-    const { search, categoryId, page = "1", perPage = "10" } = req.query;
+    const { search, categoryId, page = "1", perPage = "4" } = req.query;
 
     const currentPage = parseInt(page as string, 10);
     const itemsPerPage = parseInt(perPage as string, 10);

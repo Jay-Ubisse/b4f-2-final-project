@@ -3,6 +3,7 @@ import Category from "../models/products.model.ts";
 import { productsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
 
+
 const authorizeRole = async (role: string) => {
   (req: Request, res: Response, next: NextFunction) => {
     const user = (req as any).user;
@@ -117,17 +118,32 @@ export const updateProduct = async (req: Request, res: Response) => {
   }
 };
 
-export const getProducts = async (req: Request, res: Response) => {
-   try {
-      const products = await Products.find().populate("category");
 
-      res.status(200).json({
-         message: "Produtos encontrados", 
-         deta: products
-      })
-   } catch (error) {
-      res.status(500).json({
-         message: "Erro ao buscar produtos"
-      })
-   }
-}
+
+export const getProducts = async (req: Request, res: Response) => {
+  try {
+    const { page = "1", perPage = "4" } = req.query;
+
+    const currentPage = parseInt(page as string, 10);
+    const itemsPerPage = parseInt(perPage as string, 10);
+    const skip = (currentPage - 1) * itemsPerPage;
+
+    const totalItems = await Products.countDocuments();
+    const products = await Products.find()
+      .populate("category")
+      .skip(skip)
+      .limit(itemsPerPage);
+
+    res.status(200).json({
+      message: products.length > 0 ? "Produtos encontrados" : "Nenhum produto disponível.",
+      data: products,
+      totalItems,
+      totalPages: Math.ceil(totalItems / itemsPerPage),
+      currentPage,
+      perPage: itemsPerPage,
+    });
+  } catch (error) {
+    console.error("Erro ao buscar produtos:", error);
+    res.status(500).json({ message: "Erro ao buscar produtos." });
+  }
+};
