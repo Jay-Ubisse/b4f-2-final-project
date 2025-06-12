@@ -6,7 +6,7 @@ import {
   getAllCategories,
   getProductByCategory,
 } from "../controllers/category.controller.ts"
-import { authentionToken } from "../middleware/auth.middleware.ts";
+import { authentionToken } from "../middleware/auth.Middleware.ts";
 import { authorizeRole } from "../controllers/category.controller.ts";
 const categoryRouter = express.Router();
 
