@@ -6,7 +6,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { router } from "./routes/user.route.ts";
-import { authRouter } from "./routes/auth-route.ts";
+import { authRouter } from "./routes/auth.route.ts";
 import { Getrouter } from "./routes/products.route.ts";
 import categoryRoute from "./routes/category.route.ts";
 
