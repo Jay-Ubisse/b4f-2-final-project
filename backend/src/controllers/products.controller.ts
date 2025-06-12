@@ -2,7 +2,7 @@ import Products from "../models/products.model.ts";
 import Category from "../models/products.model.ts";
 import { productsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
-import { Product } from "../models/products.model.ts";
+
 
 const authorizeRole = async (role: string) => {
   (req: Request, res: Response, next: NextFunction) => {
@@ -28,21 +28,21 @@ export const createProduct = async (req: Request, res: Response) => {
       stock,
       categoryId,
     } = body;
-    const category = await Category.findById(categoryId).populate("Category");
+    const category = await Category.findById(categoryId).populate("Categories");
     const product = Products.create({
       name,
       price,
-      category: category,
       imageUrl,
+      category: category,
       description,
-      colors: colors,
+      colors: colors ||[],
       sizes: sizes || [],
       stock,
       categoryId,
     });
     res.status(201).json({ message: "Product created successfully", product });
   } catch (error) {
-    res.status(500).json({ message: "An internal server error occurred" });
+    res.status(500).json({ message: "An internal server error occurred",error});
   }
 };
 
@@ -86,7 +86,6 @@ export const updateProduct = async (req: Request, res: Response) => {
     const {
       name,
       price,
-      category,
       imageUrl,
       description,
       colors,
@@ -120,7 +119,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 export const getProducts = async (req: Request, res: Response) => {
    try {
-      const products = await Product.find().populate("category");
+      const products = await Products.find().populate("category");
 
       res.status(200).json({
          message: "Produtos encontrados", 

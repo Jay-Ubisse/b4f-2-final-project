@@ -1,7 +1,12 @@
-import { Button } from "../components/ui/button";
 import { login } from "../services/auth";
 import { getProduct } from "../services/products";
-
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../components/ui/carousel"
 async function handleLogin() {
   const response = await login({
     data: {
@@ -23,13 +28,17 @@ async function handleGetProducts() {
 export const Home = () => {
   return (
     <>
-      <h1 className="bg-amber-500">Home Page</h1>
-      <Button onClick={handleLogin} variant={"destructive"}>
-        Hello
-      </Button>
-      <Button onClick={handleGetProducts} variant={"destructive"}>
-        Get roducts
-      </Button>
+ <div>
+  <Carousel>
+  <CarouselContent>
+    <CarouselItem><img src="https://www.taibobacar.com/media/GRG-BLG-TS2-750x750.jpg" alt="" /></CarouselItem>
+    <CarouselItem></CarouselItem>
+    <CarouselItem></CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
+ </div>
     </>
   );
 };

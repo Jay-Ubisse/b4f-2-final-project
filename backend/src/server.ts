@@ -21,7 +21,6 @@ app.use("/orders", orderRoute);
 app.use("/products", productRoute);
 app.use("/api/products", router);
 //app.use("/categories", categoryRoute);
-app.use("/product", productRoute);
 app.use("/auth", authRouter);
 app.use("/users", router);
 
