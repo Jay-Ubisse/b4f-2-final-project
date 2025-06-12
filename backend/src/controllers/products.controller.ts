@@ -2,6 +2,7 @@ import Products from "../models/products.model.ts";
 import Category from "../models/products.model.ts";
 import { productsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
+import { Product } from "../models/products.model.ts";
 
 const authorizeRole = async (role: string) => {
   (req: Request, res: Response, next: NextFunction) => {
@@ -116,3 +117,18 @@ export const updateProduct = async (req: Request, res: Response) => {
     res.status(500).json({ message: "error when editing a product", error });
   }
 };
+
+export const getProducts = async (req: Request, res: Response) => {
+   try {
+      const products = await Product.find().populate("category");
+
+      res.status(200).json({
+         message: "Produtos encontrados", 
+         deta: products
+      })
+   } catch (error) {
+      res.status(500).json({
+         message: "Erro ao buscar produtos"
+      })
+   }
+}
