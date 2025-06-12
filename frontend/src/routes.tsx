@@ -1,10 +1,15 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home } from "./pages";
+import { Home } from "./pages/home";
+import { CartProvider } from "./contexts/cartContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <CartProvider>
+        <Home />
+      </CartProvider>
+    ),
   },
 ]);
 
