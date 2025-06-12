@@ -3,13 +3,13 @@ import { getProductsBySearch } from './../controllers/search.controller.ts';
 import { getProducts } from "../controllers/products.controller.ts";
 import { getProductsByQueryCategory } from "../controllers/category.controller.ts";
 
-export const router = express.Router();
+export const Getrouter = express.Router();
 
 // Rota para listar todos os produtos
-router.get("/", getProducts);
+Getrouter.get("/", getProducts);
 
 // Rota para listar produtos por categoria (com query param: categoryId=...)
-router.get("/category", getProductsByQueryCategory);
+Getrouter.get("/category", getProductsByQueryCategory);
 
 // Rota para pesquisa de produtos (com query param: query=cam)
-router.get("/search", getProductsBySearch);
+Getrouter.get("/search", getProductsBySearch);

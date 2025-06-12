@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Product } from "../models/products.model.ts";
-import { Category } from "../models/category.model.ts"; // Importe o modelo de categoria
+import  Product  from "../models/products.model.ts";
+import  Category  from "../models/category.model.ts"; // Importe o modelo de categoria
 
 export const getProductsBySearch = async (req: Request, res: Response) => {
   try {
