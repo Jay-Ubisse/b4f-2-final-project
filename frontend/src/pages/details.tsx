@@ -69,3 +69,4 @@ export const Details = () => {
     </div>
   );
 };
+8;
