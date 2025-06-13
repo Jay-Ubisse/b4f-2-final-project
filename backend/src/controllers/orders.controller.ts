@@ -3,7 +3,7 @@ import { Order } from "../models/orders.models.ts";
 import { Product } from "../models/user.model.ts";
 import { User } from "../models/user.model.ts";
 
-export async function createOrder(req: Request, res: Response) {
+export async function createOrders(req: Request, res: Response) {
   try {
     const userId = (req as any).user.id;
     const { items } = req.body;
@@ -91,7 +91,6 @@ export async function getAllOrders(req: Request, res: Response) {
     res.status(500).json({ error: "Erro ao buscar pedidos." });
   }
 }
-
 
 //atualizar status do pedido Patch /orders/:id [Apenas admin]
 export const patchOrders = async (req: Request, res: Response) => {
