@@ -1,6 +1,6 @@
 import Products from "../models/products.model.ts";
 import Category from "../models/products.model.ts";
-import { productsProps } from "../types/products.types.ts";
+import { ProductsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
 
 
@@ -17,7 +17,7 @@ const authorizeRole = async (role: string) => {
 };
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const body: productsProps = req.body;
+    const body: ProductsProps = req.body;
     const {
       name,
       price,
@@ -82,7 +82,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   authorizeRole;
   try {
     const id = req.params.id;
-    const body: productsProps = req.body;
+    const body: ProductsProps = req.body;
     const {
       name,
       price,
