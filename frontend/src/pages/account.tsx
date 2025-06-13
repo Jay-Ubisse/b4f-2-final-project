@@ -8,7 +8,7 @@ export const Account = () => {
 
   const getAccountData = async () => {
     try {
-      const response = await api.get("/users/me");
+      const response = await api.get("/me");
       setUserData(response.data);
       console.log("Dados da conta:", response.data);
     } catch (err) {

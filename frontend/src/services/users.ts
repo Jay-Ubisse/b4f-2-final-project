@@ -31,7 +31,7 @@ export async function createUser({
   data: { name: string; email: string; password: string };
 }) {
   try {
-    const response = await api.post("http://localhost:3000/users/register", data);
+    const response = await api.post("http://localhost:3000/register", data);
    
     return response;
   } catch (error: any) {
