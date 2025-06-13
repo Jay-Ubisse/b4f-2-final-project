@@ -15,9 +15,9 @@ interface CartItem {
   salePrice: number
   quantity: number
   image: string
-}
+} 
 
-export default function ShoppingCart() {
+export const ShoppingCart = () => {
   const [isOpen, setIsOpen] = useState(false) // Mudança de true para false
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [cartItems, setCartItems] = useState<CartItem[]>([
@@ -60,37 +60,29 @@ export default function ShoppingCart() {
   return (
     <>
       {/* Cart Button */}
-      <button
+      <Button variant={"outline"}
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 right-4 z-40 bg-black text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-gray-800 transition-colors"
+        className="fixed top-4 right-4 z-40  text-zinc-500 px-4 py-2 flex items-center gap-2 transition-colors"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5-6M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2-2v6.01"
-          />
-        </svg>
-        <span className="font-medium">CART ({totalItems})</span>
-      </button>
+        <span className="font-medium">Cart ({totalItems})</span>
+      </Button>
 
       {/* Cart Sidebar */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end">
+        <section className="fixed inset-0 bg-opacity-50 z-50 flex justify-end">
           <div className="bg-gray-50 w-full max-w-md h-full overflow-y-auto">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 bg-white border-b">
+            <div className="flex items-center h-min-screnn justify-between p-4 bg-white border-b">
               <h2 className="text-sm font-medium tracking-wider">CART ({totalItems})</h2>
-              <button onClick={() => setIsOpen(false)} className="p-1 hover:bg-gray-100 rounded">
-                <X className="w-5 h-5" />
-              </button>
+              <Button onClick={() => setIsOpen(false)} className="ml-5 w-fit border-none bg-white">
+                <X className="w-7 h-7 text-black" />
+              </Button>
             </div>
 
             {/* Cart Items */}
-            <div className="p-4 space-y-6">
+            <main className="p-4 space-y-6">
               {cartItems.map((item) => (
-                <div key={item.id} className="flex gap-4">
+                <section key={item.id} className="flex gap-4">
                   <div className="w-20 h-24 bg-pink-100 rounded flex-shrink-0">
                     <img
                       src={item.image || "/placeholder.svg"}
@@ -138,9 +130,9 @@ export default function ShoppingCart() {
                       </button>
                     </div>
                   </div>
-                </div>
+                </section>
               ))}
-            </div>
+            </main>
 
             {/* Footer */}
             <div className="mt-auto p-4 bg-white border-t space-y-4">
@@ -192,7 +184,7 @@ export default function ShoppingCart() {
               </div>
             </div>
           </div>
-        </div>
+        </section>
       )}
     </>
   )

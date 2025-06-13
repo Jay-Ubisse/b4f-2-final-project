@@ -1,52 +1,67 @@
-import { Button } from "../components/ui/button";
-import { login } from "../services/auth";
-import { getProduct } from "../services/products";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { ShoppingCart } from "../components/ui/myDialog" 
+import { error } from "console";
+import { Card } from "../components/ui/card";
 
-async function handleLogin() {
-  const response = await login({
-    data: {
-      email: "maudana@gmail.com",
-      password: "123456",
-    },
-  });
-
-  if (response.status === 200) {
-    console.log(response);
-  } else {
-    console.log(response.response.data);
-  }
-}
-
-
-async function handleGetProducts() {
-  const response = await getProduct({ id: "6848315ee273205a2300ef50" });
+interface productsProps {
+  name:String,
+        colors:String[];
+        sizes:String[];
+        price:number;
+        description:String;
+        imageUrl:String;
+        category: number;
+        categoryId:number;
+        stock:number;
 }
 
 export const Home = () => {
+  const [product, setProduct] = useState<productsProps[]>([])
+
+  useEffect(() => {
+    axios.get<productsProps[]>("http://localhost:3000/products")
+      .then((response) => setProduct(response.data))
+      .catch((error) => console.error("Error:", error));
+      console.log(error)
+  }, []);
+
   return (
-    <>
-      <h1 className="bg-amber-500">Home Page</h1>
-
-      <Button onClick={handleLogin} variant={"destructive"}>
-        Hello
-      </Button>
-      <Button onClick={handleGetProducts} variant={"destructive"}>
-        Get roducts
-      </Button>
-
-      <Button variant={"destructive"}>Hello</Button>
-
-      
-
-
-
-
-
-
-
-
-
-    </>
-  );
-};
-
+    <div className="min-h-screen bg-gray-400 p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8">Loja Online</h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-6 rounded-lg shadow">
+            <div className="w-full h-48 bg-pink-400 rounded mb-4"></div>
+            <h3 className="font-medium mb-2">Heavyweight T-Shirt</h3>
+            <p className="text-gray-600 text-sm mb-2">275 GSM Jersey</p>
+            <p className="font-bold">$36</p>
+          </div>
+          <>
+            {product?.map((product) => 
+              <Card key={product.categoryId}>
+                <h2>{product.name}</h2>
+                <div>{product.imageUrl}</div>
+                <p>{product.price}</p>
+              </Card>
+            )}
+          
+          </>
+          <div className="bg-white p-6 rounded-lg shadow">
+            <div className="w-full h-48 bg-blue-400 rounded mb-4"></div>
+            <h3 className="font-medium mb-2">Cotton Hoodie</h3>
+            <p className="text-gray-600 text-sm mb-2">Premium Cotton</p>
+            <p className="font-bold">$65</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow">
+            <div className="w-full h-48 bg-green-400 rounded mb-4"></div>
+            <h3 className="font-medium mb-2">Denim Jacket</h3>
+            <p className="text-gray-600 text-sm mb-2">100% Cotton Denim</p>
+            <p className="font-bold">$89</p>
+          </div>
+        </div>
+      </div>
+      <ShoppingCart />
+    </div>
+  )
+}
