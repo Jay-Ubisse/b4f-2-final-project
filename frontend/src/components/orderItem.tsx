@@ -56,7 +56,7 @@ export const columns: ColumnDef<typeof payments[number]>[] = [
     cell: () => (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="p-2 rounded hover:bg-gray-100">
+          <button type="button" className="p-2 rounded hover:bg-gray-100">
             <MoreHorizontal className="h-4 w-4" />
           </button>
         </DropdownMenuTrigger>

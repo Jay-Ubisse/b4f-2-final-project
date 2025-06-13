@@ -1,6 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./pages";
 import { AdminPage } from "./pages";
+import { OrdersUser } from "./pages/orders-user";
+  
+
 
 const router = createBrowserRouter([
   {
@@ -10,6 +13,10 @@ const router = createBrowserRouter([
   {
     path: "/page",
     element: < AdminPage/>,
+  },
+  {
+    path: "/orders-user",
+    element: < OrdersUser/>,
   },
 ]);
 
