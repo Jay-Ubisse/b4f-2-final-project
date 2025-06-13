@@ -3,6 +3,7 @@ export interface OrderProps {
     orderId: string;
     customerName: string;
     items: Array<{
+        name: string;
         itemId: string;
         quantity: number;
         price: number;
