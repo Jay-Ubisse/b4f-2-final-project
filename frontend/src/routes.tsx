@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { About, Home,AdminPage, } from "./pages";
+import { About, Home, AdminPage, } from "./pages";
 import { MainLayout } from "./layouts/main-layout";
-
+import { CheckoutPage } from "./pages/checkout";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,12 +15,17 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      {
+        path: "/checkout",
+        element: <CheckoutPage />,
+      },
+      {
+        path: "/page",
+        element: < AdminPage />,
+      },
     ],
   },
-  {
-    path: "/page",
-    element: < AdminPage/>,
-  },
+
 ]);
 
 export function Routes() {
