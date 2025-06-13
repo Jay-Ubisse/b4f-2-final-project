@@ -17,7 +17,7 @@ export interface CategoryProps extends Document {
   description?: string;
 }
 
-export interface productsProps extends Document{
+export interface ProductsProps extends Document{
         name:String,
         color:String[],
         sizes:String[],
