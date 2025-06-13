@@ -4,4 +4,4 @@ import { login } from '../controllers/auth.controller.ts'
 
 export const authRouter = Express.Router()
 
-authRouter.post('/login', login)
+authRouter.post('/', login)
