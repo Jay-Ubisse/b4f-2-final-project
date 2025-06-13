@@ -1,35 +1,141 @@
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../components/ui/carousel";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription
+} from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { login } from "../services/auth";
+import { useEffect, useState } from "react";
+import { data, NavLink, useNavigate} from "react-router-dom";
+import type { products } from "../services/products";
+import { useParams } from "react-router-dom";
 import { getProduct } from "../services/products";
 
-async function handleLogin() {
-  const response = await login({
-    data: {
-      email: "maudana@gmail.com",
-      password: "123456",
-    },
-  });
+// async function handleLogin() {
+//   const response = await login({
+//     data: {
+//       email: "maudana@gmail.com",
+//       password: "123456",
+//     },
+//   });
 
-  if (response.status === 200) {
-    console.log(response);
-  } else {
-    console.log(response.response.data);
-  }
-}
+//   if (response.status === 200) {
+//     console.log(response);
+//   } else {
+//     console.log(response.response.data);
+//   }
+// }
+const viewProducts = () => {
+  const Navigate = useNavigate();
+  Navigate("/products");
+};[]
 
-async function handleGetProducts() {
-  const response = await getProduct({ id: "6848315ee273205a2300ef50" });
-}
 export const Home = () => {
+ const [data, setData] = useState<products[]>([]);
+ const { id } = useParams();
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getProduct({ id:"6848315ee273205a2300ef50 "});
+        if (data) setData([data]);
+       
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching the products:", error);
+      }
+    }
+    fetchData();
+  }, [id]);
+
+
   return (
     <>
-      <h1 className="bg-amber-500">Home Page</h1>
-      <Button onClick={handleLogin} variant={"destructive"}>
-        Hello
-      </Button>
-      <Button onClick={handleGetProducts} variant={"destructive"}>
-        Get roducts
-      </Button>
+      <Carousel className="w-screen">
+        <CarouselContent>
+          {Array.from({ length: 1 }).map((_, index) => (
+            <CarouselItem key={index}>
+              <CardContent className=" items-center justify-center transition delay-150 duration-300 ease-in-out">
+                <img
+                  className="h-155 w-full"
+                  src="https://industrieafrica.com/cdn/shop/collections/TB_HERO_A.jpg?v=1741949555&width=2880"
+                  alt=""
+                />
+              </CardContent>
+            </CarouselItem>
+          ))}
+          {Array.from({ length: 1 }).map((_, index) => (
+            <CarouselItem key={index}>
+              <div className="">
+                <CardContent className=" items-center justify-center">
+                  <img 
+                    className=""
+                    src="https://www.houseofblanks.com/cdn/shop/files/HOB-FW24-shopify.png?v=1726606111&width=3840"
+                    alt=""
+                  />
+                </CardContent>
+              </div>
+            </CarouselItem>
+          ))}
+          {Array.from({ length: 1 }).map((_, index) => (
+            <CarouselItem key={index}>
+              <div className="">
+                <CardContent className=" items-center justify-center ">
+                  <img alt="" />
+                </CardContent>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+
+      <NavLink to={"/products"} className="flex justify-end mr-20 mt-10 ">
+        {" "}
+        <Button
+          onClick={viewProducts}
+          className="bg-stone-200"
+          variant="outline"
+        >
+          View All
+        </Button>
+      </NavLink>
+ {data.map((product, _id) => (
+      <div className="flex gap-5  m-6 justify-center items-center">
+          <Card key={_id} className="w-100 h-100">
+            <CardHeader>
+              <CardTitle className="text-center">{product.name}</CardTitle>
+            </CardHeader>
+              <CardDescription>{product.description}</CardDescription>
+
+            <CardContent>
+              <img src={product.imageUrl ? `${product.imageUrl}`: "https://www.taibobacar.com/media/GRG-BLG-TS2-750x750.jpg"}  alt="" />
+            </CardContent>
+
+            <CardFooter className="gap-3 flex justify-start -mt-4">
+              <div className="w-5 h-5 border-1 bg-black"></div>
+              <div className="w-5 h-5 border-1 bg-amber-800"></div>
+              <div className="w-5 h-5 border-1 bg-blue-950"></div>
+              <div className="w-5 h-5 border-1 bg-green-950"></div>
+
+              <div className="w-fit h-fit border-1 ">{product.sizes}</div>
+              <div className="w-fit h-fit border-1 ">M</div>
+              <div className="w-fit h-fit border-1">XL</div>
+              <div className="w-fit h-fit border-1 ">XXL</div>
+            </CardFooter>
+          </Card>
+       
+      </div>
+       ))}
+        
     </>
   );
 };
