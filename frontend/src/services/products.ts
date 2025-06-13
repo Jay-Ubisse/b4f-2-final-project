@@ -1,9 +1,9 @@
 import api from "./axios-instance";
 
 
-export async function getProduct({id}: {id:String}) {
+export async function getProduct() {
   try {
-    const response = await api.get(`/products/${id}`); 
+    const response = await api.get("/products"); 
     return response.data;
   
   } catch (error) {}

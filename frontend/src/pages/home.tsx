@@ -4,6 +4,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  
 } from "../components/ui/carousel";
 import {
   Card,
@@ -46,7 +47,7 @@ export const Home = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getProduct({ id:"6848315ee273205a2300ef50 "});
+        const data = await getProduct();
         if (data) setData([data]);
        
         console.log(data);
@@ -57,10 +58,29 @@ export const Home = () => {
     fetchData();
   }, [id]);
 
+const carouselImages = [
+  {
+    url: "https://images.unsplash.com/photo-1605117882932-f9e32b03fea9?w=1200&h=600&fit=crop&auto=format&q=80",
+    alt: "Máquina de costura profissional",
+  
+  },
+  {
+    url: "https://images.unsplash.com/photo-1528401635478-4f51cfc89c9d?w=1200&h=600&fit=crop&auto=format&q=80",
+    alt: "Tecidos coloridos de capulana",
+    
+  },
+    {
+    url: "https://images.unsplash.com/photo-1528401635478-4f51cfc89c9d?w=1200&h=600&fit=crop&auto=format&q=80",
+    alt: "Tecidos coloridos de capulana",
+
+  },
+ 
+]
+
 
   return (
     <>
-      <Carousel className="w-screen">
+      <Carousel>
         <CarouselContent>
           {Array.from({ length: 1 }).map((_, index) => (
             <CarouselItem key={index}>
@@ -95,11 +115,20 @@ export const Home = () => {
               </div>
             </CarouselItem>
           ))}
+           {Array.from({ length: 1 }).map((_, index) => (
+            <CarouselItem key={index}>
+              <div className="">
+                <CardContent className=" items-center justify-center ">
+                  <img src="https://www.taibobacar.com/media/layerslider/projects/Homepage-Gorongoza/Gorongoza-Collection-1170x782.webp" alt="" />
+                </CardContent>
+              </div>
+            </CarouselItem>
+          ))}
         </CarouselContent>
+      
       </Carousel>
 
       <NavLink to={"/products"} className="flex justify-end mr-20 mt-10 ">
-        {" "}
         <Button
           onClick={viewProducts}
           className="bg-stone-200"
@@ -108,16 +137,15 @@ export const Home = () => {
           View All
         </Button>
       </NavLink>
- {data.map((product, _id) => (
       <div className="flex gap-5  m-6 justify-center items-center">
-          <Card key={_id} className="w-100 h-100">
+          <Card className="w-100 h-100">
             <CardHeader>
-              <CardTitle className="text-center">{product.name}</CardTitle>
+              <CardTitle className="text-center">T-Shirt</CardTitle>
             </CardHeader>
-              <CardDescription>{product.description}</CardDescription>
+              <CardDescription></CardDescription>
 
             <CardContent>
-              <img src={product.imageUrl ? `${product.imageUrl}`: "https://www.taibobacar.com/media/GRG-BLG-TS2-750x750.jpg"}  alt="" />
+              <img src= "https://www.taibobacar.com/media/GRG-BLG-TS2-750x750.jpg"alt="" />
             </CardContent>
 
             <CardFooter className="gap-3 flex justify-start -mt-4">
@@ -126,15 +154,81 @@ export const Home = () => {
               <div className="w-5 h-5 border-1 bg-blue-950"></div>
               <div className="w-5 h-5 border-1 bg-green-950"></div>
 
-              <div className="w-fit h-fit border-1 ">{product.sizes}</div>
+              <div className="w-fit h-fit border-1 ">L</div>
               <div className="w-fit h-fit border-1 ">M</div>
+              <div className="w-fit h-fit border-1">XL</div>
+              <div className="w-fit h-fit border-1 ">XXL</div>
+            </CardFooter>
+          </Card>
+          <Card className="w-100 h-100">
+            <CardHeader>
+              <CardTitle className="text-center">Pants</CardTitle>
+            </CardHeader>
+              <CardDescription></CardDescription>
+
+            <CardContent>
+              <img src= "https://www.taibobacar.com/media/GG-BLP-PT-BG.2-570x570.jpg"alt="" />
+            </CardContent>
+
+            <CardFooter className="gap-3 flex justify-start -mt-4">
+              <div className="w-5 h-5 border-1 bg-black"></div>
+              <div className="w-5 h-5 border-1 bg-amber-800"></div>
+              <div className="w-5 h-5 border-1 bg-blue-950"></div>
+              <div className="w-5 h-5 border-1 bg-green-950"></div>
+
+              <div className="w-fit h-fit border-1 ">L</div>
+              <div className="w-fit h-fit border-1 ">M</div>
+              <div className="w-fit h-fit border-1">XL</div>
+              <div className="w-fit h-fit border-1 ">XXL</div>
+            </CardFooter>
+          </Card>
+          <Card className="w-100 h-100">
+            <CardHeader>
+              <CardTitle className="text-center">Hoodie</CardTitle>
+            </CardHeader>
+              <CardDescription></CardDescription>
+
+            <CardContent>
+              <img src= "https://www.taibobacar.com/media/GRG-LBJ-BLK.1-570x570.jpg"alt="" />
+            </CardContent>
+
+            <CardFooter className="gap-3 flex justify-start -mt-4">
+              <div className="w-5 h-5 border-1 bg-black"></div>
+              <div className="w-5 h-5 border-1 bg-amber-800"></div>
+              <div className="w-5 h-5 border-1 bg-blue-950"></div>
+              <div className="w-5 h-5 border-1 bg-green-950"></div>
+
+              <div className="w-fit h-fit border-1 ">L</div>
+              <div className="w-fit h-fit border-1 ">M</div>
+              <div className="w-fit h-fit border-1">XL</div>
+              <div className="w-fit h-fit border-1 ">XXL</div>
+            </CardFooter>
+          </Card>
+          <Card className="w-100 h-100">
+            <CardHeader>
+              <CardTitle className="text-center">Dress</CardTitle>
+            </CardHeader>
+              <CardDescription></CardDescription>
+
+            <CardContent>
+              <img src= "https://www.taibobacar.com/media/BR-ICN-DR.1.jpg"alt="" />
+            </CardContent>
+
+            <CardFooter className="gap-3 flex justify-start -mt-4">
+              <div className="w-5 h-5 border-1 bg-black"></div>
+              <div className="w-5 h-5 border-1 bg-cyan-700"></div>
+              <div className="w-5 h-5 border-1 bg-blue-950"></div>
+              <div className="w-5 h-5 border-1 bg-pink-950"></div>
+
+              <div className="w-fit h-fit border-1 ">S</div>
+              <div className="w-fit h-fit border-1 ">XS</div>
               <div className="w-fit h-fit border-1">XL</div>
               <div className="w-fit h-fit border-1 ">XXL</div>
             </CardFooter>
           </Card>
        
       </div>
-       ))}
+    
         
     </>
   );
