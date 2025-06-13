@@ -1,6 +1,6 @@
 import Products from "../models/products.model.ts";
 import Category from "../models/products.model.ts";
-import { productsProps } from "../types/products.types.ts";
+import { ProductsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
 
 
@@ -17,7 +17,7 @@ const authorizeRole = async (role: string) => {
 };
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const body: productsProps = req.body;
+    const body: ProductsProps = req.body;
     const {
       name,
       price,
@@ -28,21 +28,21 @@ export const createProduct = async (req: Request, res: Response) => {
       stock,
       categoryId,
     } = body;
-    const category = await Category.findById(categoryId).populate("Category");
+    const category = await Category.findById(categoryId).populate("Categories");
     const product = Products.create({
       name,
       price,
-      category: category,
       imageUrl,
+      category: category,
       description,
-      colors: colors,
+      colors: colors ||[],
       sizes: sizes || [],
       stock,
       categoryId,
     });
     res.status(201).json({ message: "Product created successfully", product });
   } catch (error) {
-    res.status(500).json({ message: "An internal server error occurred" });
+    res.status(500).json({ message: "An internal server error occurred",error});
   }
 };
 
@@ -82,11 +82,10 @@ export const updateProduct = async (req: Request, res: Response) => {
   authorizeRole;
   try {
     const id = req.params.id;
-    const body: productsProps = req.body;
+    const body: ProductsProps = req.body;
     const {
       name,
       price,
-      category,
       imageUrl,
       description,
       colors,
@@ -121,6 +120,19 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 
 export const getProducts = async (req: Request, res: Response) => {
+   try {
+      const products = await Products.find().populate("category");
+
+      res.status(200).json({
+         message: "Produtos encontrados", 
+         deta: products
+      })
+   } catch (error) {
+      res.status(500).json({
+         message: "Erro ao buscar produtos"
+      })
+   }
+}
   try {
     const { page = "1", perPage = "4" } = req.query;
 

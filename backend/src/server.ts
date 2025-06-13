@@ -25,9 +25,6 @@ app.use("/login", authRouter);
 app.use("/register", router);
 app.use("/me",router)
 
-
-
-
 mongoose
   .connect(process.env.BD_URI as string)
   .then(() => console.log("BD conectado com sucesso!"))
