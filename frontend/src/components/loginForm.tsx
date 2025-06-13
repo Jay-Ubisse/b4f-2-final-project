@@ -45,11 +45,11 @@ export const LoginForm = () => {
         data: { email: user.email, password: user.password },
       })
       if (response.status === 200) {
-        console.log("conseguiu fazer login")
+        //console.log("conseguiu fazer login")
         toast.success('Login realizado com sucesso!',{id:"1"})
         window.location.href = '/'
       } else {
-        console.log("não conseguiu fazer login")
+       // console.log("não conseguiu fazer login")
         toast.error("Email ou Password Incorrectos. Verifique suas credenciais.",{id:"1"})
       }
     } catch (error) {
@@ -61,8 +61,8 @@ export const LoginForm = () => {
   }
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen">
-        <Card className="w-full max-w-sm m-auto">
+      <div className="flex items-center justify-center min-h-screen ">
+        <Card className="w-full max-w-sm m-auto font-mono">
           <CardHeader>
             <CardTitle>Introduza os seus dados de Login</CardTitle>
           </CardHeader>

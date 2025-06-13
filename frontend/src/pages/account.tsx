@@ -28,7 +28,7 @@ export const Account = () => {
   }, []);
 
   return (
-    <main className="bg-gray-200 flex flex-col justify-center ">
+    <main className="bg-gray-200 flex flex-col justify-center font-mono ">
       <section className="flex flex-col justify-center flex-1 px-12 py-10">
         <h1 className="text-3xl font-bold mb-8">
           <strong>ACCOUNT</strong>

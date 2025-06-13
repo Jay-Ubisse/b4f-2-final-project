@@ -1,4 +1,5 @@
 import { Button } from '../components/ui/button'
+
 import {
   Card,
   CardContent,
@@ -10,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
-import { toast } from 'react-hot-toast'
+import { toast, Toaster } from 'react-hot-toast'
 import {
     Form,
     FormControl,
@@ -19,6 +20,8 @@ import {
     FormLabel,
     FormMessage,
     } from '../components/ui/form'  
+import { createUser } from '../services/users'
+
 
     const FormSchema = z.object({
   name: z.string({ required_error: 'O nome é obrigatório' }),
@@ -40,22 +43,36 @@ export const RegisterForm = () => {
   })
 
   async function onSubmit(user: z.infer<typeof FormSchema>) {
+    if (user.password !== user.confirmPassword) {
+            toast.error('As senhas não coincidem, tente novamente')
+        }else {
     try {
-        if (user.password !== user.confirmPassword) {
-            throw new Error('As senhas não coincidem')
+        
+            const response = await createUser({data: { name: user.name, email: user.email, password: user.password }})
+
+        if (response.status===201){
+           // console.log('Usuário registrado:', user)
+            toast.success(`Perfil criado com sucesso`,{id:`1`})
+            window.location.href = '/login'
+        } 
+        if (response.status===400){
+          //  console.log(`Ja existe usuario cadastrado com esse email`)
+            toast.error(`Já existe um usuario cadastrado com esse email, tente novamente`,{id:`1`})
         }
-      console.log('Usuário registrado:', user)
-    } catch (error) {
+        }
+ catch (error) {
       console.error(error)
-        toast.error('Erro ao registrar usuário. Tente novamente mais tarde.', {
-            id: '1',
-        })
+    toast.error('Erro ao registrar usuário. Tente novamente mais tarde.', {
+    id: '1',
+    })
     }
   }
+}
 
+  
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-md font-mono">
             <CardHeader>
             <CardTitle>Crie sua conta e tenha acesso a novas tendências  </CardTitle>
             </CardHeader>
@@ -114,7 +131,11 @@ export const RegisterForm = () => {
                     </FormItem>
                     )}
                 />
-                <Button type="submit">Registrar</Button>
+                <div>
+                    <Toaster/>
+                   <Button type="submit">Registrar</Button> 
+                </div>
+                
                 </form>
             </Form>
             <Link to="/login">Já tem uma conta? Faça login</Link>
