@@ -1,3 +1,6 @@
+
+export const Home = () => {
+  return <div>Home Page</div>;
 import { login } from "../services/auth";
 import { getProduct } from "../services/products";
 import {
