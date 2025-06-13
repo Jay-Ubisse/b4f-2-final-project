@@ -124,7 +124,7 @@ export const getProducts = async (req: Request, res: Response) => {
       const products = await Products.find().populate("category");
 
       res.status(200).json({
-         message: "Produtos encontrados", 
+         message: "ok", 
          deta: products
       })
    } catch (error) {
