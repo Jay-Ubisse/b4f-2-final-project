@@ -132,14 +132,11 @@ export const RegisterForm = () => {
                     </FormItem>
                     )}
                 />
-                <div className='text-center'>
-                <Button type="submit">Registrar</Button>
-               
-                </div>
+            
 
-                <div>
+                <div className='text-center'>
                     <Toaster/>
-                   <Button type="submit">Registrar</Button> 
+                   <Button  type="submit">Registrar</Button> 
                 </div>
                 
                 </form>
