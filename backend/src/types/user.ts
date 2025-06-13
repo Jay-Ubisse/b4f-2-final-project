@@ -7,10 +7,10 @@ export interface UserProps extends Document {
   role: string; // e.g., 'admin', 'custimer'
 }
 
-export interface CategoryProps extends Document {
-  name: string;
-  description?: string;
-}
+// export interface CategoryProps extends Document {
+//   name: string;
+//   description?: string;
+// }
 
 export interface ProductProps extends Document {
   name: string;
