@@ -1,65 +1,90 @@
 import { Link } from "react-router-dom";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+
 export const Footer = () => {
-  return <div style={
-    {backgroundColor: "#1a202c", color: "white", padding: "20px" }
-  }>
-    <footer className="footer sm:footer-horizontal  text-white-500-content p-10 flex flex-row height-20 justify-between items-center">
-  
- 
+  return (
+    <footer className="bg-zinc-900 text-white px-6 py-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold">B4F E-COMMERCE</h2>
+          <p>
+            B4F E-commerce is an online store specialized in selling high
+            quality clothing, aimed at consumers who value style, comfort and
+            sustainability.
+          </p>
+        </div>
 
-   <div className="basis-3xs flex flex-col items-center mx-4 text-white" > <b> B4f shop </b><br />
-   
-   B4f shop is a factory brand produced by Roopa Knitting <br /> Mills, the makers of the world's  <br />highest quality knit fabrics and apparel. </div>
+        <div className="space-y-3">
+          <h3 className="font-semibold uppercase">Information</h3>
+          <ul className="space-y-1">
+            <li>
+              <Link to="/about" className="hover:underline">
+                About Us
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:underline">
+                Contact Us
+              </Link>
+            </li>
+            <li>
+              <Link to="/shipping-returns" className="hover:underline">
+                Shipping & Returns
+              </Link>
+            </li>
+            <li>
+              <Link to="/wholesale" className="hover:underline">
+                Wholesale
+              </Link>
+            </li>
+          </ul>
+        </div>
 
+        <div className="space-y-3">
+          <h3 className="font-semibold uppercase">Social</h3>
+          <ul className="space-y-1">
+            <li>
+              <a href="https://www.facebook.com/" className="hover:underline">
+                Facebook
+              </a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/" className="hover:underline">
+                Instagram
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com" className="hover:underline">
+                X (Twitter)
+              </a>
+            </li>
+          </ul>
+        </div>
 
+        <div className="space-y-4">
+          <h3 className="font-semibold uppercase">Newsletter</h3>
+          <p>
+            Join our newsletter to stay up to date on features and releases.
+          </p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              className="bg-white text-black w-full"
+            />
+            <Button className="bg-yellow-300 text-black hover:bg-yellow-400">
+              Subscribe
+            </Button>
+          </div>
+        </div>
+      </div>
 
-<div>
-   
-   <b> <h1 className="footer-title">Social</h1></b>
-   <div><a href="https://www.facebook.com/">Facebook</a></div>
-  <div> <a href="https://www.instagram.com/"> Instagram</a></div>
-<div><a href="https://x.com/X.">X</a></div>
- 
-  
- </div>
+      <hr className="my-8 border-gray-700" />
 
-  <div className="basis-3xs flex flex-col items-center mx-4" >
-   
-    <b> <div >informaction</div></b> 
-     <Link 
-    
-      to="/about" className="text-white hover:underline">About us</Link>
-  <Link to="/contact" className="text-white hover:underline">Contact us</Link>
-    <Link to="/Shipping & Returns" className="text-white hover:underline">Shipping & Returns</Link>
-<Link to="/wholesale" className="text-white hover:underline">wholesale</Link>
-  </div>
-<div> Join our newsletter to stay up to <br /> date on features and releases.
-  <br />
-<input
-  type="text"
-  placeholder="enter your email"
-  className="input input-bordered join-item w-64 h-10 px-4 py-2 border-2 border-gray-400 bg-white text-black rounded"
-/>
-  
-  </div>
-
- <button
-    className="btn join-item h-10 ml-2 px-6 py-2 rounded bg-yellow-300 text-black font-bold border-2 border-yellow-400 hover:bg-yellow-400 hover:text-white transition-colors duration-200 shadow-md"
-  >
-    Subscribe
-  </button>
-
- 
-
-</footer>
- <div ><hr /></div> 
- <div className="text-center mt-4 text-white    ">
-           
-               &copy;  B4f shop. All Rights Reserved<br /> 2025
-            </div>
-          
-  </div>
-
-
-
+      <div className="text-center text-sm text-gray-400">
+        &copy; 2025 B4F STUDENTS. All Rights Reserved.
+      </div>
+    </footer>
+  );
 };
