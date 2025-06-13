@@ -2,7 +2,7 @@ import Products from "../models/products.model.ts";
 import Category from "../models/products.model.ts";
 import { ProductsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
-//import { Product } from "../models/products.model.ts";
+
 
 const authorizeRole = async (role: string) => {
   (req: Request, res: Response, next: NextFunction) => {
@@ -125,7 +125,7 @@ export const getProducts = async (req: Request, res: Response) => {
 
       res.status(200).json({
          message: "ok", 
-         deta: products
+         data: products
       })
    } catch (error) {
       res.status(500).json({
