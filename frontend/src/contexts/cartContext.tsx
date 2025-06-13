@@ -1,9 +1,8 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import type { CartContextType,CartItem } from "../types/products";
+import type { CartContextType, CartItem } from "../types/cart";
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Provider
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     const stored = localStorage.getItem("cart");
@@ -16,10 +15,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = (item: CartItem) => {
     setCartItems(prev => {
-      const existing = prev.find(p => p.productId === item.productId);
+      const existing = prev.find(p => p._id === item._id); // usar _id como chave
       if (existing) {
         return prev.map(p =>
-          p.productId === item.productId
+          p._id === item._id
             ? { ...p, quantity: p.quantity + item.quantity }
             : p
         );
@@ -29,13 +28,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeFromCart = (productId: string) => {
-    setCartItems(prev => prev.filter(p => p.productId !== productId));
+    setCartItems(prev => prev.filter(p => p._id !== productId));
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
     setCartItems(prev =>
       prev.map(p =>
-        p.productId === productId ? { ...p, quantity } : p
+        p._id === productId ? { ...p, quantity } : p
       )
     );
   };
@@ -53,7 +52,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {

@@ -1,8 +1,6 @@
-/*export interface CartItem {
-  productId: string;
-  name: string;
-  price: number;
-  image: string;
+import type { ProductProps } from "./products";
+
+export interface CartItem extends ProductProps {
   quantity: number;
 }
 
@@ -12,21 +10,4 @@ export interface CartContextType {
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
-}*/
-
-
-export interface  ProductProps  {
-  id: number;
-  name: string
-  image:string;
-  quantity: number;
-  size: string;
-  color: string;
-  price: number;
 }
-
-export  interface CartProps {
-  cart: number;
-  total: number;
-}
-
