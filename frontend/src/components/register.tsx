@@ -45,6 +45,7 @@ export const RegisterForm = () => {
             throw new Error('As senhas não coincidem')
         }
       console.log('Usuário registrado:', user)
+      window.location.href = '/login'
     } catch (error) {
       console.error(error)
         toast.error('Erro ao registrar usuário. Tente novamente mais tarde.', {
@@ -57,7 +58,7 @@ export const RegisterForm = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <Card className="w-full max-w-md">
             <CardHeader>
-            <CardTitle>Crie sua conta e tenha acesso a novas tendências  </CardTitle>
+            <CardTitle>Crie sua conta e arrase no estilo!</CardTitle>
             </CardHeader>
             <CardContent>
             <Form {...form}>
@@ -66,23 +67,24 @@ export const RegisterForm = () => {
                     control={form.control}
                     name="name"
                     render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                         <FormLabel>Nome</FormLabel>
                         <FormControl>
-                        <Input placeholder="Seu nome completo" {...field} />
+                        <Input placeholder="Insira seu nome completo" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
                     )}
                 />
+                
                 <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                        <Input placeholder="Seu email" {...field} />
+                        <Input placeholder="Insira seu email" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -92,10 +94,10 @@ export const RegisterForm = () => {
                     control={form.control}
                     name="password"
                     render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                         <FormLabel>Senha</FormLabel>
                         <FormControl>
-                        <Input type="password" placeholder="Sua senha" {...field} />
+                        <Input type="password" placeholder="Insira sua senha" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -105,7 +107,7 @@ export const RegisterForm = () => {
                     control={form.control}
                     name="confirmPassword"
                     render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                         <FormLabel>Confirmar Senha</FormLabel>
                         <FormControl>
                         <Input type="password" placeholder="Confirme sua senha" {...field} />
@@ -114,10 +116,16 @@ export const RegisterForm = () => {
                     </FormItem>
                     )}
                 />
+                <div className='text-center'>
                 <Button type="submit">Registrar</Button>
+               
+                </div>
+
                 </form>
             </Form>
-            <Link to="/login">Já tem uma conta? Faça login</Link>
+            <div className='text-center'>
+                <Link to="/login">Já tem uma conta? Faça login</Link>
+            </div>
             </CardContent>
         </Card>
     </div>
