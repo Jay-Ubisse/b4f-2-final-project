@@ -1,35 +1,55 @@
+import { useEffect, useState } from "react";
 import { Cardsidebar } from "../components/cart/sidebar";
 import {
   Command,
-  CommandEmpty,
+  //CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
   CommandSeparator,
 } from "../components/ui/command";
-
-
+/*import { data } from "react-router-dom";
+import { Cat, Search } from "lucide-react";
+*/
 export const Products = () => {
-  return (
-  <div>
-     <div className="flex justify-center pl-25 ">
-    <Cardsidebar/>
-    </div>
-    <Command>
-  <CommandInput placeholder="Type a command or search..." />
-  <CommandList>
-    <CommandEmpty>No results found.</CommandEmpty>
-    <CommandGroup >
-      <CommandItem>Camisetas</CommandItem>
-      <CommandItem>Blusas</CommandItem>
-      <CommandItem>Calças</CommandItem>
-      <CommandItem>Vestidos</CommandItem>
-    </CommandGroup>
-    <CommandSeparator />
-  </CommandList>
-</Command>
+  const [categories, setCategories] = useState([]);
+  const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    fetch("/category/")
+      .then((res) => res.json())
+      .then((data) => setCategories(data));
+  }, []);
+  const filtered = categories.filter((cat: any) =>
+    cat.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="flex justify-end">
+      
+      <Command className="w-105 ">
+      <CommandInput
+      placeholder="Digite uma categoria"
+      value={search}
+      onValueChange={setSearch}
+      />
+      <CommandList>
+        
+        <CommandGroup>
+          {filtered.map((Cat: { _id: string; name: string }) =>(
+            <CommandItem key={Cat._id}>{Cat.name} </CommandItem>
+          ))}
+          
+        </CommandGroup>
+        <CommandSeparator/>
+      </CommandList>
+      </Command>
+        <div >
+        <Cardsidebar/>
+       </div>
+       <div>
+        
 <section>
   <h1 className="flex justify-center text-2xl font-bold mb-4">Produtos</h1>
   <p className="mb-4"></p>
@@ -60,6 +80,29 @@ export const Products = () => {
     </div>
   </div>
 </section>
-  </div>
+       </div>
+    </div>
   );
-};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
