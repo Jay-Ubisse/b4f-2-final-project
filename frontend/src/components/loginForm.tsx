@@ -61,7 +61,7 @@ export const LoginForm = () => {
   }
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center font-mono min-h-screen">
         <Card className="w-full max-w-sm m-auto">
           <CardHeader>
             <CardTitle>Introduza os seus dados de Login</CardTitle>

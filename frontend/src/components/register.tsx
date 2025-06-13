@@ -55,10 +55,10 @@ export const RegisterForm = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen font-mono bg-gray-100">
         <Card className="w-full max-w-md">
             <CardHeader>
-            <CardTitle>Crie sua conta e arrase no estilo!</CardTitle>
+            <CardTitle >Crie sua conta e arrase no estilo</CardTitle>
             </CardHeader>
             <CardContent>
             <Form {...form}>
