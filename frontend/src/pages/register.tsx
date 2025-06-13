@@ -1,8 +1,8 @@
-
+import { RegisterForm } from "../components/register"
 
 export const Register=()=>{
 
     return(<>
-    <p>REGISTER PAGE</p>
+   <RegisterForm/>
     </>)
 }
