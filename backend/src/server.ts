@@ -10,6 +10,7 @@ import { authRouter } from "./routes/auth.route.ts";
 import { Getrouter } from "./routes/get-all-products.route.ts";
 import categoryRoute from "./routes/category.route.ts";
 
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -22,8 +23,9 @@ app.use("/orders", orderRoute);
 app.use("/products", productRoute);
 app.use("/product", Getrouter); 
 app.use("/categories", categoryRoute);
-app.use("/auth", authRouter);
-app.use("/users", router);
+app.use("/login", authRouter);
+app.use("/register", router);
+app.use("/me",router)
 
 
 
