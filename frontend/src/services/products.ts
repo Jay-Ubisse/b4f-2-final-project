@@ -1,20 +1,35 @@
 import api from "./axios-instance";
+import type { Products } from "../types/products";
 
-
-export async function getProduct() {
+export async function getProductsById({
+  id,
+}: {
+  id: string;
+}): Promise<Products | undefined> {
   try {
-    const response = await api.get("/products"); 
-    return response.data;
-  
-  } catch (error) {}
+    const res = await fetch(`/products/${id}`);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error("Erro ao buscar produto por ID:", err);
+  }
 }
-export interface products extends Document{
-  _id:string
-  name:string,
-        colors:string[];
-        sizes:string[];
-        price:Number;
-        description:string;
-        imageUrl:string;
-        stock:number;
+export async function getProducts({
+  data,
+}: {
+  data:{ name:string;
+  colors:[];
+  sizes:[];
+  price:number;
+  description:string;
+  imageUrl:string;
+  categoryId:string;
+  stock:number;};
+}): Promise<Products | undefined> {
+  try {
+    const res = await api.get(`/products`, data);
+    return res.data;
+  } catch (err) {
+    console.error("Erro ao buscar produto :", err);
+  }
 }

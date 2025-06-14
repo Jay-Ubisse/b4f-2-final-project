@@ -17,10 +17,9 @@ import {
 import { Button } from "../components/ui/button";
 import { login } from "../services/auth";
 import { useEffect, useState } from "react";
-import { data, NavLink, useNavigate} from "react-router-dom";
-import type { products } from "../services/products";
-import { useParams } from "react-router-dom";
-import { getProduct } from "../services/products";
+import { NavLink, useNavigate} from "react-router-dom";
+import type { Products } from "../types/products";
+import { getProducts } from "../services/products";
 
 // async function handleLogin() {
 //   const response = await login({
@@ -42,13 +41,12 @@ const viewProducts = () => {
 };[]
 
 export const Home = () => {
- const [data, setData] = useState<products[]>([]);
- const { id } = useParams();
+ const [data, setData] = useState<Products[]>([]);
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getProduct();
-        if (data) setData([data]);
+        const data = await getProducts;
+        if (!data) setData([data]);
        
         console.log(data);
       } catch (error) {
@@ -56,31 +54,12 @@ export const Home = () => {
       }
     }
     fetchData();
-  }, [id]);
-
-const carouselImages = [
-  {
-    url: "https://images.unsplash.com/photo-1605117882932-f9e32b03fea9?w=1200&h=600&fit=crop&auto=format&q=80",
-    alt: "Máquina de costura profissional",
-  
-  },
-  {
-    url: "https://images.unsplash.com/photo-1528401635478-4f51cfc89c9d?w=1200&h=600&fit=crop&auto=format&q=80",
-    alt: "Tecidos coloridos de capulana",
-    
-  },
-    {
-    url: "https://images.unsplash.com/photo-1528401635478-4f51cfc89c9d?w=1200&h=600&fit=crop&auto=format&q=80",
-    alt: "Tecidos coloridos de capulana",
-
-  },
- 
-]
-
+  }, [data]
+);
 
   return (
     <>
-      <Carousel>
+      <Carousel className="w-screen h-155">
         <CarouselContent>
           {Array.from({ length: 1 }).map((_, index) => (
             <CarouselItem key={index}>
@@ -99,7 +78,7 @@ const carouselImages = [
                 <CardContent className=" items-center justify-center">
                   <img 
                     className=""
-                    src="https://www.houseofblanks.com/cdn/shop/files/HOB-FW24-shopify.png?v=1726606111&width=3840"
+                    src="https://www.taibobacar.com/media/resort19-header.jpg"
                     alt=""
                   />
                 </CardContent>
@@ -119,7 +98,7 @@ const carouselImages = [
             <CarouselItem key={index}>
               <div className="">
                 <CardContent className=" items-center justify-center ">
-                  <img src="https://www.taibobacar.com/media/layerslider/projects/Homepage-Gorongoza/Gorongoza-Collection-1170x782.webp" alt="" />
+                  <img src="https://www.taibobacar.com/media/TB-Bacars-Garden-001.jpg" alt="" />
                 </CardContent>
               </div>
             </CarouselItem>
@@ -137,7 +116,8 @@ const carouselImages = [
           View All
         </Button>
       </NavLink>
-      <div className="flex gap-5  m-6 justify-center items-center">
+      <NavLink to={"/details"}>
+        <div className="flex gap-5  m-6 justify-center items-center">
           <Card className="w-100 h-100">
             <CardHeader>
               <CardTitle className="text-center">T-Shirt</CardTitle>
@@ -228,6 +208,7 @@ const carouselImages = [
           </Card>
        
       </div>
+      </NavLink>
     
         
     </>

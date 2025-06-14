@@ -1,6 +1,6 @@
-import mongoose, { Document, Types} from "mongoose";
+import mongoose, { Document} from "mongoose";
 
-export interface productsProps extends Document{
+export interface ProductsProps extends Document{
   name:String,
         colors:String[];
         sizes:String[];
@@ -17,6 +17,7 @@ export interface CategoryProps extends Document {
   description?: string;
 }
 
+<<<<<<< HEAD
 export interface ProductsProps extends Document{
         name:String,
         color:String[],
@@ -26,4 +27,6 @@ export interface ProductsProps extends Document{
         category:Types.ObjectId[],
         stock:number;
 }
+=======
+>>>>>>> dev-isa
 
