@@ -3,7 +3,6 @@ import Category from "../models/products.model.ts";
 import { ProductsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
 
-
 const authorizeRole = async (role: string) => {
   (req: Request, res: Response, next: NextFunction) => {
     const user = (req as any).user;
