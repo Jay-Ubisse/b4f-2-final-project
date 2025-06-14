@@ -19,6 +19,6 @@ productRoute.delete("/:id", authentionToken, deletedProduct);
 productRoute.put("/:id", authentionToken, updateProduct);
 productRoute.get("/", getProducts);
 productRoute.get("/search", getProductsBySearch);
-categoryRouter.get("/category", getProductsByQueryCategory);
+productRoute.get("/category", getProductsByQueryCategory);
 
 
