@@ -6,6 +6,7 @@ import {
   updateProduct,
   getProducts,
   getProductsBySearch,
+  getProductsByQueryCategory,
 } from "../controllers/products.controller.ts";
 import { authentionToken } from "../middleware/auth.Middleware.ts";
 
@@ -18,5 +19,6 @@ productRoute.delete("/:id", authentionToken, deletedProduct);
 productRoute.put("/:id", authentionToken, updateProduct);
 productRoute.get("/", getProducts);
 productRoute.get("/search", getProductsBySearch);
+productRoute.get("/category", getProductsByQueryCategory);
 
 

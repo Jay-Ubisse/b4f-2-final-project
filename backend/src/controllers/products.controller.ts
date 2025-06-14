@@ -2,10 +2,6 @@ import Products from "../models/products.model.ts";
 import Category from "../models/products.model.ts";
 import { ProductsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
-<<<<<<< HEAD
-=======
-//import { Product } from "../models/products.model.ts";
->>>>>>> dev-isa
 
 const authorizeRole = async (role: string) => {
   (req: Request, res: Response, next: NextFunction) => {
@@ -128,14 +124,14 @@ export const getProducts = async (req: Request, res: Response) => {
 
       res.status(200).json({
          message: "ok", 
-         deta: products
+         data: products
       })
    } catch (error) {
       res.status(500).json({
          message: "Erro ao buscar produtos"
       })
    }
-}
+
   try {
     const { page = "1", perPage = "4" } = req.query;
 
@@ -218,5 +214,46 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Erro ao buscar produtos:", error);
      res.status(500).json({ message: "Erro ao buscar produtos." });
+  }
+};
+
+export const getProductsByQueryCategory = async (req: Request, res: Response) => {
+  try {
+    const categoryName = req.query.category;
+
+    if (!categoryName || typeof categoryName !== "string") {
+        res.status(400).json({
+        message: "Parâmetro 'categoria' é obrigatório e deve ser string(nome da categoria)."
+      });return
+    }
+    
+    const normalizedCategory = categoryName.trim().toLowerCase();
+
+    const foundCategory = await Category.findOne({
+      name: { $regex: new RegExp(`^${normalizedCategory}$`, "i") }
+    });
+
+    if (!foundCategory) {
+      const allCategories = await Category.find();
+       res.status(404).json({
+        message: `Categoria "${normalizedCategory}" não encontrada.`,
+        availableCategories: allCategories.map(cat => cat.name)
+      });
+    }
+
+    const products = await Products.find({ category: foundCategory?._id });
+
+     res.status(200).json({
+      category: foundCategory?.name,
+      totalProducts: products.length,
+      products
+    });
+
+  } catch (error) {
+    console.error("Erro ao buscar produtos por categoria:", error);
+     res.status(500).json({
+      message: "Erro interno no servidor",
+      error: error instanceof Error ? error.message : "Unknown error"
+    });
   }
 };
