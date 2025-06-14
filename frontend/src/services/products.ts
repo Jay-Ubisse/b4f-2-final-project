@@ -10,13 +10,13 @@ export type Products = {
   stock: number;
 };
 
-export async function getProductsById({
+export async function getProducts({
   id,
 }: {
   id: string;
 }): Promise<Products | undefined> {
   try {
-    const res = await fetch(`/products/${id}`);
+    const res = await fetch(`/products/`);
     const data = await res.json();
     return data;
   } catch (err) {

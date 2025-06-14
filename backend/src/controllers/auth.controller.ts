@@ -13,13 +13,13 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 
   if (!user) {
     return res
-      .status(401)
-      .json({ message: 'Email ou palavra-passe incorreto.' })
+      .status(404)
+      .json({ message: "Not found" })
   }
 
   const isEqual = await bcrypt.compare(password, user.password);
   if (!user || !isEqual) {
-   return res.status(401).json({ message: "Email ou palavra-passe incorreto." });
+   return res.status(401).json({ message: "not authorized" });
   }
 
 const jwtSecret: string = process.env.JWT_SECRET || '';
@@ -34,7 +34,7 @@ const jwtSecret: string = process.env.JWT_SECRET || '';
       expiresIn: "24h",
     }
   );
-  res.status(200).json({ message: "Seja bem vindo Devolta", user,token})}
+  res.status(200).json({ message: "Ok", user,token})}
 
 
 
