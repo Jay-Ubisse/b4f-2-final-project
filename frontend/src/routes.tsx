@@ -1,32 +1,29 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { About, Home, Details, ErrorPage, ContactPage } from "./pages";
 
-import { About, Home, Counter} from "./pages";
-
-
-import { CartProvider } from "./contexts/cartContext";
 import { MainLayout } from "./layouts/main-layout";
-
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <CartProvider>
-        <MainLayout />
-      </CartProvider>
-    ),
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
         element: <Home />,
       },
       {
-        path: "about",
+        path: "/about",
         element: <About />,
       },
       {
-        path: "counter",
-        element: <Counter />,
+        path: "/details",
+        element: <Details />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
       },
     ],
   },

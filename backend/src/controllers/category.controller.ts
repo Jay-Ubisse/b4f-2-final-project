@@ -170,6 +170,3 @@ export const getProductsByQueryCategory = async (req: Request, res: Response) =>
     });
   }
 };
-
-
-

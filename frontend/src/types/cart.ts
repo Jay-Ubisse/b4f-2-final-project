@@ -1,13 +1,18 @@
-import type { ProductProps } from "./products";
-
-export interface CartItem extends ProductProps {
+export interface CartItem {
+  _id: string;
+  name: string;
+  price: number;
+  imageUrl?: string;
   quantity: number;
+  selectedColor: string;
+  selectedSize: string;
 }
 
-export interface CartContextType {
-  cartItems: CartItem[];
-  addToCart: (item: CartItem) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
+export interface ProductProps {
+  _id: string;
+  name: string;
+  price?: number;
+  colors?: string[];
+  sizes?: string[];
+  imageUrl?: string;
 }
