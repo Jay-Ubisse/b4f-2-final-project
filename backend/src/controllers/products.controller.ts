@@ -132,7 +132,7 @@ export const getProducts = async (req: Request, res: Response) => {
          message: "Erro ao buscar produtos"
       })
    }
-}
+
   try {
     const { page = "1", perPage = "4" } = req.query;
 
