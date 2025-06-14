@@ -15,10 +15,18 @@ import {
   CardDescription
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import type{ Products } from "../services/products";
+=======
+import { login } from "../services/auth";
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate} from "react-router-dom";
+import type { Products } from "../types/products";
+import { getProducts } from "../services/products";
+>>>>>>> cdcce75dac082793947457b859e3e5d1b92c7223
 
 // async function handleLogin() {
 //   const response = await login({
@@ -40,6 +48,7 @@ const viewProducts = () => {
 };[]
 
 export const Home = () => {
+<<<<<<< HEAD
  const [data, setData] = useState<products[]>([]);
  const { id } = useParams();
   useEffect(() => {
@@ -47,6 +56,14 @@ export const Home = () => {
       try {
         const data = await getProduct();
         if (data) setData([data]);
+=======
+ const [data, setData] = useState<Products[]>([]);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getProducts;
+        if (!data) setData([data]);
+>>>>>>> cdcce75dac082793947457b859e3e5d1b92c7223
        
         console.log(data);
       } catch (error) {
@@ -54,6 +71,7 @@ export const Home = () => {
       }
     }
     fetchData();
+<<<<<<< HEAD
   }, [id]);
 
 const carouselImages = [
@@ -77,6 +95,14 @@ const carouselImages = [
   return (
     <>
       <Carousel>
+=======
+  }, [data]
+);
+
+  return (
+    <>
+      <Carousel className="w-screen h-155">
+>>>>>>> cdcce75dac082793947457b859e3e5d1b92c7223
         <CarouselContent>
           {Array.from({ length: 1 }).map((_, index) => (
             <CarouselItem key={index}>
@@ -95,7 +121,11 @@ const carouselImages = [
                 <CardContent className=" items-center justify-center">
                   <img 
                     className=""
+<<<<<<< HEAD
                     src="https://www.houseofblanks.com/cdn/shop/files/HOB-FW24-shopify.png?v=1726606111&width=3840"
+=======
+                    src="https://www.taibobacar.com/media/resort19-header.jpg"
+>>>>>>> cdcce75dac082793947457b859e3e5d1b92c7223
                     alt=""
                   />
                 </CardContent>
@@ -115,7 +145,11 @@ const carouselImages = [
             <CarouselItem key={index}>
               <div className="">
                 <CardContent className=" items-center justify-center ">
+<<<<<<< HEAD
                   <img src="https://www.taibobacar.com/media/layerslider/projects/Homepage-Gorongoza/Gorongoza-Collection-1170x782.webp" alt="" />
+=======
+                  <img src="https://www.taibobacar.com/media/TB-Bacars-Garden-001.jpg" alt="" />
+>>>>>>> cdcce75dac082793947457b859e3e5d1b92c7223
                 </CardContent>
               </div>
             </CarouselItem>
@@ -133,7 +167,12 @@ const carouselImages = [
           View All
         </Button>
       </NavLink>
+<<<<<<< HEAD
       <div className="flex gap-5  m-6 justify-center items-center">
+=======
+      <NavLink to={"/details"}>
+        <div className="flex gap-5  m-6 justify-center items-center">
+>>>>>>> cdcce75dac082793947457b859e3e5d1b92c7223
           <Card className="w-100 h-100">
             <CardHeader>
               <CardTitle className="text-center">T-Shirt</CardTitle>
@@ -212,7 +251,11 @@ const carouselImages = [
 
             <CardFooter className="gap-3 flex justify-start -mt-4">
               <div className="w-5 h-5 border-1 bg-black"></div>
+<<<<<<< HEAD
               <div className="w-5 h-5 border-1 bg-cyan-"></div>
+=======
+              <div className="w-5 h-5 border-1 bg-cyan-700"></div>
+>>>>>>> cdcce75dac082793947457b859e3e5d1b92c7223
               <div className="w-5 h-5 border-1 bg-blue-950"></div>
               <div className="w-5 h-5 border-1 bg-pink-950"></div>
 
@@ -224,6 +267,10 @@ const carouselImages = [
           </Card>
        
       </div>
+<<<<<<< HEAD
+=======
+      </NavLink>
+>>>>>>> cdcce75dac082793947457b859e3e5d1b92c7223
     
         
     </>

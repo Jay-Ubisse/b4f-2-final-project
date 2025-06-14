@@ -17,4 +17,16 @@ export interface CategoryProps extends Document {
   description?: string;
 }
 
+<<<<<<< HEAD
+export interface ProductsProps extends Document{
+        name:String,
+        color:String[],
+        sizes:String[],
+        price:Number,
+        description:String,
+        category:Types.ObjectId[],
+        stock:number;
+}
+=======
+>>>>>>> dev-isa
 

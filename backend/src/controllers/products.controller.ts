@@ -4,6 +4,8 @@ import { ProductsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
 
 export const authorizeRole = async (role: string) => {
+const authorizeRole = async (role: string) => {
+
   (req: Request, res: Response, next: NextFunction) => {
     const user = (req as any).user;
 
@@ -13,7 +15,7 @@ export const authorizeRole = async (role: string) => {
 
     next();
   };
-};
+};}
 export const createProduct = async (req: Request, res: Response) => {
     authorizeRole("admin");
   try {
@@ -257,3 +259,4 @@ export const getProductsByQueryCategory = async (req: Request, res: Response) =>
     });
   }
 };
+

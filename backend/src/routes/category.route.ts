@@ -17,6 +17,10 @@ categoryRouter.put("/:id", authentionToken, authorizeRole("admin"),updateCategor
 categoryRouter.delete("/:id",authentionToken, authorizeRole("admin") ,deleteCategory);
 categoryRouter.get("/",getAllCategories);
 categoryRouter.get("/:id/products", getProductByCategory);
+<<<<<<< HEAD
+
+=======
+>>>>>>> cdcce75dac082793947457b859e3e5d1b92c7223
 
 
 
