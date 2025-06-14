@@ -18,7 +18,7 @@ async function handleLogin() {
 }
 
 async function handleGetProducts() {
-  const response = await getProduct({ id: "6848315ee273205a2300ef50" });
+ // const response = await getProduct({ id: "6848315ee273205a2300ef50" });
 }
 export const Home = () => {
   return (
