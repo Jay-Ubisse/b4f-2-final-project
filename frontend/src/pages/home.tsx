@@ -36,9 +36,9 @@ import { getProducts } from "../services/products";
 //   }
 // }
 const viewProducts = () => {
-  const Navigate = useNavigate();
-  Navigate("/products");
-};[]
+let Navigate=useNavigate();
+Navigate("/products");
+};
 
 export const Home = () => {
  const [data, setData] = useState<Products[]>([]);
@@ -106,16 +106,13 @@ export const Home = () => {
         </CarouselContent>
       
       </Carousel>
-
-      <NavLink to={"/products"} className="flex justify-end mr-20 mt-10 ">
-        <Button
-          onClick={viewProducts}
-          className="bg-stone-200"
+        <Button onClick={viewProducts}
+          className="bg-stone-200 flex justify-end mr-20 mt-10"
           variant="outline"
         >
           View All
         </Button>
-      </NavLink>
+    
       <NavLink to={"/details"}>
         <div className="flex gap-5  m-6 justify-center items-center">
           <Card className="w-100 h-100">

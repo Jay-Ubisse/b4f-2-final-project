@@ -9,9 +9,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "../components/ui/command";
-/*import { data } from "react-router-dom";
-import { Cat, Search } from "lucide-react";
-*/
+
 export const Products = () => {
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
@@ -51,7 +49,7 @@ export const Products = () => {
        <div>
         
 <section>
-  <h1 className="flex justify-center text-2xl font-bold mb-4">Produtos</h1>
+  <h1 className="flex justify-center text-2xl font-bold mb-4">Shop on our E-Commerce</h1>
   <p className="mb-4"></p>
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
    
