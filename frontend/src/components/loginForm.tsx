@@ -25,13 +25,13 @@ import { login } from '../services/auth'
 
 
 const FormSchema = z.object({
-  email: z
-    .string({ required_error: 'O email é obrigatório' })
-    .email('Email inválido'),
-  password: z
-    .string({ required_error: 'A senha é obrigatória' })
-    .min(6, 'A senha deve ter pelo menos 6 caracteres')
-    .max(20, 'A senha deve ter no máximo 20 caracteres'),
+   email: z
+        .string({ required_error: 'Email is required' })
+        .email('Invalid email'),
+    password: z
+        .string({ required_error: 'Password is required' })
+        .min(6, 'Password must be at least 6 characters long')
+        .max(20, 'Password must be at most 20 characters long'),
 })
 
 export const LoginForm = () => {
@@ -46,15 +46,15 @@ export const LoginForm = () => {
       })
       if (response.status === 200) {
         //console.log("conseguiu fazer login")
-        toast.success('Login realizado com sucesso!',{id:"1"})
+        toast.success('Login successful!',{id:"1"})
         window.location.href = '/'
       } else {
        // console.log("não conseguiu fazer login")
-        toast.error("Email ou Password Incorrectos. Verifique suas credenciais.",{id:"1"})
+        toast.error("Incorrect Email or Password. Please check your credentials.",{id:"1"})
       }
     } catch (error) {
       console.error(error)
-      toast.error('Erro ao realizar login. Tente novamente mais tarde.', {
+      toast.error('Error logging in. Please try again later.', {
         id: '1',
       })
     }
@@ -64,7 +64,7 @@ export const LoginForm = () => {
       <div className="flex items-center justify-center min-h-screen ">
         <Card className="w-full max-w-sm m-auto font-mono">
           <CardHeader>
-            <CardTitle>Introduza os seus dados de Login</CardTitle>
+            <CardTitle className='font-light text-2xl text-center'>LOGIN</CardTitle>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -104,18 +104,18 @@ export const LoginForm = () => {
                 />
                 <div className="flex-col gap-2 text-center">
                   <Toaster />
-                  <Button type="submit">Entrar</Button>
+                  <Button type="submit">Sign In</Button>
                 </div>
               </form>
             </Form>
-            <CardAction className="w-full text-center">
+            <CardAction className="w-full text-center pt-1">
               <p className="text-sm">
-                Não possui conta?
+                Don't have an account?
                 <Link
                   to="/register"
                   className="text-black hover:underline pl-1 "
                 >
-                  Clique aqui para criar
+                  Click here to regist
                 </Link>
               </p>
             </CardAction>

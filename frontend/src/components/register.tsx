@@ -24,18 +24,18 @@ import { createUser } from '../services/users'
 
 
     const FormSchema = z.object({
-  name: z.string({ required_error: 'O nome é obrigatório' }),
+  name: z.string({ required_error: 'Name is required' }),
     email: z
-        .string({ required_error: 'O email é obrigatório' })
-        .email('Email inválido'),
+        .string({ required_error: 'Email is required' })
+        .email('Invalid email'),
     password: z
-        .string({ required_error: 'A senha é obrigatória' })
-        .min(6, 'A senha deve ter pelo menos 6 caracteres')
-        .max(20, 'A senha deve ter no máximo 20 caracteres'),
+        .string({ required_error: 'Password is required' })
+        .min(6, 'Password must be at least 6 characters long')
+        .max(20, 'Password must be at most 20 characters long'),
     confirmPassword: z
-        .string({ required_error: 'A confirmação de senha é obrigatória' })
-        .min(6, 'A confirmação de senha deve ter pelo menos 6 caracteres')
-        .max(20, 'A confirmação de senha deve ter no máximo 20 caracteres')
+        .string({ required_error: 'Password confirmation is Required' })
+        .min(6, 'Password confirmation must be at least 6 characters long')
+        .max(20, 'Password confirmation must be at most 20 characters long')
         })
 export const RegisterForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -44,7 +44,7 @@ export const RegisterForm = () => {
 
   async function onSubmit(user: z.infer<typeof FormSchema>) {
     if (user.password !== user.confirmPassword) {
-            toast.error('As senhas não coincidem, tente novamente')
+            toast.error('Passwords do not match, please try again')
         }else {
     try {
         
@@ -52,17 +52,17 @@ export const RegisterForm = () => {
 
         if (response.status===201){
            // console.log('Usuário registrado:', user)
-            toast.success(`Perfil criado com sucesso`,{id:`1`})
+            toast.success(`Profile created successfully`,{id:`1`})
             window.location.href = '/login'
         } 
         if (response.status===400){
           //  console.log(`Ja existe usuario cadastrado com esse email`)
-            toast.error(`Já existe um usuario cadastrado com esse email, tente novamente`,{id:`1`})
+            toast.error(`There is already a user registered with that email, try again`,{id:`1`})
         }
         }
  catch (error) {
       console.error(error)
-    toast.error('Erro ao registrar usuário. Tente novamente mais tarde.', {
+    toast.error('Error registering user. Please try again later.', {
     id: '1',
     })
     }
@@ -74,7 +74,7 @@ export const RegisterForm = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <Card className="w-full max-w-md font-mono">
             <CardHeader>
-            <CardTitle >Crie sua conta e arrase no estilo</CardTitle>
+            <CardTitle className='font-light text-2xl text-center'>CREATE ACCOUNT</CardTitle>
             </CardHeader>
             <CardContent>
             <Form {...form}>
@@ -86,7 +86,7 @@ export const RegisterForm = () => {
                     <FormItem className="mb-4">
                         <FormLabel>Nome</FormLabel>
                         <FormControl>
-                        <Input placeholder="Insira seu nome completo" {...field} />
+                        <Input placeholder="Enter your full name" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -100,7 +100,7 @@ export const RegisterForm = () => {
                     <FormItem className="mb-4">
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                        <Input placeholder="Insira seu email" {...field} />
+                        <Input placeholder="Enter your email" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -111,9 +111,9 @@ export const RegisterForm = () => {
                     name="password"
                     render={({ field }) => (
                     <FormItem className="mb-4">
-                        <FormLabel>Senha</FormLabel>
+                        <FormLabel>Password</FormLabel>
                         <FormControl>
-                        <Input type="password" placeholder="Insira sua senha" {...field} />
+                        <Input type="password" placeholder="Enter your password" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -124,9 +124,9 @@ export const RegisterForm = () => {
                     name="confirmPassword"
                     render={({ field }) => (
                     <FormItem className="mb-4">
-                        <FormLabel>Confirmar Senha</FormLabel>
+                        <FormLabel>Confirm Password</FormLabel>
                         <FormControl>
-                        <Input type="password" placeholder="Confirme sua senha" {...field} />
+                        <Input type="password" placeholder="Confirm your password" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -136,13 +136,13 @@ export const RegisterForm = () => {
 
                 <div className='text-center'>
                     <Toaster/>
-                   <Button  type="submit">Registrar</Button> 
-                </div>
-                
+                   <Button  type="submit">Create</Button> 
+                </div>  
                 </form>
             </Form>
             <div className='text-center'>
-                <Link to="/login">Já tem uma conta? Faça login</Link>
+                <p>Already have an account?
+                <Link className='text-center hover:underline pl-1'  to="/login">Login Here</Link></p>
             </div>
             </CardContent>
         </Card>

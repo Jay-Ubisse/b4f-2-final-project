@@ -3,6 +3,7 @@ import { User } from "lucide-react";
 import { Button } from "../components/ui/button";
 import api from "../services/axios-instance";
 
+
 export const Account = () => {
    const [userData, setUserData] = useState<any | null>(null);
 
@@ -17,6 +18,10 @@ export const Account = () => {
     }
   };
 
+  const details = () => {
+    window.location.href = "/account/orders"
+  }
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("session");
@@ -28,34 +33,38 @@ export const Account = () => {
   }, []);
 
   return (
-    <main className="bg-gray-200 flex flex-col justify-center font-mono ">
-      <section className="flex flex-col justify-center flex-1 px-12 py-10">
+    <main className="bg-gray-200 flex flex-col items-center font-mono ">
+      <section className="flex flex-col w-fit flex-1 px-12 py-10">
         <h1 className="text-3xl font-bold mb-8">
           <strong>ACCOUNT</strong>
         </h1>
 
-        <section className="bg-gray-200 p-8 rounded-md max-w-3xl">
+        <section className="bg-gray-200 p-8 rounded-md text-center">
           <h2 className="text-2xl font-semibold mb-6">
             <strong>ACCOUNT DETAILS</strong>
           </h2>
 
           {userData ? (
             <>
-              <p className="mb-4">
+              <div className="flex flex-col items-start">
+                <p className="mb-4">
                 <strong>Name: </strong> {userData.name}
               </p>
               <p className="mb-8">
                 <strong>Email: </strong> {userData.email}
               </p>
+              </div>
             </>
           ) : (
-            <p>Carregando dados do usuário...</p>
+            <p>Loading user data...</p>
           )}
-
-          <Button variant="link" className="flex items-center" onClick={handleLogout}>
-            <User className="text-black mr-2" size={20} />
+        <div className="flex justify-center">
+          <Button onClick={details}> Order</Button>
+          <Button className="ml-4" onClick={handleLogout}>
+            <User className="text-white mr-2" size={20} />
             Log out
           </Button>
+          </div>
         </section>
       </section>
     </main>
