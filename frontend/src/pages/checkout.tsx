@@ -3,7 +3,7 @@ import OrderSummary from "../components/checkout/order-summary.tsx"
 
 export function CheckoutPage() {
   return (
-    <div className="flex-row bg-gray-100 min-h-screen">
+    <div className=" bg-gray-100 min-h-screen">
       <OrderSummary items={[]} total={0} onConfirm={function (): void {
         console.log("Function not implemented.");
       } }/>

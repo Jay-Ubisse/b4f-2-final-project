@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CheckCircle2, CircleDashed } from "lucide-react"
@@ -27,9 +27,17 @@ export function CheckoutForm() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  // 👉 Tenta recuperar dados salvos do localStorage
+  const storedData =
+    typeof window !== "undefined" ? localStorage.getItem("checkout-form") : null
+  const parsedData: CheckoutFormValues | undefined = storedData
+    ? JSON.parse(storedData)
+    : undefined
+
+  // 👉 Inicia o formulário com valores padrão ou salvos
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
-    defaultValues: {
+    defaultValues: parsedData ?? {
       email: "",
       phone: "",
       firstName: "",
@@ -47,18 +55,23 @@ export function CheckoutForm() {
     mode: "onChange",
   })
 
-  const {
-    handleSubmit,
-    trigger,
-  } = form
+  const { handleSubmit, trigger, watch, reset } = form
+
+  // 🧠 Salva os dados sempre que o formulário muda
+  useEffect(() => {
+    const subscription = watch((value) => {
+      localStorage.setItem("checkout-form", JSON.stringify(value))
+    })
+    return () => subscription.unsubscribe()
+  }, [watch])
 
   const goToNextStep = async () => {
     const fieldsToValidate =
       currentStep === 0
         ? ["email", "phone", "firstName", "lastName"]
         : currentStep === 1
-          ? ["address", "city", "province", "postalCode"]
-          : ["cardNumber", "cardExpiry", "cardCvc", "cardName", "cardType"]
+        ? ["address", "city", "province", "postalCode"]
+        : ["cardNumber", "cardExpiry", "cardCvc", "cardName", "cardType"]
 
     const isStepValid = await trigger(fieldsToValidate as any)
 
@@ -80,8 +93,11 @@ export function CheckoutForm() {
   const onSubmit = async (data: CheckoutFormValues) => {
     setIsSubmitting(true)
     try {
-      // Replace with your actual API endpoint
       await axios.post("/api/checkout", data)
+
+      // ✅ Limpa dados após envio bem-sucedido
+      localStorage.removeItem("checkout-form")
+      reset()
       setIsModalOpen(true)
     } catch (error) {
       console.error("Error submitting checkout form:", error)
@@ -91,8 +107,8 @@ export function CheckoutForm() {
   }
 
   return (
-    <div className="space-y-8 ">
-      {/* Steps indicator */}
+    <div className="space-y-8">
+      {/* Passos do checkout */}
       <div className="flex justify-between">
         {steps.map((step, index) => (
           <div key={step.id} className="flex flex-col items-center">
@@ -103,7 +119,11 @@ export function CheckoutForm() {
                   : "border-muted bg-background"
               }`}
             >
-              {index < currentStep ? <CheckCircle2 className="h-6 w-6" /> : <CircleDashed className="h-6 w-6" />}
+              {index < currentStep ? (
+                <CheckCircle2 className="h-6 w-6" />
+              ) : (
+                <CircleDashed className="h-6 w-6" />
+              )}
             </div>
             <span className="mt-2 text-sm font-medium">{step.title}</span>
           </div>
@@ -119,10 +139,15 @@ export function CheckoutForm() {
               {currentStep === 2 && <PaymentMethod form={form} />}
 
               <div className="flex justify-between pt-4">
-                <Button type="submit" variant="outline" onClick={goToPreviousStep} disabled={currentStep === 0}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={goToPreviousStep}
+                  disabled={currentStep === 0}
+                >
                   Previous
                 </Button>
-                <Button type="submit" onClick={goToNextStep} disabled={isSubmitting}>
+                <Button type="button" onClick={goToNextStep} disabled={isSubmitting}>
                   {currentStep === steps.length - 1 ? "Complete Order" : "Next"}
                 </Button>
               </div>
@@ -130,7 +155,12 @@ export function CheckoutForm() {
           </form>
         </CardContent>
       </Card>
-      <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} formData={form.getValues()} />
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        formData={form.getValues()}
+      />
     </div>
   )
 }

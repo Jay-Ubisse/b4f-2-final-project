@@ -4,9 +4,9 @@ import type { UseFormReturn } from "react-hook-form"
 import type { CheckoutFormValues } from "./schemas"
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { Label } from "../ui/label"
 import { CreditCard } from "lucide-react"
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 
 interface PaymentMethodProps {
   form: UseFormReturn<CheckoutFormValues>

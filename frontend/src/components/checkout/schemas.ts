@@ -1,5 +1,4 @@
-import * as z from "zod"
-
+import { z } from "zod"
 export const checkoutFormSchema = z.object({
   // Contact Information
   firstName: z.string().min(2, { message: "First name is required" }),
@@ -11,7 +10,7 @@ export const checkoutFormSchema = z.object({
   address: z.string().min(5, { message: "Address is required" }),
   city: z.string().min(2, { message: "City is required" }),
   province: z.string().min(1, { message: "Province is required" }),
-  postalCode: z.string().min(4, { message: "Postal code is required" }),
+  postalCode: z.string().min(4, { message: "Postal code must be numeric" }),
 
   // Payment Method
   cardType: z.enum(["visa", "mastercard"]),
