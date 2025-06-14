@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { About, Home, AdminPage, OrdersUser, } from "./pages";
+import { About, Home, OrdersUser, } from "./pages";
 import { MainLayout } from "./layouts/main-layout";
 import { CheckoutPage } from "./pages/checkout";
+import { AdminPage } from "./pages/admin";
 
 
 
@@ -23,10 +24,11 @@ const router = createBrowserRouter([
         path: "/checkout",
         element: <CheckoutPage />,
       },
-      {
-        path: "/page",
-        element: < AdminPage />,
+        {
+        path: "/admin",
+        element: <AdminPage />,
       },
+   
       {
         path: "/orders-user",
         element: < OrdersUser />,

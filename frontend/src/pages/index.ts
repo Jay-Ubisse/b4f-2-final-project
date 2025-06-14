@@ -1,7 +1,8 @@
 import { Home } from "./home";
 import { About } from "./about";
-import {AdminPage } from "./adminpage";
+import { AdminPage } from "./admin";
 import { CheckoutPage } from "./checkout";
 import { OrdersUser } from "./orders-user";
+import UsersPage from "./admin/users"
 
-export { Home, About, AdminPage,CheckoutPage,OrdersUser };
+export { Home, About, CheckoutPage, AdminPage, UsersPage, OrdersUser };
