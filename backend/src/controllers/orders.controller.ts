@@ -3,7 +3,7 @@ import { Order } from "../models/orders.models.ts";
 import { Product } from "../models/user.model.ts";
 import { User } from "../models/user.model.ts";
 
-export async function createOrder(req: Request, res: Response) {
+export async function createOrders(req: Request, res: Response) {
   try {
     const userId = (req as any).user.id;
     const { items } = req.body;
@@ -92,7 +92,7 @@ export async function getAllOrders(req: Request, res: Response) {
   }
 }
 
-//atualizar status do pedido
+//atualizar status do pedido Patch /orders/:id [Apenas admin]
 export const patchOrders = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -114,35 +114,12 @@ export const patchOrders = async (req: Request, res: Response) => {
       res.status(404).json({ error: "Pedido não encontrado." });
     }
 
-    res.status(200).json(updatedOrder);
-  } catch (error: any) {
+    res.status(200).json({
+      message: "Status do pedido atualizado com sucesso.",
+      order: updatedOrder,
+    });
+  } catch (error) {
     console.error("Erro ao atualizar pedido:", error);
     res.status(500).json({ error: "Erro ao atualizar pedido." });
   }
 };
-
-// Atualizar status do pedido (PATCH /orders/:id) [Apenas admin]
-// export async function updateOrderStatus(req: Request, res: Response) {
-//   try {
-//     const orderId = req.params.id;
-//     const { status } = req.body;
-
-//     const validStatus = ["pendente", "enviado", "entregue", "cancelado"];
-//     if (!validStatus.includes(status)) {
-//       res.status(400).json({ error: "Status inválido!" });
-//     }
-
-//     const updatedOrder = await Order.findByIdAndUpdate(
-//       orderId,
-//       { status },
-//       { new: true }
-//     );
-
-//     if (!updatedOrder)
-//       res.status(404).json({ error: "Pedido não encontrado." });
-
-//     res.json(updatedOrder);
-//   } catch (err) {
-//     res.status(500).json({ error: "Erro ao atualizar status do pedido." });
-//   }
-// }
