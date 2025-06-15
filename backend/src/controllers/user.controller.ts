@@ -13,7 +13,7 @@ export const register = async (req:Request, res:Response) => {
     if (existingUser) {
       res
         .status(400)
-        .json({ message: "Já existe um usuário cadastrado com este email." });
+        .json({ message: "There is already a user registered with this email." });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -24,12 +24,12 @@ export const register = async (req:Request, res:Response) => {
       password: hashedPassword,
     });
 
-    res.status(201).json({ message: "Usuário criado com sucesso", user });
+    res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
     console.log(error);
     res
       .status(500)
-      .json({ message: "Ocorreu um erro interno no servidor", error });
+      .json({ message: "An internal server error has occurred", error });
   }
 };
 
@@ -39,13 +39,10 @@ export const getMe=(req:Request,res:Response)=> {
 
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: 'Erro ao buscar os dados do usuário' })
+    res.status(500).json({ message: "Error fetching user data" })
   }
 }
 
 
-import { Request, Response } from "express";
-import { User } from "../models/user.model.js";
 
-export function createUser(req: Request, res: Response) {}
 

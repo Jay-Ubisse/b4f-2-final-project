@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import ProductList from "../components/admin/productList";
 import OrderList from "../components/admin/orderList";
@@ -78,9 +76,20 @@ export function AdminPage() {
     const fetchOrders = async () => {
         try {
             const response = await getOrders();
+            const result = Array.isArray(response)
+                ? response
+                : Array.isArray(response?.data)
+                    ? response.data
+                    : Array.isArray(response?.orders)
+                        ? response.orders
+                        : [];
+            console.log("Resposta de getOrders:", response);
+
+            setOrders(result);
             setOrders(response);
         } catch (error) {
             console.error("Erro ao buscar pedidos:", error);
+            setOrders([])
         }
     };
     const fetchCategories = async () => {
@@ -156,8 +165,8 @@ export function AdminPage() {
                 <CategoryList categories={categories} onEdit={openCategoryModal}
                     onDelete={async (id) => {
                         try {
-                            const confirmar = confirm("Tens certeza que queres apagar este produto?");
-                            if (!confirmar) return;
+                            const confirmed = confirm("Tens certeza que queres apagar este produto?");
+                            if (!confirmed) return;
                             await deleteCategory(id);
                             await fetchCategories();
 
@@ -182,12 +191,14 @@ export function AdminPage() {
                         Add Product
                     </Button>
                 </h2>
-                <ProductList products={products}
+                <ProductList
+                    products={products}
+                    categories={categories}
                     onEdit={openProductModal}
                     onDelete={async (id) => {
                         try {
-                            const confirmar = confirm("Tens certeza que queres apagar este produto?");
-                            if (!confirmar) return;
+                            const confirmed = confirm("Tens certeza que queres apagar este produto?");
+                            if (!confirmed) return;
                             await deleteProduct(id);
                             await fetchProducts();
                         } catch (error) {

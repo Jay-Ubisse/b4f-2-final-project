@@ -84,6 +84,22 @@ export const updateOrderStatus = async (id: string, status: string) => {
     throw error
   }
 }
+
+export const getMyOrders = async () => {
+  try {
+    const response = await api.get("/orders/me")
+    console.log("Items:", response.data.items)
+    return response.data.orders|| response.data
+  } catch (error: any) {
+    console.log("Erro ao buscar pedidos:", error)
+
+    if (error.status === 401) {
+      return("user not authenticated. Please log in to view orders.")
+    }
+
+    throw error
+  }
+}
 //=====PRODUCTS========
 
 export const createProduct = async (product: {

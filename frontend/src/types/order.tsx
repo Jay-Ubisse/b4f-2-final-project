@@ -29,42 +29,8 @@ export interface OrderProps {
        country: string;
        city: string;
     };
+    createdAt: Date;
 }
-
-
-export const data: OrderProps[] = [
-   {
-        orderId: '12345',
-        customerName: 'John Doe',
-        items: [
-            { name: 'Widget A', itemId: 'a1', quantity: 2, price: 19.99 },
-            { name: 'Widget B', itemId: 'b1', quantity: 1, price: 29.99 },
-        ],
-        totalAmount: 69.97,
-        orderDate: '2023-10-01',
-        status: 'shipped',
-        shippingAddress: {
-            country: 'USA',
-            city: 'New York',
-        },
-    },
-     {
-        orderId: '12345',
-        customerName: 'John Doe',
-        items: [
-            { name: 'Widget A', itemId: 'a1', quantity: 2, price: 19.99 },
-            { name: 'Widget B', itemId: 'b1', quantity: 1, price: 29.99 },
-        ],
-        totalAmount: 69.97,
-        orderDate: '2023-10-01',
-        status: 'shipped',
-        shippingAddress: {
-            country: 'USA',
-            city: 'New York',
-        },
-    },
-  
-]
 
 
 export const columns: ColumnDef<OrderProps>[] = [

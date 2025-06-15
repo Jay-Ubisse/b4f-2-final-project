@@ -6,8 +6,9 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { router } from "./routes/user.route.ts";
-import { authRouter } from "./routes/auth-route.ts";
+import { authRouter } from "./routes/auth.route.ts";
 import categoryRoute from "./routes/category.route.ts";
+
 
 const app = express();
 app.use(express.json());
@@ -18,14 +19,11 @@ const host = process.env.HOST || "http://localhost";
 const port = process.env.PORT || 3000;
 
 app.use("/orders", orderRoute);
-
 app.use("/products", productRoute);
 app.use("/categories", categoryRoute);
-app.use("/auth", authRouter);
-app.use("/users", router);
-
-
-
+app.use("/login", authRouter);
+app.use("/register", router);
+app.use("/me",router)
 
 mongoose
   .connect(process.env.BD_URI as string)

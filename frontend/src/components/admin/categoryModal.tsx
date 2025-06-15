@@ -1,5 +1,3 @@
-"use client"
-
 import {
   Dialog,
   DialogContent,
@@ -8,8 +6,11 @@ import {
 } from "../../components/ui/dialog"
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Label } from "../ui/label"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 interface CategoryModalProps {
   onSubmit: (category: { name: string; description?: string }) => Promise<void>
@@ -18,59 +19,90 @@ interface CategoryModalProps {
   category: { name?: string; description?: string } | null
 }
 
+const categorySchema = z.object({
+  name: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
+  description: z.string().max(255, "Descrição muito longa").optional(),
+})
+
+type CategoryFormValues = z.infer<typeof categorySchema>
+
 export const CategoryModal = ({
   onSubmit,
   isOpen,
   onClose,
   category,
 }: CategoryModalProps) => {
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<CategoryFormValues>({
+    resolver: zodResolver(categorySchema),
+    defaultValues: {
+      name: "",
+      description: "",
+    },
+  })
 
-  // Preenche os campos ao editar
   useEffect(() => {
     if (category) {
-      setName(category.name || "")
-      setDescription(category.description || "")
+      reset({
+        name: category.name || "",
+        description: category.description || "",
+      })
     } else {
-      setName("")
-      setDescription("")
+      reset({
+        name: "",
+        description: "",
+      })
     }
-  }, [category, isOpen])
+  }, [category, isOpen, reset])
 
-  const handleSubmit = async () => {
-    if (!name.trim()) return
-    await onSubmit({ name, description })
-    setName("")
-    setDescription("")
-    onClose() 
+  const onFormSubmit = async (data: CategoryFormValues) => {
+    await onSubmit(data)
+    reset()
+    onClose()
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent>
-        <DialogTitle>{category && category.name ? "Edit Category" : "New Category"}</DialogTitle>
+        <DialogTitle>
+          {category?.name ? "Edit Category" : "New Category"}
+        </DialogTitle>
         <DialogDescription>
-{category && category.name
-    ? "Update the category details."
-    : "Create a new category by filling out the fields below."}
-         </DialogDescription>
-        <Label>Name</Label>
-        <Input
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Label>Description (optional)</Label>
-        <Input
-          placeholder="Description of the category"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <div className="flex justify-end mt-4 gap-2">
-          <Button variant="outline" onClick={onClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Save</Button>
-        </div>
+          {category?.name
+            ? "Update the category details."
+            : "Create a new category by filling out the fields below."}
+        </DialogDescription>
+
+        <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-3">
+          <div>
+            <Label>Name</Label>
+            <Input placeholder="Name" {...register("name")} />
+            {errors.name && (
+              <p className="text-sm text-red-500">{errors.name.message}</p>
+            )}
+          </div>
+
+          <div>
+            <Label>Description (optional)</Label>
+            <Input placeholder="Description" {...register("description")} />
+            {errors.description && (
+              <p className="text-sm text-red-500">
+                {errors.description.message}
+              </p>
+            )}
+          </div>
+
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" type="button" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button type="submit">Save</Button>
+          </div>
+        </form>
       </DialogContent>
     </Dialog>
   )
