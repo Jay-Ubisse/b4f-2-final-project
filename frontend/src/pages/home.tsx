@@ -2,8 +2,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   
 } from "../components/ui/carousel";
 import {
@@ -21,20 +19,20 @@ import { NavLink, useNavigate} from "react-router-dom";
 import type { Product } from "../types/products";
 import { getProducts } from "../services/products";
 
-// async function handleLogin() {
-//   const response = await login({
-//     data: {
-//       email: "maudana@gmail.com",
-//       password: "123456",
-//     },
-//   });
+async function handleLogin() {
+  const response = await login({
+    data: {
+      email: "maudana@gmail.com",
+      password: "123456",
+    },
+  });
 
-//   if (response.status === 200) {
-//     console.log(response);
-//   } else {
-//     console.log(response.response.data);
-//   }
-// }
+  if (response.status === 200) {
+    console.log(response);
+  } else {
+    console.log(response.response.data);
+  }
+}
 const viewProducts = () => {
 let Navigate=useNavigate();
 Navigate("/products");

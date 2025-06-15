@@ -28,7 +28,6 @@ import { Button } from "../components/ui/button";
 export const Products = () => {
   const [products, setProducts] = useState<Product[] | undefined>([]);
   const [search, setSearch] = useState("");
-  const [refresh,setRefresh]=useState(0);
   useEffect(() => {
     async function fetchProducts() {
       try {
