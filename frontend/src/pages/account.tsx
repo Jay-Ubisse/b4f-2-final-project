@@ -19,7 +19,12 @@ export const Account = () => {
   };
 
   const details = () => {
-    window.location.href = "/account/orders"
+    if(userData.id.role!=="admin"){
+         return window.location.href = "/account/orders"
+
+    }else{
+       return window.location.href = "/account/admin"
+    }
   }
 
   const handleLogout = () => {

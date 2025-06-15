@@ -1,10 +1,6 @@
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 79a5aeb627154f2166ede9729a97e68b8136b766
 import { cn } from "../../lib/utils"
 
 function Label({

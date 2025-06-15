@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useEmblaCarousel from "embla-carousel-react";
-import { useEmblaAutoPlay } from "../components/ui/autoplay";
+//import { useEmblaAutoPlay } from "../components/ui/autoplay";
 import { motion } from "framer-motion";
 
 import {
@@ -56,8 +56,8 @@ export const Home = () => {
   const [products] = useState<ProductLocal[]>(localProducts);
   const navigate = useNavigate();
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  useEmblaAutoPlay(emblaApi, 4000); // autoplay a cada 4s
+  const [emblaRef] = useEmblaCarousel({ loop: true });
+  //useEmblaAutoPlay(emblaApi, 4000); // autoplay a cada 4s
 
   return (
     <>

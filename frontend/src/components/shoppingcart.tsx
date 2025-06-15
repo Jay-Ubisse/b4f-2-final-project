@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { X, Minus, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
-import { useCart } from "../../contexts/cartContext";
+import { Button } from "../../src/components/ui/button";
+import { Checkbox } from "../../src/components/ui/checkbox";
+import { useCart } from "../../src/contexts/cartContext";
 
 type CartProps = {
   isOpen: boolean;

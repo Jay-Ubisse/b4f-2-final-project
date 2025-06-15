@@ -1,11 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-<<<<<<< HEAD
-import { About, Home, Login, Register , Account, OrdersUser, ErrorPage, Products,CheckoutPage,AdminPage} from "./pages";
+import { About, Home, Login, Register , Account, OrdersUser, ErrorPage, Products,CheckoutPage,AdminPage,} from "./pages";
 
-=======
-import { About, Home, OrdersUser, CheckoutPage, AdminPage, ErrorPage, Products, Details, ContactPage } from "./pages";
->>>>>>> feature/frontend-cart
 import { MainLayout } from "./layouts/main-layout";
+import { Details } from "./pages/details";
+import { ContactPage } from "./pages/contact";
 
 
 
@@ -13,7 +11,7 @@ import { MainLayout } from "./layouts/main-layout";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />
+    element: <MainLayout />,
     children: [
       {
         index: true,
@@ -25,7 +23,6 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
-<<<<<<< HEAD
         path: "/login",
         element: <Login />,
       },
@@ -38,9 +35,7 @@ const router = createBrowserRouter([
         element: <Account />,
       },
        {
-=======
 
->>>>>>> feature/frontend-cart
         path: "/checkout",
         element: <CheckoutPage />,
       },
@@ -57,7 +52,7 @@ const router = createBrowserRouter([
         element: <OrdersUser />,
       },
       {
-        path: "/admin",
+        path: "/account/admin",
         element: <AdminPage />,
       },
       {
