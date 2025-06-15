@@ -9,4 +9,3 @@ export type Product= {
   categoryId: string;
   stock: number;
 };
-

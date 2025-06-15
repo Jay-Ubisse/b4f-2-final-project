@@ -1,29 +1,20 @@
 import { Link } from "react-router-dom";
-
-// export const ErrorPage = () => {
-//   return (
-//     <div className="flex items-center justify-center">
-//       <div className="bg-gray-500 flex flex-col gap-2 items-center justify-center h-2/3 w-2/3 text-black">
-//         <h1 className="font-bold text-2xl  text-black">
-//           Ops... Parece que você se perdeu.
-//         </h1>
-//         <Link to="/" className="px-2 py-1 rounded-md text-sm text-black">
-//           Voltar para a página inicial
-//         </Link>
-//       </div>
-//     </div>
-//   );
-// };
+import { Button } from "../components/ui/button";
 
 export const ErrorPage = () => {
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
-      <div className="bg-gray-500 flex flex-col gap-2 items-center justify-center h-2/3 w-2/3 text-black">
-        <h1 className="font-bold text-2xl text-black">
-          Ops... Parece que você se perdeu.
+    <div className="h-screen w-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-black to-zinc-400">
+      <div className="text-center flex flex-col items-center gap-4 p-6">
+        <h1 className="text-[10rem] font-mono font-extrabold text-white animate-pulse leading-none">
+          404
         </h1>
-        <Link to="/" className="px-2 py-1 rounded-md text-sm text-black">
-          Voltar para a página inicial
+        <p className="text-xl text-gray-300 font-mono">
+          Ops... Parece que você se perdeu
+        </p>
+        <Link to="/">
+          <Button className="mt-4 bg-black text-white font-mono px-6 py-2 rounded hover:bg-slate-800 hover:text-white hover:scale-105 transition-all duration-300">
+            Voltar para a Home
+          </Button>
         </Link>
       </div>
     </div>
