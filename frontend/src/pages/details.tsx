@@ -10,7 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
+<<<<<<< HEAD
 import type { ProductsProps } from "../services/products";
+=======
+import type { Products } from "../types/products";
+>>>>>>> 79a5aeb627154f2166ede9729a97e68b8136b766
 
 export const Details = () => {
   //mostrar o artigo selecionado

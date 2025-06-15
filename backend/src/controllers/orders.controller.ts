@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Order } from "../models/orders.models.ts";
-import { Product } from "../models/user.model.ts";
+import { Product } from "../models/products.model.ts";
 import { User } from "../models/user.model.ts";
 
 export async function createOrders(req: Request, res: Response) {
