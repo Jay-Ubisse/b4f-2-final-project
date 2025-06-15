@@ -1,25 +1,12 @@
-export type Products = {
-  _id: string;
-  name: string;
-  colors: string[];
-  sizes: string[];
-  price: number;
-  description: string;
-  imageUrl: string;
-  categoryId: string;
-  stock: number;
-};
 
-export async function getProductsById({
-  id,
-}: {
-  id: string;
-}): Promise<Products | undefined> {
+export async function getProductsById({ _id }: { _id: string }) {
   try {
-    const res = await fetch(`/products/${id}`);
-    const data = await res.json();
-    return data;
+    const res = await fetch(`/products${_id}`);
+    if (!res.ok) throw new Error("Produto não encontrado");
+    console.log(res)
+    return await res.json();
   } catch (err) {
-    console.error("Erro ao buscar produto por ID:", err);
+    console.error(err);
+    return undefined;
   }
 }
