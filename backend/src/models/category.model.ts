@@ -11,4 +11,3 @@ const Category =  mongoose.models.Category || mongoose.model<CategoryProps>("Cat
 
 
 export default Category;
-
