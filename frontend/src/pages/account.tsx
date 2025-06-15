@@ -35,19 +35,26 @@ export const Account = () => {
   return (
     <main className="bg-gray-200 flex flex-col items-center font-mono ">
       <section className="flex flex-col w-fit flex-1 px-12 py-10">
-        <h1 className="text-3xl font-bold mb-8">
-          <strong>ACCOUNT</strong>
-        </h1>
+       
 
         <section className="bg-gray-200 p-8 rounded-md text-center">
           <h2 className="text-2xl font-semibold mb-6">
+
+            <section className="flex items-center justify-center m-2">
+            <div className="w-20 h-20 rounded-full bg-black flex items-center justify-center opacity-50">
+                <User className="text-white" size={30} />
+            </div>
+            </section>
             <strong>ACCOUNT DETAILS</strong>
           </h2>
 
           {userData ? (
+
             <>
               <div className="flex flex-col items-start">
-                <User className="text-white mr-2" size={20} />
+                
+                
+                
                 <p className="mb-4">
                 <strong>Name: </strong> {userData.name}
               </p>
