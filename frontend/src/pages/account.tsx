@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { User } from "lucide-react";
+import { User,LogOut } from "lucide-react";
 import { Button } from "../components/ui/button";
 import api from "../services/axios-instance";
 
@@ -47,6 +47,7 @@ export const Account = () => {
           {userData ? (
             <>
               <div className="flex flex-col items-start">
+                <User className="text-white mr-2" size={20} />
                 <p className="mb-4">
                 <strong>Name: </strong> {userData.name}
               </p>
@@ -61,7 +62,8 @@ export const Account = () => {
         <div className="flex justify-center">
           <Button onClick={details}> Order</Button>
           <Button className="ml-4" onClick={handleLogout}>
-            <User className="text-white mr-2" size={20} />
+            
+            <LogOut className="text-white mr-2" size={20} />
             Log out
           </Button>
           </div>

@@ -15,26 +15,12 @@ import {
   CardDescription
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { login } from "../services/auth";
+//import { login } from "../services/auth";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate} from "react-router-dom";
 import type { Product } from "../types/products";
 import { getProducts } from "../services/products";
 
-// async function handleLogin() {
-//   const response = await login({
-//     data: {
-//       email: "maudana@gmail.com",
-//       password: "123456",
-//     },
-//   });
-
-//   if (response.status === 200) {
-//     console.log(response);
-//   } else {
-//     console.log(response.response.data);
-//   }
-// }
 const viewProducts = () => {
   const Navigate = useNavigate();
   Navigate("/products");

@@ -2,10 +2,6 @@ import Products from "../models/products.model.ts";
 import Category from "../models/products.model.ts";
 import { ProductsProps } from "../types/products.types.ts";
 import { Response, Request, NextFunction } from "express";
-<<<<<<< HEAD
-
-=======
->>>>>>> c276fbf717702d0e3dc1bed3b2157bb1296b6ef4
 
 export const authorizeRole = async (role: string) => {
 const authorizeRole = async (role: string) => {

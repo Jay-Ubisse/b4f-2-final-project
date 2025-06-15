@@ -20,13 +20,7 @@ const port = process.env.PORT || 3000;
 
 app.use("/orders", orderRoute);
 app.use("/products", productRoute);
-<<<<<<< HEAD
-app.use("/api/products", router);
-//app.use("/categories", categoryRoute);
-app.use("/product", productRoute);
-=======
 app.use("/categories", categoryRoute);
->>>>>>> c276fbf717702d0e3dc1bed3b2157bb1296b6ef4
 app.use("/login", authRouter);
 app.use("/register", router);
 app.use("/me",router)
