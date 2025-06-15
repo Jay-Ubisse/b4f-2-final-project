@@ -1,3 +1,4 @@
+// pages/Details.tsx
 import { useEffect, useState } from "react";
 import { getProductsById } from "../services/products";
 import type { Product } from "../types/products";
@@ -12,13 +13,11 @@ export const Details = () => {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    if (!id) return;
-
     async function fetchData() {
       setLoading(true);
       setError("");
       try {
-        const data = await getProductsById({ id });
+        const data = await getProductsById(id); 
         if (!data) throw new Error("Produto não encontrado");
         setProduct(data);
       } catch (err) {
@@ -37,12 +36,11 @@ export const Details = () => {
 
   function handleAddToCart() {
     //alert(`Adicionado ${quantity}x ${product.name} ao carrinho!`);
-   
   }
 
   function handleQuantityChange(e: React.ChangeEvent<HTMLInputElement>) {
     const val = parseInt(e.target.value, 10);
-    if (val >= 1) {
+    if (!isNaN(val) && val >= 1 && val <= 99) {
       setQuantity(val);
     }
   }
@@ -53,7 +51,7 @@ export const Details = () => {
         <div className="sm:w-1/2 flex justify-center items-center">
           <img
             src={product.imageUrl || "/placeholder-image.png"}
-            alt={product.name}
+            alt={`Imagem de ${product.name}`}
             className="max-h-48 object-contain rounded-md"
           />
         </div>
@@ -77,6 +75,7 @@ export const Details = () => {
                 id="quantity"
                 type="number"
                 min={1}
+                max={99}
                 value={quantity}
                 onChange={handleQuantityChange}
                 className="w-20 border rounded px-2 py-1 text-center"
