@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { CategoryProps } from "../types/category.types.ts";
+import { CategoryProps } from "../types/category.ts";
 
 
 const categorySchecma = new Schema<CategoryProps>({
@@ -7,8 +7,8 @@ const categorySchecma = new Schema<CategoryProps>({
   description: { type: String, default: "" },
 });
 
-const Category =  mongoose.models.Category || mongoose.model<CategoryProps>("Category", categorySchecma);
+export const Category = mongoose.model<CategoryProps>("Category", categorySchecma);
 
 
-export default Category;
+
 

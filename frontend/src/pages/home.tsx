@@ -2,8 +2,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   
 } from "../components/ui/carousel";
 import {
@@ -18,30 +16,30 @@ import { Button } from "../components/ui/button";
 import { login } from "../services/auth";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate} from "react-router-dom";
-import type { Products } from "../types/products";
+import type { Product } from "../types/products";
 import { getProducts } from "../services/products";
 
-// async function handleLogin() {
-//   const response = await login({
-//     data: {
-//       email: "maudana@gmail.com",
-//       password: "123456",
-//     },
-//   });
+async function handleLogin() {
+  const response = await login({
+    data: {
+      email: "maudana@gmail.com",
+      password: "123456",
+    },
+  });
 
-//   if (response.status === 200) {
-//     console.log(response);
-//   } else {
-//     console.log(response.response.data);
-//   }
-// }
+  if (response.status === 200) {
+    console.log(response);
+  } else {
+    console.log(response.response.data);
+  }
+}
 const viewProducts = () => {
-  const Navigate = useNavigate();
-  Navigate("/products");
-};[]
+let Navigate=useNavigate();
+Navigate("/products");
+};
 
 export const Home = () => {
- const [data, setData] = useState<Products[]>([]);
+ const [data, setData] = useState<Product[]>([]);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -106,16 +104,16 @@ export const Home = () => {
         </CarouselContent>
       
       </Carousel>
-
-      <NavLink to={"/products"} className="flex justify-end mr-20 mt-10 ">
-        <Button
-          onClick={viewProducts}
-          className="bg-stone-200"
+      <NavLink to={"/products"} >
+         <Button
+          className="bg-stone-200 flex justify-end mt-10 ml-300"
           variant="outline"
         >
           View All
         </Button>
       </NavLink>
+       
+    
       <NavLink to={"/details"}>
         <div className="flex gap-5  m-6 justify-center items-center">
           <Card className="w-100 h-100">

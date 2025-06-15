@@ -1,4 +1,5 @@
-export type Products = {
+export type Product= {
+  _id:string;
   name: string;
   colors: string[];
   sizes: string[];
