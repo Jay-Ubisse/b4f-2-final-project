@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Cardsidebar } from "../components/cart/sidebar";
 import type { Product } from "../types/products";
 import { getProducts } from "../services/products";
 
@@ -8,7 +7,6 @@ import {
 } from "lucide-react";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -25,12 +23,12 @@ import {
   CardTitle,
   
 } from "../components/ui/card";
+import { Button } from "../components/ui/button";
 
 export const Products = () => {
-  const [categories, setCategories] = useState([]);
-  const [search, setSearch] = useState("");
   const [products, setProducts] = useState<Product[] | undefined>([]);
-
+  const [search, setSearch] = useState("");
+  const [refresh,setRefresh]=useState(0);
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -56,41 +54,42 @@ export const Products = () => {
     fetchProducts();
   });
 
-  useEffect(() => {
-    fetch("/products")
-      .then((res) => res.json())
-      .then((data) => setCategories(data));
-  }, []);
-  const filtered = categories.filter((cat: any) =>
-    cat.name.toLowerCase().includes(search.toLowerCase())
-  );
 
+  useEffect(() => {
+  
+  fetch("/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, []);
+    const filterdProduct = products?.filter((product) =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    );
+  
   return (
      
     <div>
-      
-      <Command className="w-105 ">
+       
+       <div className="flex gap-4">
+        <Command className="w-50 ">
       <CommandInput
-      placeholder="Type a category"
+      placeholder="Type a product"
       value={search}
       onValueChange={setSearch}
       />
       <CommandList>
-        
         <CommandGroup>
-          {filtered.map((Cat: { _id: string; name: string }) =>(
-            <CommandItem key={Cat._id}>{Cat.name} </CommandItem>
-          ))}
-          
+          {filterdProduct?.map((product,index) =>(
+            <CommandItem key={index}>{product.name} </CommandItem>
+          ))}    
         </CommandGroup>
         <CommandSeparator/>
       </CommandList>
       </Command>
-        <div className="flex justify-end -mt-5" >
-       <Cardsidebar />
-       </div>
     
-      <section className="flex flex-wrap gap-8 space-around items center ml-15">
+        <Button className="bg-stone-700 ">Get Product</Button> 
+ 
+       </div>
+      <section className="flex flex-wrap gap-8 space-around items center ml-15 mt-5">
         {products?.slice(1, 7).map((product, index) => (
           <Card 
             key={index}
@@ -98,7 +97,7 @@ export const Products = () => {
           >
             <CardHeader>
               <CardTitle className="text-center">{product.name}</CardTitle>
-              <p>{product.price}</p>
+              <p>Price: {product.price}</p>
               <CardDescription className="text-mono">
                 {product.description}
               </CardDescription>
@@ -117,7 +116,7 @@ export const Products = () => {
             <CardFooter className="space-around ">
               <div >
               
-                <p className="mr-2">{product.sizes.join(" ")}</p>
+                <p className="mr-2">Sizes: {product.sizes.join(" ")}</p>
               </div>
               <div className="gap-4 flex justify-start mt-4">
                <div className="w-5 h-5 border-1 bg-black"></div>
