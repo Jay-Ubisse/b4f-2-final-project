@@ -112,8 +112,6 @@ export const Home = () => {
           View All
         </Button>
       </NavLink>
-       
-    
       <NavLink to={"/details"}>
         <div className="flex gap-5  m-6 justify-center items-center">
           <Card className="w-100 h-100">
