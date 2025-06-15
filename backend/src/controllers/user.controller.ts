@@ -1,11 +1,11 @@
 import { Request, Response,NextFunction } from 'express'
 import bcrypt from 'bcrypt'
-import { userProps } from '../types/types.ts';
+import { UserProps } from '../types/user.ts';
 import { User } from '../models/user.model.ts'
 
 export const register = async (req:Request, res:Response) => {
   try {
-    const body:userProps = req.body;
+    const body:UserProps = req.body;
     const { name, email, password } = body;
 
     const existingUser = await User.findOne({ email });

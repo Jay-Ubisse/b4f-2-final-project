@@ -1,5 +1,8 @@
+<<<<<<< HEAD
+=======
 "use client"
 
+>>>>>>> 79a5aeb627154f2166ede9729a97e68b8136b766
 import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { XIcon } from "lucide-react"

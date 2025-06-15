@@ -2,11 +2,11 @@ import  jwt  from 'jsonwebtoken';
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import { User } from '../models/user.model.ts'
-import { userProps } from '../types/types.ts'
+import { UserProps } from '../types/user.ts';
 
 
 export const login = async (req: Request, res: Response): Promise<any> => {
-  const body:userProps = req.body
+  const body:UserProps = req.body
   const { email, password } = body
 
   const user = await User.findOne({ email })

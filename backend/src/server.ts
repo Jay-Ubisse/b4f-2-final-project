@@ -12,7 +12,7 @@ import categoryRoute from "./routes/category.route.ts";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: "http://localhost:4000"}));
 dotenv.config();
 
 const host = process.env.HOST || "http://localhost";
@@ -20,21 +20,10 @@ const port = process.env.PORT || 3000;
 
 app.use("/orders", orderRoute);
 app.use("/products", productRoute);
-<<<<<<< HEAD
-=======
-app.use("/api/products", router);
-//app.use("/categories", categoryRoute);
-app.use("/auth", authRouter);
-app.use("/users", router);
->>>>>>> feature/frontend-catalog
 app.use("/categories", categoryRoute);
 app.use("/login", authRouter);
 app.use("/register", router);
-app.use("/me",router)
-<<<<<<< HEAD
-=======
-
->>>>>>> feature/frontend-catalog
+app.use("/me",router);
 
 mongoose
   .connect(process.env.BD_URI as string)
