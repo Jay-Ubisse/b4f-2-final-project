@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { OrderProps } from "../types/order.ts";
 
-/* ===================== ORDER =================== */
 
 const orderSchema = new Schema<OrderProps>({
   user: {

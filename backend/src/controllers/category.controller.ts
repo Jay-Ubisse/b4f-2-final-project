@@ -1,6 +1,6 @@
 
-import {Category}  from "../models/category.model.ts";
-import {Product} from "../models/products.model.ts";
+import { Category } from "../models/category.model.ts";
+import { Product } from "../models/products.model.ts";
 import { NextFunction, Request, Response } from "express";
 
 export const authorizeRole = (role: string) => {

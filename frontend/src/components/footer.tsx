@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 
+
 export const Footer = () => {
   return (
-    <footer className="bg-zinc-900 text-white px-6 py-10">
+    <footer className="bg-zinc-900 text-white font-mono px-4 py-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
         <div className="space-y-3">
           <h2 className="text-lg font-semibold">B4F E-COMMERCE</h2>
@@ -62,18 +63,18 @@ export const Footer = () => {
           </ul>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 gap-4">
           <h3 className="font-semibold uppercase">Newsletter</h3>
           <p>
-            Join our newsletter to stay up to date on features and releases.
+            <span>Join our newsletter to stay up to date on features and releases.</span>
           </p>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+          <div className="flex flex-wrap sm:flex-row items-start  gap-4">
             <Input
               type="email"
               placeholder="Enter your email"
-              className="bg-white text-black w-full"
+              className="bg-white text-black w-[37rem]!"
             />
-            <Button className="bg-yellow-300 text-black hover:bg-yellow-400">
+            <Button className="bg-yellow-300 text-black hover:bg-yellow-400 w-[18.5rem]">
               Subscribe
             </Button>
           </div>
