@@ -24,4 +24,3 @@ const token=authHeader && authHeader.split(" ")[1];
   });
 
 }
-

@@ -1,10 +1,10 @@
 
 import mongoose, {Schema} from "mongoose";
-<<<<<<< HEAD
+
 import { ProductsProps} from "../types/products.types.ts";
-=======
-import { ProductsProps} from "../types/products.ts";
->>>>>>> b0bc113ba43df0ee0e742125a7f3f6424ce8a73e
+
+//import { ProductsProps} from "../types/products.ts";
+
 
 const productSchema = new Schema<ProductsProps>({
   name: { type: String, required: true },
@@ -17,11 +17,9 @@ const productSchema = new Schema<ProductsProps>({
   },
   stock: { type: Number, required: true, default: 0 },
 });
-<<<<<<< HEAD
+
 const Products = mongoose.model<ProductsProps>("products", productSchema);
 export default Products;
-=======
 
 export const Product = mongoose.model<ProductsProps>("product", productSchema);
 
->>>>>>> b0bc113ba43df0ee0e742125a7f3f6424ce8a73e

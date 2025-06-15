@@ -128,8 +128,4 @@ export const deleteCategory = async (req: Request, res: Response)=> {
         res.status(500).json({ message: "Internal Server Error, Try Again" });
         
     }
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> b0bc113ba43df0ee0e742125a7f3f6424ce8a73e

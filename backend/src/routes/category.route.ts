@@ -19,13 +19,4 @@ categoryRouter.get("/",getAllCategories);
 categoryRouter.get("/:id/products", getProductByCategory);
 
 
-
-
-
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> b0bc113ba43df0ee0e742125a7f3f6424ce8a73e
 export default categoryRouter;

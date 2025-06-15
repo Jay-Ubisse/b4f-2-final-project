@@ -68,9 +68,7 @@ export const Home = () => {
                   className="h-155 w-full"
                   src="https://industrieafrica.com/cdn/shop/collections/TB_HERO_A.jpg?v=1741949555&width=2880"
                   alt=""
-                />
-                
-
+                />        
     <Link to="/details">
     see details
     </Link>

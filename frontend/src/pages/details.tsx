@@ -1,84 +1,96 @@
-import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProductsById } from "../services/products";
-import { Input } from "../components/ui/input";
+import type { Product } from "../types/products";
 import { Button } from "../components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import type { Products } from "../types/products";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
 
 export const Details = () => {
-  const { _id } = useParams();
-  const [product, setProduct] = useState<Products | null>(null);
+  const id = "684d633357d8aac2b6df1c9a"; 
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
+    if (!id) return;
+
     async function fetchData() {
-      if (!_id) return;
+      setLoading(true);
+      setError("");
       try {
-        const data = await getProductsById({ _id });
-        if (data) setProduct(data);
-        console.log(data);
-      } catch (error) {
-        console.error("Erro ao buscar produto:", error);
+        const data = await getProductsById({ id });
+        if (!data) throw new Error("Produto não encontrado");
+        setProduct(data);
+      } catch (err) {
+        setError((err as Error).message || "Erro ao buscar produto");
+      } finally {
+        setLoading(false);
       }
     }
-    fetchData();
-  }, [_id]);
 
-  if (!product) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-4xl font-bold">Details Page</h1>
-        <p>Carregando produto...</p>
-        <Link to="/" className="px-2 py-1 text-sm">
-          Home
-        </Link>
-      </div>
-    );
+    fetchData();
+  }, [id]);
+
+  if (loading) return <div className="text-center py-10">Carregando produto...</div>;
+  if (error) return <div className="text-center py-10 text-red-600">{error}</div>;
+  if (!product) return null;
+
+  function handleAddToCart() {
+    //alert(`Adicionado ${quantity}x ${product.name} ao carrinho!`);
+   
+  }
+
+  function handleQuantityChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = parseInt(e.target.value, 10);
+    if (val >= 1) {
+      setQuantity(val);
+    }
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen ">
-      <h1 className="text-4xl font-bold ">Details Page</h1>
-      <p>
-        <Link to="/" className="px-2 py-1   text-sm">
-          Home
-        </Link>
-      </p>
-      <section className="p-4 rounded shadow-md">
-        <Card key={product._id} className="mb-4">
+    <div className="max-w-md sm:max-w-lg mx-auto p-4">
+      <Card className="flex flex-col sm:flex-row gap-4">
+        <div className="sm:w-1/2 flex justify-center items-center">
+          <img
+            src={product.imageUrl || "/placeholder-image.png"}
+            alt={product.name}
+            className="max-h-48 object-contain rounded-md"
+          />
+        </div>
+
+        <div className="sm:w-1/2 flex flex-col justify-between">
           <CardHeader>
-            <CardTitle>{product.name}</CardTitle>
-            <img
-              src={product.imageUrl}
-              alt={product.name}
-              className="w-full h-auto"
-            />
-            <p>{product.name}</p>
-            <p>{product.description}</p>
-            <p>{product.colors.join(", ")}</p>
-            <p>{product.sizes.join(", ")}</p>
-            <p>{product.price}</p>
-            <CardDescription>{product.description}</CardDescription>
+            <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
+            <CardDescription className="text-sm text-muted-foreground line-clamp-4">
+              {product.description}
+            </CardDescription>
           </CardHeader>
-          <CardFooter className="flex justify-between">
-            <Button className="bg-blue-500 text-white hover:bg-blue-600">
-              Add to Cart
-            </Button>
-            <Input
-              type="number"
-              min="1"
-              defaultValue="1"
-              className="w-16 border border-gray-300 rounded-md"
-            />
+
+          <CardFooter className="flex flex-col gap-3 pt-4">
+            <span className="text-xl font-bold text-green-600">
+              {product.price.toFixed(2)} Mzn
+            </span>
+
+            <div className="flex items-center gap-3">
+              <label htmlFor="quantity" className="sr-only">Quantidade</label>
+              <input
+                id="quantity"
+                type="number"
+                min={1}
+                value={quantity}
+                onChange={handleQuantityChange}
+                className="w-20 border rounded px-2 py-1 text-center"
+              />
+
+              <Button onClick={handleAddToCart} variant="outline">
+                Adicionar ao carrinho
+              </Button>
+
+              <Button>Comprar</Button>
+            </div>
           </CardFooter>
-        </Card>
-      </section>
+        </div>
+      </Card>
     </div>
   );
 };

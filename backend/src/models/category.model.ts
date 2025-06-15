@@ -10,9 +10,5 @@ const categorySchecma = new Schema<CategoryProps>({
 export const Category = mongoose.model<CategoryProps>("Category", categorySchecma);
 
 
-
-<<<<<<< HEAD
 export default Category;
-=======
 
->>>>>>> b0bc113ba43df0ee0e742125a7f3f6424ce8a73e
