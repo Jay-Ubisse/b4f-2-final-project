@@ -132,7 +132,7 @@ export const getProducts = async (req: Request, res: Response) => {
          message: "Erro ao buscar produtos"
       })
    }
-}
+
   try {
     const { page = "1", perPage = "4" } = req.query;
 
@@ -145,7 +145,7 @@ export const getProducts = async (req: Request, res: Response) => {
       .populate("category")
       .skip(skip)
       .limit(itemsPerPage);
-
+  
     res.status(200).json({
       message: products.length > 0 ? "Produtos encontrados" : "Nenhum produto disponível.",
       data: products,
