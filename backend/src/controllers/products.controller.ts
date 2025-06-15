@@ -123,7 +123,6 @@ export const getProducts = async (req: Request, res: Response) => {
   try {
     const { search, category } = req.query;
 
-    // Se tiver `search`, busca por nome
     if (search) {
       const filter = { name: { $regex: search, $options: "i" } };
       const products = await Product.find(filter).populate("category");
@@ -135,7 +134,6 @@ export const getProducts = async (req: Request, res: Response) => {
       });
     }
 
-    // Se tiver `category`, busca por categoria
     if (category) {
       const normalized = String(category).trim().toLowerCase();
 
@@ -160,7 +158,6 @@ export const getProducts = async (req: Request, res: Response) => {
       });return;
     }
 
-    // Se não tiver query nenhuma, retorna todos
     const products = await Product.find().populate("category");
     res.status(200).json({
       message: "All products",

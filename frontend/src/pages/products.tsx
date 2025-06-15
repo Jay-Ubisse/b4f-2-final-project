@@ -16,16 +16,6 @@ import {
   CardDescription,
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-<<<<<<< HEAD
-import {useNavigate } from "react-router-dom";
-export const Products = () => {
-  const  viewDetails=()=>{
-let Navigate=useNavigate();
-Navigate("/products");
-  }
-  const [products, setProducts] = useState<Product[] | undefined>([]);
-  const [search, setSearch] = useState("");
-=======
 
 import useEmblaCarousel from "embla-carousel-react";
 import { useEmblaAutoPlay } from "../components/ui/autoplay";
@@ -37,7 +27,6 @@ export const Products = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   useEmblaAutoPlay(emblaApi, 4000);
 
->>>>>>> feature/frontend-cart
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -82,48 +71,7 @@ export const Products = () => {
   };
 
   return (
-<<<<<<< HEAD
-     
-    <div>    
-       <div className="flex gap-4">
-        <Command className="w-50 ">
-      <CommandInput
-      placeholder="Type a product"
-      value={search}
-      onValueChange={setSearch}
-      />
-      <CommandList>
-        <CommandGroup>
-          {filterdProduct?.map((product,index) =>(
-            <CommandItem key={index}>{product.name} </CommandItem>
-          ))}    
-        </CommandGroup>
-        <CommandSeparator/>
-      </CommandList>
-      </Command>
-    
-        <Button className="bg-stone-700 ">Get Product</Button> 
- 
-       </div>
-       <button onClick={viewDetails}>
-      <section className="flex flex-wrap gap-8 space-around items center ml-15 mt-5">
-        {products?.slice(1, 7).map((product, index) => (
-          <Card 
-            key={index}
-            className="w-96 bg-stone-200 shadow-md hover:shadow-lg  h-100w-100 font-bold inline"
-          >
-            <CardHeader>
-              <CardTitle className="text-center">{product.name}</CardTitle>
-              <p>Price: {product.price}</p>
-              <CardDescription className="text-mono">
-                {product.description}
-              </CardDescription>
-              <CardAction> <ShoppingCart /></CardAction>
-            </CardHeader>
-            <CardContent>
-=======
     <div className="px-4 py-8">
-      {/* Carrossel */}
       <div
         className="overflow-hidden max-w-[90%] mx-auto h-[500px] mb-6 rounded-xl"
         ref={emblaRef}
@@ -139,7 +87,6 @@ export const Products = () => {
               key={index}
               className="min-w-full flex justify-center items-center px-2"
             >
->>>>>>> feature/frontend-cart
               <img
                 src={img}
                 alt={`Banner ${index + 1}`}
@@ -150,7 +97,6 @@ export const Products = () => {
         </div>
       </div>
 
-      {/* Botão Get All Products */}
       <div className="flex justify-center mb-10">
         <Link to="/products/all">
           <Button className="bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors">
@@ -159,7 +105,6 @@ export const Products = () => {
         </Link>
       </div>
 
-      {/* Lista de Produtos */}
       <h1 className="text-3xl font-bold mb-6 text-center">Our Products</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
@@ -227,13 +172,7 @@ export const Products = () => {
             </Link>
           </motion.div>
         ))}
-<<<<<<< HEAD
-      </section>
-      </button>
-=======
       </div>
->>>>>>> dev-luco
->>>>>>> feature/frontend-cart
     </div>
   );
 };

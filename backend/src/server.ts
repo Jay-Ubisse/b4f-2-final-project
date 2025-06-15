@@ -12,7 +12,7 @@ import categoryRoute from "./routes/category.route.ts";
 
 const app = express();
 app.use(express.json());
-app.use(cors({origin: "http://localhost:4000"}));
+app.use(cors());
 dotenv.config();
 
 const host = process.env.HOST || "http://localhost";

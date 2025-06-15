@@ -60,7 +60,6 @@ export function Header() {
   return (
     <header className="fixed top-0 w-full bg-white z-50 border-b shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4 md:py-6 md:px-6">
-        {/* Desktop nav */}
         <nav className="hidden md:flex gap-8 text-sm">
           {linksLeft.map((link) => (
             <NavLink
@@ -75,12 +74,10 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Central logo */}
         <div className="text-lg font-bold tracking-widest uppercase absolute left-1/2 -translate-x-1/2">
           <NavLink to="/">B4F E-COMMERCE</NavLink>
         </div>
 
-        {/* Desktop right */}
         <nav className="hidden md:flex items-center gap-8 text-sm ml-auto">
           <Button
             variant="ghost"
@@ -105,7 +102,6 @@ export function Header() {
           </button>
         </nav>
 
-        {/* Mobile menu + icons */}
         <div className="md:hidden w-full flex items-center justify-between text-base">
           <button
             onClick={() => setIsMobileOpen((prev) => !prev)}
@@ -124,7 +120,6 @@ export function Header() {
         </div>
       </div>
 
-      {/* Dynamic Search Bar (below header) */}
       {showSearchBar && (
         <div className="w-full bg-white shadow-md border-b px-4 md:px-6 py-4">
           <div className="max-w-7xl mx-auto">
@@ -155,7 +150,6 @@ export function Header() {
         </div>
       )}
 
-      {/* Mobile menu */}
       {isMobileOpen && (
         <div className="md:hidden fixed inset-0 z-40 bg-black/90 text-white px-6 py-6">
           <div className="flex items-center justify-between mb-6">

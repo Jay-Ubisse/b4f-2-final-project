@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 
-// Define o tipo de item no carrinho
 export type CartItem = {
   _id: string;
   name: string;
@@ -15,7 +14,6 @@ export type CartItem = {
   description?: string;
 };
 
-// Define o formato do contexto
 type CartContextType = {
   cartItems: CartItem[];
   addToCart: (item: CartItem) => void;
@@ -31,15 +29,12 @@ type CartContextType = {
   setIsOpen: (open: boolean) => void;
 };
 
-// Cria o contexto
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Provider do carrinho
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Carregar do localStorage ao iniciar
   useEffect(() => {
     const savedCart = localStorage.getItem("itemProducts");
     if (savedCart) {
@@ -51,12 +46,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  // Atualiza localStorage quando o carrinho mudar
   useEffect(() => {
     localStorage.setItem("itemProducts", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Adiciona item ao carrinho (ou atualiza se já existir)
   const addToCart = (newItem: CartItem) => {
     const existingIndex = cartItems.findIndex(
       (item) =>
@@ -91,7 +84,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCartItems(updatedItems);
   };
 
-  // Remove item
   const removeItem = (id: string, color: string, size: string) => {
     setCartItems(
       cartItems.filter(
@@ -105,7 +97,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  // Limpa todo o carrinho
   const clearCart = () => {
     setCartItems([]);
   };
@@ -127,7 +118,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook de acesso ao carrinho
 export const useCart = (): CartContextType => {
   const context = useContext(CartContext);
   if (!context) {

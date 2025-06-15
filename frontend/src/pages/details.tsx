@@ -13,13 +13,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-<<<<<<< HEAD
-import type { Product } from "../types/products";
-
-export const Details = () => {
-  //mostrar o artigo selecionado
-  const [list, setList] = useState<Product[]>([]);
-=======
 import { useCart } from "../contexts/cartContext";
 
 export const Details = () => {
@@ -32,7 +25,6 @@ export const Details = () => {
 
   const { addToCart } = useCart();
 
->>>>>>> feature/frontend-cart
   useEffect(() => {
     async function fetchData() {
       if (!id) return;
