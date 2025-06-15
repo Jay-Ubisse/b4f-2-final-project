@@ -129,7 +129,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 export const getProducts = async (req: Request, res: Response) => {
    try {
-      const products = await Product.find().populate("category");
+      const products = await Product.find();
 
       res.status(200).json({
          message: "ok", 
@@ -141,31 +141,31 @@ export const getProducts = async (req: Request, res: Response) => {
       })
    }
 
-  try {
-    const { page = "1", perPage = "4" } = req.query;
+  // try {
+  //   const { page = "1", perPage = "4" } = req.query;
 
-    const currentPage = parseInt(page as string, 10);
-    const itemsPerPage = parseInt(perPage as string, 10);
-    const skip = (currentPage - 1) * itemsPerPage;
+  //   const currentPage = parseInt(page as string, 10);
+  //   const itemsPerPage = parseInt(perPage as string, 10);
+  //   const skip = (currentPage - 1) * itemsPerPage;
 
-    const totalItems = await Product.countDocuments();
-    const products = await Product.find()
-      .populate("category")
-      .skip(skip)
-      .limit(itemsPerPage);
+  //   const totalItems = await Product.countDocuments();
+  //   const products = await Product.find()
+  //     .populate("categories")
+  //     .skip(skip)
+  //     .limit(itemsPerPage);
 
-    res.status(200).json({
-      message: products.length > 0 ? "Produtos encontrados" : "Nenhum produto disponível.",
-      data: products,
-      totalItems,
-      totalPages: Math.ceil(totalItems / itemsPerPage),
-      currentPage,
-      perPage: itemsPerPage,
-    });
-  } catch (error) {
-    console.error("Erro ao buscar produtos:", error);
-    res.status(500).json({ message: "Erro ao buscar produtos." });
-  }
+  //   res.status(200).json({
+  //     message: products.length > 0 ? "Produtos encontrados" : "Nenhum produto disponível.",
+  //     data: products,
+  //     totalItems,
+  //     totalPages: Math.ceil(totalItems / itemsPerPage),
+  //     currentPage,
+  //     perPage: itemsPerPage,
+  //   });
+  // } catch (error) {
+  //   console.error("Erro ao buscar produtos:", error);
+  //   res.status(500).json({ message: "Erro ao buscar produtos." });
+  // }
 };
 
 

@@ -5,17 +5,19 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../u
 export const Cardsidebar=()=>{
 
     return(
-        <Sheet>
-            <SheetTrigger>
+        <Sheet >
+            <SheetTrigger className="">
                 <Button variant={"link"}>
-                    <p>Category</p>
+                    <p>Categories</p>
                 </Button>
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>
-                    <SheetTitle>Category</SheetTitle>
+                    <SheetTitle>Dresses</SheetTitle>
+                      <SheetTitle>Blousses</SheetTitle>
+                        <SheetTitle>Jackets</SheetTitle>
                 </SheetHeader>
-                ...
+                
             </SheetContent>
         </Sheet>
     )

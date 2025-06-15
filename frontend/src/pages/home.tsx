@@ -18,7 +18,7 @@ import { Button } from "../components/ui/button";
 import { login } from "../services/auth";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate} from "react-router-dom";
-import type { Products } from "../types/products";
+import type { Product } from "../types/products";
 import { getProducts } from "../services/products";
 
 // async function handleLogin() {
@@ -41,7 +41,7 @@ Navigate("/products");
 };
 
 export const Home = () => {
- const [data, setData] = useState<Products[]>([]);
+ const [data, setData] = useState<Product[]>([]);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -106,12 +106,15 @@ export const Home = () => {
         </CarouselContent>
       
       </Carousel>
-        <Button onClick={viewProducts}
-          className="bg-stone-200 flex justify-end mr-20 mt-10"
+      <NavLink to={"/products"} >
+         <Button
+          className="bg-stone-200 flex justify-end mt-10 ml-300"
           variant="outline"
         >
           View All
         </Button>
+      </NavLink>
+       
     
       <NavLink to={"/details"}>
         <div className="flex gap-5  m-6 justify-center items-center">
