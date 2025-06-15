@@ -7,8 +7,8 @@ const categorySchecma = new Schema<CategoryProps>({
   description: { type: String, default: "" },
 });
 
-const Category =  mongoose.models.Category || mongoose.model<CategoryProps>("Category", categorySchecma);
-
-
-export default Category;
+export const Category = mongoose.model<CategoryProps>(
+  "Category",
+  categorySchecma
+);
 

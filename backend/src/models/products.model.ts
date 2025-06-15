@@ -1,19 +1,20 @@
+import mongoose, { Schema } from "mongoose";
+import { ProductProps } from "../types/product.types.ts";
 
-import mongoose, {Schema} from "mongoose";
-import { ProductsProps} from "../types/products.types.ts";
-
-
-
-const productSchema = new Schema<ProductsProps>({
+const productSchema = new Schema<ProductProps>({
   name: { type: String, required: true },
+  price: { type: Number, required: true },
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: "Category",
+    required: true,
+  },
+  categoryId: { type: String, required: true },
+  imageUrl: { type: String, required: true },
+  description: { type: String, default: "" },
   colors: { type: [String], default: [] },
   sizes: { type: [String], default: [] },
-  price: { type: Number, required: true },
-  description: { type: String, default: "" },
-  category: {
-     type: Schema.Types.ObjectId, ref: "Categories", required: true
-  },
   stock: { type: Number, required: true, default: 0 },
 });
-const Products = mongoose.model<ProductsProps>("products", productSchema);
-export default Products;
+
+export const Product = mongoose.model<ProductProps>("Product", productSchema);
