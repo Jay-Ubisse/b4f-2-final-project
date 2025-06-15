@@ -1,7 +1,8 @@
-import Products from "../models/products.model.ts";
-import Category from "../models/products.model.ts";
-import { ProductsProps } from "../types/products.types.ts";
+import {Product} from "../models/products.model.ts";
+import {Category} from "../models/category.model.ts";
+import { ProductsProps } from "../types/products.ts";
 import { Response, Request, NextFunction } from "express";
+import { CategoryProps } from "../types/category.ts";
 
 export const authorizeRole = async (role: string) => {
 const authorizeRole = async (role: string) => {
@@ -31,8 +32,14 @@ export const createProduct = async (req: Request, res: Response) => {
       stock,
       categoryId,
     } = body;
-    const categoryData = await Category.findById(categoryId).populate("Categories");
-    const product = Products.create({
+
+    const categoryData = await Category.findById(categoryId);
+
+    if(!category) {
+       res.status(404).json({ message: "Produto nao encontrado" });
+    }
+
+    const product = await Product.create({
       name,
       price,
       imageUrl,
@@ -42,8 +49,10 @@ export const createProduct = async (req: Request, res: Response) => {
       sizes: sizes || [],
       stock,
     });
-    res.status(201).json({ message: "Product created successfully", product });
+        console.log(product)
+    res.status(201).json({ message: "Product created successfully", product }); 
   } catch (error) {
+
     res.status(500).json({ message: "An internal server error occurred",error});
   }
 };
@@ -51,7 +60,7 @@ export const createProduct = async (req: Request, res: Response) => {
 export const getProductId = async (req: Request, res: Response) => {
   try {
     const productId = req.params.id;
-    const existingProduct = await Products.findById(productId).select({});
+    const existingProduct = await Product.findById(productId).select({});
     if (!existingProduct) {
       res.status(404).json({ message: "Product not found" });
     }
@@ -66,7 +75,7 @@ export const getProductId = async (req: Request, res: Response) => {
 export const deletedProduct = (req: Request, res: Response) => {
   authorizeRole("admin");
   const { id } = req.params;
-  Products.findByIdAndDelete(id)
+  Product.findByIdAndDelete(id)
     .then((deletedProduct) => {
       if (!deletedProduct) {
         res.status(404).json({ message: "Product not found" });
@@ -98,7 +107,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     const categoryData = await Category.findById(categoryId).populate(
       "Category"
     );
-    const product = await Products.findByIdAndUpdate(id, {
+    const product = await Product.findByIdAndUpdate(id, {
       name,
       price,
       category: categoryData,
@@ -121,7 +130,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 export const getProducts = async (req: Request, res: Response) => {
    try {
-      const products = await Products.find().populate("category");
+      const products = await Product.find();
 
       res.status(200).json({
          message: "ok", 
@@ -133,31 +142,31 @@ export const getProducts = async (req: Request, res: Response) => {
       })
    }
 
-  try {
-    const { page = "1", perPage = "4" } = req.query;
+  // try {
+  //   const { page = "1", perPage = "4" } = req.query;
 
-    const currentPage = parseInt(page as string, 10);
-    const itemsPerPage = parseInt(perPage as string, 10);
-    const skip = (currentPage - 1) * itemsPerPage;
+  //   const currentPage = parseInt(page as string, 10);
+  //   const itemsPerPage = parseInt(perPage as string, 10);
+  //   const skip = (currentPage - 1) * itemsPerPage;
 
-    const totalItems = await Products.countDocuments();
-    const products = await Products.find()
-      .populate("category")
-      .skip(skip)
-      .limit(itemsPerPage);
-  
-    res.status(200).json({
-      message: products.length > 0 ? "Ok" : "No products available.",
-      data: products,
-      totalItems,
-      totalPages: Math.ceil(totalItems / itemsPerPage),
-      currentPage,
-      perPage: itemsPerPage,
-    });
-  } catch (error) {
-    console.error("Erro ao buscar produtos:", error);
-    res.status(500).json({ message: "An internal server error occurred" });
-  }
+  //   const totalItems = await Product.countDocuments();
+  //   const products = await Product.find()
+  //     .populate("categories")
+  //     .skip(skip)
+  //     .limit(itemsPerPage);
+
+  //   res.status(200).json({
+  //     message: products.length > 0 ? "Produtos encontrados" : "Nenhum produto disponível.",
+  //     data: products,
+  //     totalItems,
+  //     totalPages: Math.ceil(totalItems / itemsPerPage),
+  //     currentPage,
+  //     perPage: itemsPerPage,
+  //   });
+  // } catch (error) {
+  //   console.error("Erro ao buscar produtos:", error);
+  //   res.status(500).json({ message: "Erro ao buscar produtos." });
+  // }
 };
 
 
@@ -179,7 +188,7 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
       filter.category = categoryId;
       const categoryExists = await Category.findById(categoryId);
       if (!categoryExists) {
-        const allCategories = await Category.find();
+        const allCategories: CategoryProps[] = await Category.find();
          res.status(404).json({
           message: "Not found",
           availableCategories: allCategories.map(cat => cat.name),
@@ -193,8 +202,8 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
       });
     }
 
-    const totalItems = await Products.countDocuments(filter);
-    const products = await Products.find(filter)
+    const totalItems = await Product.countDocuments(filter);
+    const products = await Product.find(filter)
       .populate("category")
       .skip(skip)
       .limit(itemsPerPage);
@@ -236,14 +245,14 @@ export const getProductsByQueryCategory = async (req: Request, res: Response) =>
     });
 
     if (!foundCategory) {
-      const allCategories = await Category.find();
+      const allCategories: CategoryProps[] = await Category.find();
        res.status(404).json({
         message: "Not found",
         availableCategories: allCategories.map(cat => cat.name)
       });
     }
 
-    const products = await Products.find({ category: foundCategory?._id });
+    const products = await Product.find({ category: foundCategory?._id });
 
      res.status(200).json({
       category: foundCategory?.name,

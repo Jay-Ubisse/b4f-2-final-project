@@ -2,8 +2,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   
 } from "../components/ui/carousel";
 import {
@@ -15,16 +13,30 @@ import {
   CardDescription
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-//import { login } from "../services/auth";
+import { login } from "../services/auth";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate} from "react-router-dom";
 import type { Product } from "../types/products";
 import { getProducts } from "../services/products";
 
+async function handleLogin() {
+  const response = await login({
+    data: {
+      email: "maudana@gmail.com",
+      password: "123456",
+    },
+  });
+
+  if (response.status === 200) {
+    console.log(response);
+  } else {
+    console.log(response.response.data);
+  }
+}
 const viewProducts = () => {
-  const Navigate = useNavigate();
-  Navigate("/products");
-};[]
+let Navigate=useNavigate();
+Navigate("/products");
+};
 
 export const Home = () => {
  const [data, setData] = useState<Product[]>([]);
@@ -92,11 +104,9 @@ export const Home = () => {
         </CarouselContent>
       
       </Carousel>
-
-      <NavLink to={"/products"} className="flex justify-end mr-20 mt-10 ">
-        <Button
-          onClick={viewProducts}
-          className="bg-stone-200"
+      <NavLink to={"/products"} >
+         <Button
+          className="bg-stone-200 flex justify-end mt-10 ml-300"
           variant="outline"
         >
           View All

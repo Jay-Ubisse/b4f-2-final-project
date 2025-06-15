@@ -4,7 +4,12 @@ import { Login } from "./login";
 import { Register } from "./register";
 import { Account } from "./account";
 import { OrdersUser } from "./orders-user";
+import { CheckoutPage } from "./checkout";
+import {AdminPage} from "./admin-dashboard";
 import { ErrorPage } from "./errorPages";
 import { Products } from "./products";
 
-export { Home, About,Login, Register, Account, OrdersUser,ErrorPage, Products};
+export { Home, About,Login, Register, Account, OrdersUser,ErrorPage, Products,CheckoutPage, AdminPage };
+
+    
+
