@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-import type { Products } from "../services/products";
+import type { Products } from "../types/products";
 
 export const Details = () => {
   //mostrar o artigo selecionado
