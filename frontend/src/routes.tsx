@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         element: <OrdersUser />,
       },
       {
-        path: "/admin",
+        path: "/account/admin",
         element: <AdminPage />,
       },
       {

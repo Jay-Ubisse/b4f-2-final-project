@@ -17,15 +17,15 @@ import {
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 
-import useEmblaCarousel from "embla-carousel-react";
-import { useEmblaAutoPlay } from "../components/ui/autoplay";
+//import useEmblaCarousel from "embla-carousel-react";
+//import { useEmblaAutoPlay } from "../components/ui/autoplay";
 
 export const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const { addToCart } = useCart();
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  useEmblaAutoPlay(emblaApi, 4000);
+  //const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+ // useEmblaAutoPlay(emblaApi, 4000);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -74,7 +74,7 @@ export const Products = () => {
     <div className="px-4 py-8">
       <div
         className="overflow-hidden max-w-[90%] mx-auto h-[500px] mb-6 rounded-xl"
-        ref={emblaRef}
+        //ref={emblaRef}
       >
         <div className="flex transition-transform duration-1000 ease-in-out">
           {[

@@ -57,8 +57,8 @@ export const Home = () => {
   const [products] = useState<ProductLocal[]>(localProducts);
   const navigate = useNavigate();
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  useEmblaAutoPlay(emblaApi, 4000); // autoplay a cada 4s
+  const [emblaRef] = useEmblaCarousel({ loop: true });
+  //useEmblaAutoPlay(emblaApi, 4000); // autoplay a cada 4s
 
   return (
     <>

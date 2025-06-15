@@ -4,7 +4,7 @@ import { Menu, Search, ShoppingCart, X } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 import { Button } from "./ui/button";
-import { Cart } from "./cart/shoppingcart";
+import { Cart } from "./shoppingcart";
 import { useCart } from "../contexts/cartContext";
 import { getProducts } from "../services/products";
 import type { Product } from "../types/products";
