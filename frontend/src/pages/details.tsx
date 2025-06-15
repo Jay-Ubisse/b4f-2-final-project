@@ -10,11 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-import type { Products } from "../types/products";
+import type { Product } from "../types/products";
 
 export const Details = () => {
   //mostrar o artigo selecionado
-  const [list, setList] = useState<Products[]>([]);
+  const [list, setList] = useState<Product[]>([]);
   useEffect(() => {
     async function fetchData() {
       try {

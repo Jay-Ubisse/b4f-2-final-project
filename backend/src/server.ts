@@ -20,15 +20,21 @@ const port = process.env.PORT || 3000;
 
 app.use("/orders", orderRoute);
 app.use("/products", productRoute);
+<<<<<<< HEAD
+=======
 app.use("/api/products", router);
 //app.use("/categories", categoryRoute);
 app.use("/auth", authRouter);
 app.use("/users", router);
+>>>>>>> feature/frontend-catalog
 app.use("/categories", categoryRoute);
 app.use("/login", authRouter);
 app.use("/register", router);
 app.use("/me",router)
+<<<<<<< HEAD
+=======
 
+>>>>>>> feature/frontend-catalog
 
 mongoose
   .connect(process.env.BD_URI as string)

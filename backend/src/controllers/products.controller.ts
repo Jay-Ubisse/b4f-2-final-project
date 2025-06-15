@@ -4,7 +4,9 @@ import { ProductsProps } from "../types/products.ts";
 import { Response, Request, NextFunction } from "express";
 import { CategoryProps } from "../types/category.ts";
 
+export const authorizeRole = async (role: string) => {
 const authorizeRole = async (role: string) => {
+
   (req: Request, res: Response, next: NextFunction) => {
     const user = (req as any).user;
 
@@ -14,14 +16,16 @@ const authorizeRole = async (role: string) => {
 
     next();
   };
-};
+};}
 export const createProduct = async (req: Request, res: Response) => {
+    authorizeRole("admin");
   try {
     const body: ProductsProps = req.body;
     const {
       name,
       price,
       imageUrl,
+      category,
       description,
       colors,
       sizes,
@@ -29,7 +33,7 @@ export const createProduct = async (req: Request, res: Response) => {
       categoryId,
     } = body;
 
-    const category = await Category.findById(categoryId);
+    const categoryData = await Category.findById(categoryId);
 
     if(!category) {
        res.status(404).json({ message: "Produto nao encontrado" });
@@ -39,12 +43,11 @@ export const createProduct = async (req: Request, res: Response) => {
       name,
       price,
       imageUrl,
-      category: category,
+      category: categoryData,
       description,
       colors: colors ||[],
       sizes: sizes || [],
       stock,
-      categoryId,
     });
         console.log(product)
     res.status(201).json({ message: "Product created successfully", product }); 
@@ -63,7 +66,7 @@ export const getProductId = async (req: Request, res: Response) => {
     }
     res
       .status(200)
-      .json({ message: "Product deleted successfully", existingProduct });
+      .json({ message: "Ok", existingProduct });
   } catch (error) {
     res.status(500).json({ message: "An internal server error occurred" });
   }
@@ -77,7 +80,7 @@ export const deletedProduct = (req: Request, res: Response) => {
       if (!deletedProduct) {
         res.status(404).json({ message: "Product not found" });
       }
-      res.status(200).json({ message: "Product deleted successfully" });
+      res.status(200).json({ message: "Ok" });
     })
     .catch((error) => {
       res
@@ -121,11 +124,9 @@ export const updateProduct = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "product updated successfully", product });
   } catch (error) {
-    res.status(500).json({ message: "error when editing a product", error });
+    res.status(500).json({ message: "An internal server error occurred", error });
   }
 };
-
-
 
 export const getProducts = async (req: Request, res: Response) => {
    try {
@@ -137,7 +138,7 @@ export const getProducts = async (req: Request, res: Response) => {
       })
    } catch (error) {
       res.status(500).json({
-         message: "Erro ao buscar produtos"
+         message: "An internal server error occurred"
       })
    }
 
@@ -189,7 +190,7 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
       if (!categoryExists) {
         const allCategories: CategoryProps[] = await Category.find();
          res.status(404).json({
-          message: "Categoria não encontrada.",
+          message: "Not found",
           availableCategories: allCategories.map(cat => cat.name),
         });
       }
@@ -197,7 +198,7 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
 
     if (!search && !categoryId) {
        res.status(400).json({
-        message: "Parâmetro 'search' é obrigatório.",
+        message: "search parameter is required",
       });
     }
 
@@ -216,15 +217,16 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
     };
 
     if (products.length === 0) {
-      response.message = "Nenhum produto encontrado.";
+      response.message = "Not found";
     }
 
      res.json(response);
   } catch (error) {
     console.error("Erro ao buscar produtos:", error);
-     res.status(500).json({ message: "Erro ao buscar produtos." });
+     res.status(500).json({ message: "An internal server error occurred" });
   }
 };
+
 
 export const getProductsByQueryCategory = async (req: Request, res: Response) => {
   try {
@@ -232,7 +234,7 @@ export const getProductsByQueryCategory = async (req: Request, res: Response) =>
 
     if (!categoryName || typeof categoryName !== "string") {
         res.status(400).json({
-        message: "Parâmetro 'categoria' é obrigatório e deve ser string(nome da categoria)."
+        message: "category Parameter is required"
       });return
     }
     
@@ -245,7 +247,7 @@ export const getProductsByQueryCategory = async (req: Request, res: Response) =>
     if (!foundCategory) {
       const allCategories: CategoryProps[] = await Category.find();
        res.status(404).json({
-        message: `Categoria "${normalizedCategory}" não encontrada.`,
+        message: "Not found",
         availableCategories: allCategories.map(cat => cat.name)
       });
     }
@@ -261,8 +263,9 @@ export const getProductsByQueryCategory = async (req: Request, res: Response) =>
   } catch (error) {
     console.error("Erro ao buscar produtos por categoria:", error);
      res.status(500).json({
-      message: "Erro interno no servidor",
+      message: "An internal server error occurred",
       error: error instanceof Error ? error.message : "Unknown error"
     });
   }
 };
+
