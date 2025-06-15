@@ -24,8 +24,12 @@ import {
   
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-
+import {useNavigate } from "react-router-dom";
 export const Products = () => {
+  const  viewDetails=()=>{
+let Navigate=useNavigate();
+Navigate("/products");
+  }
   const [products, setProducts] = useState<Product[] | undefined>([]);
   const [search, setSearch] = useState("");
   useEffect(() => {
@@ -66,8 +70,7 @@ export const Products = () => {
   
   return (
      
-    <div>
-       
+    <div>    
        <div className="flex gap-4">
         <Command className="w-50 ">
       <CommandInput
@@ -88,6 +91,7 @@ export const Products = () => {
         <Button className="bg-stone-700 ">Get Product</Button> 
  
        </div>
+       <button onClick={viewDetails}>
       <section className="flex flex-wrap gap-8 space-around items center ml-15 mt-5">
         {products?.slice(1, 7).map((product, index) => (
           <Card 
@@ -128,7 +132,7 @@ export const Products = () => {
           </Card>
         ))}
       </section>
-      
+      </button>
     </div>
   );
 };
