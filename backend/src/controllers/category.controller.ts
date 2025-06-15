@@ -1,6 +1,6 @@
 
-import Category  from "../models/category.model.ts";
-import Product from "../models/products.model.ts";
+import {Category}  from "../models/category.model.ts";
+import {Product} from "../models/products.model.ts";
 import { NextFunction, Request, Response } from "express";
 
 export const authorizeRole = (role: string) => {
@@ -128,4 +128,8 @@ export const deleteCategory = async (req: Request, res: Response)=> {
         res.status(500).json({ message: "Internal Server Error, Try Again" });
         
     }
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> b0bc113ba43df0ee0e742125a7f3f6424ce8a73e

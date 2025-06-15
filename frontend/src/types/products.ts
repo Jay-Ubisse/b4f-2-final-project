@@ -1,4 +1,4 @@
-export type Products = {
+export type Product= {
   _id:string;
   name: string;
   colors: string[];
@@ -9,3 +9,4 @@ export type Products = {
   categoryId: string;
   stock: number;
 };
+
