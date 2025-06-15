@@ -24,5 +24,4 @@ categoryRouter.get("/:id/products", getProductByCategory);
 
 
 
-
 export default categoryRouter;

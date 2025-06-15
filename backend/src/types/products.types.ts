@@ -17,4 +17,3 @@ export interface CategoryProps extends Document {
   description?: string;
 }
 
-

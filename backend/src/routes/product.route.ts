@@ -17,7 +17,4 @@ export const productRoute = express.Router();
 productRoute.post("/", createProduct);
 productRoute.get("/:id", getProductId);
 productRoute.delete("/:id", authentionToken, deletedProduct);
-productRoute.put("/:id", authentionToken,authorizeRole, updateProduct);
-productRoute.get("/", getProducts);
-productRoute.get("/search", getProductsBySearch);
-productRoute.get("/category", getProductsByQueryCategory);
+productRoute.put("/:id", authentionToken, updateProduct);
