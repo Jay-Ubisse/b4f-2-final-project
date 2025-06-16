@@ -8,8 +8,16 @@ import { CheckoutPage } from "./checkout";
 import {AdminPage} from "./admin-dashboard";
 import { ErrorPage } from "./errorPages";
 import { Products } from "./products";
+import { ContactPage } from "./contact";
+import { Details } from "./details";
 
-export { Home, About,Login, Register, Account, OrdersUser,ErrorPage, Products,CheckoutPage, AdminPage };
+
+export { Home, About,Login, Register, Account, OrdersUser,ErrorPage, Products,CheckoutPage, AdminPage, Details,  ContactPage };
+
+
+
+
+
+
 
     
-

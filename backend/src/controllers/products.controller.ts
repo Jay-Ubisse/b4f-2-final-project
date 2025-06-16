@@ -1,8 +1,7 @@
-import {Product} from "../models/products.model.ts";
-import {Category} from "../models/category.model.ts";
-import { ProductsProps } from "../types/products.ts";
+import { Product } from "../models/products.model.ts";
+import { Category } from "../models/category.model.ts";
+import { ProductProps } from "../types/product.types.ts";
 import { Response, Request, NextFunction } from "express";
-import { CategoryProps } from "../types/category.ts";
 
 export const authorizeRole = async (role: string) => {
 const authorizeRole = async (role: string) => {
@@ -20,7 +19,7 @@ const authorizeRole = async (role: string) => {
 export const createProduct = async (req: Request, res: Response) => {
     authorizeRole("admin");
   try {
-    const body: ProductsProps = req.body;
+    const body: ProductProps = req.body;
     const {
       name,
       price,
@@ -32,14 +31,8 @@ export const createProduct = async (req: Request, res: Response) => {
       stock,
       categoryId,
     } = body;
-
-    const categoryData = await Category.findById(categoryId);
-
-    if(!category) {
-       res.status(404).json({ message: "Produto nao encontrado" });
-    }
-
-    const product = await Product.create({
+    const categoryData = await Category.findById(categoryId).populate("Categories");
+    const product = Product.create({
       name,
       price,
       imageUrl,
@@ -49,10 +42,8 @@ export const createProduct = async (req: Request, res: Response) => {
       sizes: sizes || [],
       stock,
     });
-        console.log(product)
-    res.status(201).json({ message: "Product created successfully", product }); 
+    res.status(201).json({ message: "Product created successfully", product });
   } catch (error) {
-
     res.status(500).json({ message: "An internal server error occurred",error});
   }
 };
@@ -93,7 +84,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   authorizeRole;
   try {
     const id = req.params.id;
-    const body: ProductsProps = req.body;
+    const body: ProductProps = req.body;
     const {
       name,
       price,
@@ -129,143 +120,58 @@ export const updateProduct = async (req: Request, res: Response) => {
 };
 
 export const getProducts = async (req: Request, res: Response) => {
-   try {
-      const products = await Product.find();
-
-      res.status(200).json({
-         message: "ok", 
-         data: products
-      })
-   } catch (error) {
-      res.status(500).json({
-         message: "An internal server error occurred"
-      })
-   }
-
-  // try {
-  //   const { page = "1", perPage = "4" } = req.query;
-
-  //   const currentPage = parseInt(page as string, 10);
-  //   const itemsPerPage = parseInt(perPage as string, 10);
-  //   const skip = (currentPage - 1) * itemsPerPage;
-
-  //   const totalItems = await Product.countDocuments();
-  //   const products = await Product.find()
-  //     .populate("categories")
-  //     .skip(skip)
-  //     .limit(itemsPerPage);
-
-  //   res.status(200).json({
-  //     message: products.length > 0 ? "Produtos encontrados" : "Nenhum produto disponível.",
-  //     data: products,
-  //     totalItems,
-  //     totalPages: Math.ceil(totalItems / itemsPerPage),
-  //     currentPage,
-  //     perPage: itemsPerPage,
-  //   });
-  // } catch (error) {
-  //   console.error("Erro ao buscar produtos:", error);
-  //   res.status(500).json({ message: "Erro ao buscar produtos." });
-  // }
-};
-
-
-export const getProductsBySearch = async (req: Request, res: Response) => {
   try {
-    const { search, categoryId, page = "1", perPage = "10" } = req.query;
-
-    const currentPage = parseInt(page as string, 10);
-    const itemsPerPage = parseInt(perPage as string, 10);
-    const skip = (currentPage - 1) * itemsPerPage;
-
-    const filter: any = {};
+    const { search, category } = req.query;
 
     if (search) {
-      filter.name = { $regex: search, $options: "i" };
-    }
+      const filter = { name: { $regex: search, $options: "i" } };
+      const products = await Product.find(filter).populate("category");
 
-    if (categoryId) {
-      filter.category = categoryId;
-      const categoryExists = await Category.findById(categoryId);
-      if (!categoryExists) {
-        const allCategories: CategoryProps[] = await Category.find();
-         res.status(404).json({
-          message: "Not found",
-          availableCategories: allCategories.map(cat => cat.name),
-        });
-      }
-    }
-
-    if (!search && !categoryId) {
-       res.status(400).json({
-        message: "search parameter is required",
+       res.status(200).json({
+        message: products.length > 0 ? "Found" : "No matching products",
+        total: products.length,
+        data: products,
       });
     }
 
-    const totalItems = await Product.countDocuments(filter);
-    const products = await Product.find(filter)
-      .populate("category")
-      .skip(skip)
-      .limit(itemsPerPage);
+    if (category) {
+      const normalized = String(category).trim().toLowerCase();
 
-    const response: any = {
-      data: products,
-      totalItems,
-      totalPages: Math.ceil(totalItems / itemsPerPage),
-      currentPage,
-      perPage: itemsPerPage,
-    };
+      const foundCategory = await Category.findOne({
+        name: { $regex: new RegExp(`^${normalized}$`, "i") },
+      });
 
-    if (products.length === 0) {
-      response.message = "Not found";
+      if (!foundCategory) {
+        const all = await Category.find();
+         res.status(404).json({
+          message: "Category not found",
+          availableCategories: all.map((cat) => cat.name),
+        });return;
+      }
+
+      const products = await Product.find({ category: foundCategory._id }).populate("category");
+
+       res.status(200).json({
+        category: foundCategory.name,
+        total: products.length,
+        data: products,
+      });return;
     }
 
-     res.json(response);
+    const products = await Product.find().populate("category");
+    res.status(200).json({
+      message: "All products",
+      total: products.length,
+      data: products,
+    });
   } catch (error) {
     console.error("Erro ao buscar produtos:", error);
-     res.status(500).json({ message: "An internal server error occurred" });
-  }
-};
-
-
-export const getProductsByQueryCategory = async (req: Request, res: Response) => {
-  try {
-    const categoryName = req.query.category;
-
-    if (!categoryName || typeof categoryName !== "string") {
-        res.status(400).json({
-        message: "category Parameter is required"
-      });return
-    }
-    
-    const normalizedCategory = categoryName.trim().toLowerCase();
-
-    const foundCategory = await Category.findOne({
-      name: { $regex: new RegExp(`^${normalizedCategory}$`, "i") }
-    });
-
-    if (!foundCategory) {
-      const allCategories: CategoryProps[] = await Category.find();
-       res.status(404).json({
-        message: "Not found",
-        availableCategories: allCategories.map(cat => cat.name)
-      });
-    }
-
-    const products = await Product.find({ category: foundCategory?._id });
-
-     res.status(200).json({
-      category: foundCategory?.name,
-      totalProducts: products.length,
-      products
-    });
-
-  } catch (error) {
-    console.error("Erro ao buscar produtos por categoria:", error);
-     res.status(500).json({
+    res.status(500).json({
       message: "An internal server error occurred",
-      error: error instanceof Error ? error.message : "Unknown error"
+      error: error instanceof Error ? error.message : "Unknown error",
     });
   }
 };
+
+
 

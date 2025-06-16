@@ -1,9 +1,9 @@
 import mongoose, { Document} from "mongoose";
 
-export interface ProductsProps extends Document{
+export interface ProductProps extends Document{
   name:String,
-        colors:string[];
-        sizes:string[];
+        colors:String[];
+        sizes:String[];
         price:number;
         description:String;
         imageUrl:String;
@@ -11,8 +11,6 @@ export interface ProductsProps extends Document{
         categoryId:String;
         stock:number;
 }
-
-
 
 
 

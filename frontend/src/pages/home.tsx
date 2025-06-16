@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { delay, motion } from "framer-motion";
-import useEmblaCarousel from 'embla-carousel-react'
-import Autoplay from 'embla-carousel-autoplay'
+import useEmblaCarousel from "embla-carousel-react";
+import { useEmblaAutoPlay } from "../contexts/autoplay";
+import { motion } from "framer-motion";
 
 import {
   Card,
@@ -26,7 +26,7 @@ const localProducts: ProductLocal[] = [
     id: "1",
     name: "T-Shirt",
     imageUrl: "https://www.taibobacar.com/media/GRG-BLG-TS2-750x750.jpg",
-    colors: ["black", "red", "blue", "green"],
+    colors: ["black", "amber", "blue", "green"],
     sizes: ["L", "M", "XL", "XXL"],
   },
   {
@@ -56,12 +56,12 @@ export const Home = () => {
   const [products] = useState<ProductLocal[]>(localProducts);
   const navigate = useNavigate();
 
-  const autoplay = Autoplay({ delay: 4000 });
-  const [emblaRef] = useEmblaCarousel({ loop: true }, [autoplay]);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  useEmblaAutoPlay(emblaApi, 4000); // autoplay a cada 4s
 
   return (
     <>
-    
+      {/* Carrossel */}
       <div
         className="overflow-hidden max-w-[90%] mx-auto h-[500px] mb-10 rounded-xl"
         ref={emblaRef}
@@ -71,6 +71,7 @@ export const Home = () => {
             "https://industrieafrica.com/cdn/shop/collections/TB_HERO_A.jpg?v=1741949555&width=2880",
             "https://www.taibobacar.com/media/resort19-header.jpg",
             "https://www.taibobacar.com/media/TB-Bacars-Garden-001.jpg",
+            "https://www.taibobacar.com/media/GRG-BLG-TS2-750x750.jpg",
           ].map((img, index) => (
             <div
               key={index}
@@ -86,7 +87,7 @@ export const Home = () => {
         </div>
       </div>
 
-     
+      {/* Botão de navegação */}
       <div className="flex justify-end mr-10 mb-4">
         <Button
           onClick={() => navigate("/products")}
@@ -97,10 +98,11 @@ export const Home = () => {
         </Button>
       </div>
 
+      {/* Produtos */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 m-6">
         {products.map((product, index) => (
           <motion.div
-            key={index}
+            key={product.id}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
@@ -117,7 +119,7 @@ export const Home = () => {
                 />
               </CardContent>
               <CardFooter className="flex flex-col items-start gap-2">
-            
+                {/* Cores */}
                 <div className="flex gap-2">
                   {product.colors.map((color, index) => (
                     <div
@@ -128,6 +130,7 @@ export const Home = () => {
                   ))}
                 </div>
 
+                {/* Tamanhos */}
                 <div className="flex gap-2">
                   {product.sizes.map((size, index) => (
                     <span
@@ -138,6 +141,8 @@ export const Home = () => {
                     </span>
                   ))}
                 </div>
+
+                {/* Botão */}
                 <Button
                   onClick={() => console.log("Adicionar ao carrinho:", product)}
                   className="mt-4 bg-black text-white w-full hover:bg-gray-800"

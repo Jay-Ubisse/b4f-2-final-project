@@ -30,6 +30,11 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
 
   useEffect(() => {
     const savedItems = JSON.parse(localStorage.getItem('itemProducts') || '[]')
+    const itemsFixed = savedItems.map((item: any) => ({
+      ...item,
+      qty: Number(item.qty),
+      price: Number(item.price),
+    }))
     const storedData = localStorage.getItem('checkout-form')
     if (storedData) {
       const parsed = JSON.parse(storedData)
@@ -42,7 +47,7 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
       }
       setUser(resumo)
     }
-    setItems(savedItems)
+    setItems(itemsFixed)
   }, [])
 
   const now = new Date()
@@ -60,9 +65,15 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
   const reciboDate = formatDate(now)
   const poDate = formatDate(vencimento)
 
-  const subtotal = items.reduce((acc, item) => acc + item.qty * item.price, 0)
-  const iva = subtotal * 0.16
-  const total = subtotal + iva
+  function getCartCalculations(items: ProductItem[]) {
+  const subtotal = items.reduce((acc, item) => acc + item.qty * item.price, 0);
+  const iva = subtotal * 0.16;
+  const total = subtotal + iva;
+  const totalQuantity = items.reduce((acc, item) => acc + item.qty, 0);
+  return { subtotal, iva, total, totalQuantity };
+}
+
+ const { subtotal, iva, total } = getCartCalculations(items);
 
   const handlePrint = () => {
     window.print()
@@ -105,7 +116,7 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
           ×
         </button>
 
-        <div className="p-6 text-sm text-gray-900">
+        <div className="p-6 text-sm text-zinc-800">
           <h1 className="text-3xl font-bold mb-4 text-primary">Receipt</h1>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
@@ -179,7 +190,7 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
             Thank you for your purchase!
           </p>
           <p className="text-center font-semibold italic text-gray-700 tracking-widest">
-            B4F ECOMMERCE
+            B4F E-COMMERCE
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-3">
