@@ -79,7 +79,7 @@ export const Details = () => {
       <Card className="flex flex-col sm:flex-row gap-4">
         <div className="sm:w-1/2 flex justify-center items-center">
           <img
-            src={product.imageUrl || "/placeholder-image.png"}
+            src={product.imageUrl || "https://www.taibobacar.com/media/BR-MTS-DR.1-570x570.jpg"}
             alt={`Image of ${product.name}`}
             className="max-h-48 object-contain rounded-md"
           />

@@ -52,7 +52,7 @@ export const Cart = ({ isOpen, onClose }: CartProps) => {
   const renderCartItem = (item: typeof cartItems[0]) => (
     <div key={item._id} className="flex gap-4 border-b pb-4">
       <img
-        src={item.imageUrl}
+        src={item.imageUrl || "https://www.taibobacar.com/media/BR-MTS-DR.1-570x570.jpg"}
         alt={item.name}
         className="w-20 h-24 object-cover rounded"
       />
