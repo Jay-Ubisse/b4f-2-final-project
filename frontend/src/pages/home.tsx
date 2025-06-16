@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useEmblaCarousel from "embla-carousel-react";
-import { useEmblaAutoPlay } from "../contexts/autoplay";
 import { motion } from "framer-motion";
+import useEmblaCarousel from 'embla-carousel-react'
 
+import { useEmblaAutoPlay } from "../contexts/autoplay";
 import {
   Card,
   CardContent,
@@ -57,7 +57,7 @@ export const Home = () => {
   const navigate = useNavigate();
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  useEmblaAutoPlay(emblaApi, 4000); // autoplay a cada 4s
+  useEmblaAutoPlay(emblaApi, 4000);
 
   return (
     <>
@@ -102,10 +102,15 @@ export const Home = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 m-6">
         {products.map((product, index) => (
           <motion.div
-            key={product.id}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
+            key={index}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: index * 0.12,
+              ease: "easeOut"
+            }}
+            whileHover={{ scale: 1.04 }}
           >
             <Card className="w-full hover:shadow-xl transition duration-300">
               <CardHeader>
@@ -157,3 +162,4 @@ export const Home = () => {
     </>
   );
 };
+

@@ -1,20 +1,27 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { About, Home, OrdersUser, CheckoutPage, AdminPage, ErrorPage, Products, Details, ContactPage, Login,Register,Account} from "./pages";
+import { createBrowserRouter, RouterProvider, Navigate, useLocation } from "react-router-dom";
+import { About, Home, OrdersUser, CheckoutPage, AdminPage, ErrorPage, Products, Login, Register, Account, Details, ContactPage } from "./pages";
 import { MainLayout } from "./layouts/main-layout";
+import type { JSX } from "react";
 
+export function RequireAuth({ children }: { children: JSX.Element }) {
+  const isAuthenticated = !!localStorage.getItem("token");
+  const location = useLocation();
 
-
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+  return children;
+}
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-     errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
         element: <Home />,
-       
       },
       {
         path: "/about",
@@ -24,21 +31,28 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
       },
-       {
+      {
         path: "/register",
         element: <Register />,
       },
-       {
+      {
         path: "/account",
-        element: <Account />,
-      },
-       {
-
-        path: "/checkout",
-        element: <CheckoutPage />,
+        element: (
+          <RequireAuth>
+            <Account />
+          </RequireAuth>
+        ),
       },
       {
-        path: "/products",
+        path: "/checkout",
+        element: (
+          <RequireAuth>
+            <CheckoutPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/shop",
         element: <Products />,
       },
       {
@@ -46,12 +60,24 @@ const router = createBrowserRouter([
         element: <Details />,
       },
       {
-        path: "/account/orders",
-        element: <OrdersUser />,
+        path: "/product/:id",
+        element: <Details />,
+      },
+      {
+        path: "/orders",
+        element: (
+          <RequireAuth>
+            <OrdersUser />
+          </RequireAuth>
+        ),
       },
       {
         path: "/admin",
-        element: <AdminPage />,
+        element: (
+          <RequireAuth>
+            <AdminPage />
+          </RequireAuth>
+        ),
       },
       {
         path: "/products",
@@ -61,12 +87,8 @@ const router = createBrowserRouter([
         path: "/contacts",
         element: <ContactPage />,
       },
-    ]
-
-
-  }
-
-
+    ],
+  },
 ]);
 
 export function Routes() {

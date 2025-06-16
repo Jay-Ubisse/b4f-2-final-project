@@ -1,6 +1,5 @@
-"use client"
-
 import { useEffect, useState } from "react"
+
 import type { OrderProps } from "../types/order"
 import { getMyOrders } from "./../services/admin"
 

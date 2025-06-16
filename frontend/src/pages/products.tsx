@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import type { Product } from "../types/products";
-import { getProducts } from "../services/products";
-import { useCart } from "../contexts/cartContext";
-import type { CartItem } from "../contexts/cartContext";
 import { ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import useEmblaCarousel from "embla-carousel-react";
 
 import {
   Card,
@@ -16,9 +13,14 @@ import {
   CardDescription,
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-
-import useEmblaCarousel from "embla-carousel-react";
 import { useEmblaAutoPlay } from "../contexts/autoplay";
+import type { CartItem } from "../contexts/cartContext";
+import { getProducts } from "../services/products";
+import { useCart } from "../contexts/cartContext";
+import type { Product } from "../types/products";
+
+
+
 
 export const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -111,10 +113,14 @@ export const Products = () => {
         {products.slice(0, 6).map((product, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-            whileHover={{ scale: 1.03 }}
+            transition={{
+              duration: 0.6,
+              delay: index * 0.12,
+              ease: "easeOut"
+            }}
+            whileHover={{ scale: 1.04 }}
           >
             <Link to={`/details/${product._id}`}>
               <Card className="bg-stone-100 shadow-md hover:shadow-lg transition-all h-full flex flex-col justify-between cursor-pointer">
@@ -136,7 +142,6 @@ export const Products = () => {
                     alt={product.name}
                     className="w-full h-56 object-cover rounded-md"
                   />
-                  
                 </CardContent>
 
                 <CardFooter className="flex flex-col gap-3">

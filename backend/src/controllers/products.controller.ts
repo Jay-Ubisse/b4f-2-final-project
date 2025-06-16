@@ -1,6 +1,6 @@
 import { Product } from "../models/products.model.ts";
 import { Category } from "../models/category.model.ts";
-import { ProductProps } from "../types/product.types.ts";
+import { ProductProps } from "../types/product.ts";
 import { Response, Request, NextFunction } from "express";
 
 export const authorizeRole = async (role: string) => {

@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProductsById } from "../services/products";
-import type { Product } from "../types/products";
 import { Button } from "../components/ui/button";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
-import { useCart } from "../contexts/cartContext";
-import type { CartItem } from "../contexts/cartContext";
 import { ShoppingCart } from "lucide-react";
 
+import type { CartItem } from "../contexts/cartContext";
+import { useCart } from "../contexts/cartContext";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
+import type { Product } from "../types/products";
 
 
 export const Details = () => {

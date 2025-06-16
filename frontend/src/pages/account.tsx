@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { User,LogOut } from "lucide-react";
-import { Button } from "../components/ui/button";
 import api from "../services/axios-instance";
+
+import { Button } from "../components/ui/button";
+
 
 
 export const Account = () => {
@@ -19,7 +21,12 @@ export const Account = () => {
   };
 
   const details = () => {
-    window.location.href = "/account/orders"
+    if(userData.id.role!=="admin"){
+         return window.location.href = "/account/orders"
+
+    }else{
+       return window.location.href = "/account/admin"
+    }
   }
 
   const handleLogout = () => {

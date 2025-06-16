@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import ProductList from "../components/admin/productList";
 import OrderList from "../components/admin/orderList";
 import {
@@ -11,7 +12,8 @@ import {
     updateCategory,
     updateProduct,
     deleteProduct,
-    deleteCategory
+    deleteCategory,
+    getCurrentUser
 } from "../services/admin";
 import { ProductModal } from "../components/admin/productModal";
 import { CategoryModal } from "../components/admin/categoryModal";
@@ -19,6 +21,16 @@ import CategoryList from "../components/admin/categoryList";
 import { Button } from "../components/ui/button";
 
 export function AdminPage() {
+
+    const logedUser = getCurrentUser();
+
+ // if (!logedUser || logedUser.role !== "admin") {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center">
+//         <h1 className="text-3xl font-bold text-red-600">Access Denied</h1>
+//       </div>
+//     );
+//   }
     const [products, setProducts] = useState<Product[]>([]);
 
     interface User {
@@ -141,12 +153,14 @@ export function AdminPage() {
         fetchCategories();
     }, []);
 
-    const user = { name: "Maud Uate" };
+    //const user = { name: "Maud Uate" };
 
+    if (!logedUser || logedUser.role !== "admin") {
+        
     return (
         <div className="p-6 space-y-10">
             <h1 className="text-3xl font-bold text-center">Admin Dashboard</h1>
-            <h2 className="text-2xl font-semibold mb-4 text-center">Welcome {user.name}</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-center">Welcome {logedUser.name}</h2>
             <section>
                 <h2 className="text-2xl font-semibold mb-4">Requests</h2>
                 <OrderList orders={orders} onUpdateStatus={handleUpdateStatus} />
@@ -268,4 +282,11 @@ export function AdminPage() {
             />
         </div>
     );
+}else{
+    <div className="min-h-screen flex items-center justify-center">
+                <h1 className="text-3xl font-bold text-red-600">Access Denied</h1>
+            </div>
 }
+}
+
+

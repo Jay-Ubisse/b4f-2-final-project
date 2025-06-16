@@ -11,13 +11,5 @@ import { Products } from "./products";
 import { ContactPage } from "./contact";
 import { Details } from "./details";
 
-
-export { Home, About,Login, Register, Account, OrdersUser,ErrorPage, Products,CheckoutPage, AdminPage, Details,  ContactPage };
-
-
-
-
-
-
-
+export { Home, About, CheckoutPage, OrdersUser, AdminPage, Details, ErrorPage, Products, ContactPage ,Login, Register, Account,};
     

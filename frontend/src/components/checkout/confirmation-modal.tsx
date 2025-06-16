@@ -14,7 +14,7 @@ type UserData = {
 type ProductItem = {
   id: string
   name: string
-  qty: number
+  quantity: number
   price: number
 }
 
@@ -30,9 +30,11 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
 
   useEffect(() => {
     const savedItems = JSON.parse(localStorage.getItem('itemProducts') || '[]')
+    // Corrige os campos para o formato correto
     const itemsFixed = savedItems.map((item: any) => ({
-      ...item,
-      qty: Number(item.qty),
+      id: item._id,
+      name: item.name,
+      quantity: Number(item.quantity),
       price: Number(item.price),
     }))
     const storedData = localStorage.getItem('checkout-form')
@@ -66,14 +68,14 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
   const poDate = formatDate(vencimento)
 
   function getCartCalculations(items: ProductItem[]) {
-  const subtotal = items.reduce((acc, item) => acc + item.qty * item.price, 0);
-  const iva = subtotal * 0.16;
-  const total = subtotal + iva;
-  const totalQuantity = items.reduce((acc, item) => acc + item.qty, 0);
-  return { subtotal, iva, total, totalQuantity };
-}
+    const subtotal = items.reduce((acc, item) => acc + item.quantity * item.price, 0)
+    const iva = subtotal * 0.16
+    const total = subtotal + iva
+    const totalQuantity = items.reduce((acc, item) => acc + item.quantity, 0)
+    return { subtotal, iva, total, totalQuantity }
+  }
 
- const { subtotal, iva, total } = getCartCalculations(items);
+  const { subtotal, iva, total } = getCartCalculations(items)
 
   const handlePrint = () => {
     window.print()
@@ -165,10 +167,10 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
             <tbody>
               {items.map((item, idx) => (
                 <tr key={item.id ?? idx} className="border hover:bg-muted/20 transition">
-                  <td className="py-2 px-3 border">{item.qty}</td>
+                  <td className="py-2 px-3 border">{item.quantity}</td>
                   <td className="py-2 px-3 border">{item.name}</td>
                   <td className="py-2 px-3 border">{item.price.toFixed(2)}</td>
-                  <td className="py-2 px-3 border">{(item.qty * item.price).toFixed(2)}</td>
+                  <td className="py-2 px-3 border">{(item.quantity * item.price).toFixed(2)}</td>
                 </tr>
               ))}
               <tr className="font-semibold text-gray-900">

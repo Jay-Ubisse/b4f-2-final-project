@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { X, Minus, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 
+
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { useCart } from "./../contexts/cartContext";
@@ -93,7 +94,9 @@ export const Cart = ({ isOpen, onClose }: CartProps) => {
         onClick={onClose}
         className="w-full bg-gray-900 text-white hover:bg-gray-800 transition-colors"
       >
-        Back to shop
+        <Link to={"/shop"}>
+          Back to shop
+        </Link>
       </Button>
 
       <div className="flex justify-center items-center gap-2 text-xs text-gray-600">
@@ -134,7 +137,6 @@ export const Cart = ({ isOpen, onClose }: CartProps) => {
       <Button
         className="w-full bg-gray-900 text-white py-3"
         disabled={!acceptTerms || cartItems.length === 0}
-      
       >
         <Link to={"/checkout"}>
           Checkout

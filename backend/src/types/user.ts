@@ -1,7 +1,8 @@
-type role = 'Admin' | 'Customer';
-export interface userProps {
-name:string,
-email:string,
-password:string,
-role:role
+import { Document } from "mongoose";
+
+export interface UserProps extends Document {
+  name: string;
+  email: string;
+  password: string;
+  role: string; // e.g., 'admin', 'custimer'
 }

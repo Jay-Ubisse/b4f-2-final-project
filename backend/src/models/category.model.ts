@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { CategoryProps } from "../types/category.types.ts";
+import { CategoryProps } from "../types/category.ts";
 
 
 const categorySchecma = new Schema<CategoryProps>({

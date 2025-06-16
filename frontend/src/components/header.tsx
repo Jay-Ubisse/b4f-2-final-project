@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, Search, ShoppingCart, X } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { Button } from "./ui/button";
 import { Cart } from "./shoppingcart";
@@ -20,26 +21,27 @@ import {
 
 export function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const { isOpen, setIsOpen } = useCart();
+  const { isOpen, setIsOpen, cartItems } = useCart();
   const [search, setSearch] = useState("");
   const [suggestions, setSuggestions] = useState<Product[]>([]);
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const searchBarRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const linksLeft = [
-    { label: "Shop", href: "/products" },
+    { label: "Shop", href: "/shop" },
     { label: "About", href: "/about" },
   ];
 
+  // Buscar sugestões
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (search.length < 2) {
         setSuggestions([]);
         return;
       }
-
       try {
         const result = await getProducts({ data: {} });
-
         if (Array.isArray(result)) {
           const filtered = result.filter((product) =>
             product.name.toLowerCase().includes(search.toLowerCase())
@@ -53,9 +55,23 @@ export function Header() {
         setSuggestions([]);
       }
     };
-
     fetchSuggestions();
   }, [search]);
+
+  // Fechar barra de busca ao clicar fora
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        showSearchBar &&
+        searchBarRef.current &&
+        !searchBarRef.current.contains(event.target as Node)
+      ) {
+        setShowSearchBar(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showSearchBar]);
 
   return (
     <header className="fixed top-0 w-full bg-white z-50 border-b shadow-sm">
@@ -84,6 +100,7 @@ export function Header() {
             size="sm"
             onClick={() => setShowSearchBar((prev) => !prev)}
             className="text-sm font-normal"
+            aria-label="Abrir busca"
           >
             Search
           </Button>
@@ -93,12 +110,22 @@ export function Header() {
             className={({ isActive }) =>
               `transition hover:opacity-60 ${isActive ? "font-semibold" : ""}`
             }
+            aria-label="Conta"
           >
             Account
           </NavLink>
 
-          <button onClick={() => setIsOpen(true)} className="transition hover:opacity-60">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="relative transition hover:opacity-60"
+            aria-label="Abrir carrinho"
+          >
             Cart
+            {cartItems?.length > 0 && (
+              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full px-2">
+                {cartItems.length}
+              </span>
+            )}
           </button>
         </nav>
 
@@ -106,85 +133,132 @@ export function Header() {
           <button
             onClick={() => setIsMobileOpen((prev) => !prev)}
             className="p-2"
+            aria-label="Abrir menu"
           >
             {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           <div className="flex items-center gap-4">
-            <button>
+            <button
+              aria-label="Abrir busca"
+              onClick={() => setShowSearchBar((prev) => !prev)}
+            >
               <Search size={20} />
             </button>
-            <button onClick={() => setIsOpen(true)}>
+            <button
+              onClick={() => setIsOpen(true)}
+              aria-label="Abrir carrinho"
+              className="relative"
+            >
               <ShoppingCart size={20} />
+              {cartItems?.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">
+                  {cartItems.length}
+                </span>
+              )}
             </button>
           </div>
         </div>
       </div>
 
-      {showSearchBar && (
-        <div className="w-full bg-white shadow-md border-b px-4 md:px-6 py-4">
-          <div className="max-w-7xl mx-auto">
-            <Command className="w-full">
-              <CommandInput
-                placeholder="Search product..."
-                value={search}
-                onValueChange={setSearch}
-              />
-              {search.length >= 2 && (
-                <CommandList>
-                  <CommandGroup heading="Results">
-                    {suggestions.length > 0 ? (
-                      suggestions.map((product, index) => (
-                        <CommandItem key={index}>
-                          {product.name}
-                        </CommandItem>
-                      ))
-                    ) : (
-                      <CommandItem disabled>No product found</CommandItem>
-                    )}
-                  </CommandGroup>
-                  <CommandSeparator />
-                </CommandList>
-              )}
-            </Command>
-          </div>
-        </div>
-      )}
-
-      {isMobileOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-black/90 text-white px-6 py-6">
-          <div className="flex items-center justify-between mb-6">
-            <button onClick={() => setIsMobileOpen(false)}>
-              <X size={28} />
-            </button>
-            <span className="uppercase font-bold tracking-wider">B4F ECOMMERCE</span>
-            <div className="flex gap-3">
-              <Search size={20} />
-              <ShoppingCart size={20} />
+      {/* Barra de busca animada */}
+      <AnimatePresence>
+        {showSearchBar && (
+          <motion.div
+            ref={searchBarRef}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="w-full bg-white shadow-md border-b px-4 md:px-6 py-4"
+            style={{ position: "relative", zIndex: 60 }}
+          >
+            <div className="max-w-7xl mx-auto">
+              <Command className="w-full">
+                <CommandInput
+                  placeholder="Search product..."
+                  value={search}
+                  onValueChange={setSearch}
+                  autoFocus
+                />
+                {search.length >= 2 && (
+                  <CommandList>
+                    <CommandGroup heading="Results">
+                      {suggestions.length > 0 ? (
+                        suggestions.map((product, index) => (
+                          <CommandItem
+                            key={index}
+                            onSelect={() => {
+                              setShowSearchBar(false);
+                              setSearch("");
+                              navigate(`/product/${product._id}`);
+                            }}
+                            className="cursor-pointer"
+                          >
+                            {product.name}
+                          </CommandItem>
+                        ))
+                      ) : (
+                        <CommandItem disabled>No product found</CommandItem>
+                      )}
+                    </CommandGroup>
+                    <CommandSeparator />
+                  </CommandList>
+                )}
+              </Command>
             </div>
-          </div>
-          <nav className="flex flex-col gap-6 text-lg font-mono">
-            {[...linksLeft, { label: "Account", href: "/account" }].map((link) => (
-              <NavLink
-                key={link.label}
-                to={link.href}
-                onClick={() => setIsMobileOpen(false)}
-                className="hover:opacity-70"
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Menu mobile */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: "-100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "-100%" }}
+            transition={{ duration: 0.25 }}
+            className="md:hidden fixed inset-0 z-40 bg-black/90 text-white px-6 py-6"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <button onClick={() => setIsMobileOpen(false)} aria-label="Fechar menu">
+                <X size={28} />
+              </button>
+              <span className="uppercase font-bold tracking-wider">B4F ECOMMERCE</span>
+              <div className="flex gap-3">
+                <Search size={20} />
+                <ShoppingCart size={20} />
+              </div>
+            </div>
+            <nav className="flex flex-col gap-6 text-lg font-mono">
+              {[...linksLeft, { label: "Account", href: "/account" }].map((link) => (
+                <NavLink
+                  key={link.label}
+                  to={link.href}
+                  onClick={() => setIsMobileOpen(false)}
+                  className="hover:opacity-70"
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+              <span
+                onClick={() => {
+                  setIsMobileOpen(false);
+                  setIsOpen(true);
+                }}
+                className="cursor-pointer hover:opacity-70"
               >
-                {link.label}
-              </NavLink>
-            ))}
-            <span
-              onClick={() => {
-                setIsMobileOpen(false);
-                setIsOpen(true);
-              }}
-              className="cursor-pointer hover:opacity-70"
-            >
-              Cart
-            </span>
-          </nav>
-        </div>
-      )}
+                Cart
+                {cartItems?.length > 0 && (
+                  <span className="ml-2 bg-red-500 text-white text-xs rounded-full px-2">
+                    {cartItems.length}
+                  </span>
+                )}
+              </span>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Cart overlay */}
       <Cart isOpen={isOpen} onClose={() => setIsOpen(false)} />

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { ProductProps } from "../types/product.types.ts";
+import { ProductProps } from "../types/product.ts";
 
 const productSchema = new Schema<ProductProps>({
   name: { type: String, required: true },
